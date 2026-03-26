@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Gallery{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'web:home' %}">Home</a></li>
+    <li class="breadcrumb-item active">Gallery</li>
+{% endblock %}
+
+{% block content %}
+<div class="container-custom">
+    <h1 class="text-center mb-4">Our Gallery</h1>
+    <p class="text-center mb-5">Explore our delicious dishes and restaurant ambiance</p>
+    
+    <div class="row g-4">
+        {% for item in gallery_items %}
+        <div class="col-md-4">
+            <div class="card h-100">
+                <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.title }}" style="height: 250px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.title }}</h5>
+                    <p class="card-text">{{ item.description }}</p>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center py-5">
+            <p class="lead">No gallery images available yet.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

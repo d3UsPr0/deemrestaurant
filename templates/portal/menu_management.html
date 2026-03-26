@@ -1,0 +1,165 @@
+{% extends 'portal/base.html' %}
+
+{% block title %}Menu Management{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3">Menu Management</h1>
+        <a href="{% url 'portal:menu_item_add' %}" class="btn btn-success">
+            <i class="fas fa-plus"></i> Add Menu Item
+        </a>
+    </div>
+    
+    <!-- Categories Tabs -->
+    <ul class="nav nav-tabs mb-4">
+        <li class="nav-item">
+            <a class="nav-link active" data-bs-toggle="tab" href="#all">All Items</a>
+        </li>
+        {% for category in categories %}
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="#cat-{{ category.id }}">{{ category.name }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    
+    <div class="tab-content">
+        <!-- All Items Tab -->
+        <div class="tab-pane fade show active" id="all">
+            <div class="card shadow">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Category</th>
+                                    <th>Price</th>
+                                    <th>Status</th>
+                                    <th>Featured</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in menu_items %}
+                                <tr>
+                                    <td>
+                                        {% if item.image %}
+                                            <img src="{{ item.image.url }}" width="50" height="50" style="object-fit: cover; border-radius: 5px;">
+                                        {% else %}
+                                            <div class="bg-secondary" style="width: 50px; height: 50px; border-radius: 5px;"></div>
+                                        {% endif %}
+                                    </td>
+                                    <td><strong>{{ item.name }}</strong></td>
+                                    <td>{{ item.category.name }}</td>
+                                    <td>Tsh {{ item.price|floatformat:0 }}</td>
+                                    <td>
+                                        {% if item.is_available %}
+                                            <span class="badge bg-success">Available</span>
+                                        {% else %}
+                                            <span class="badge bg-danger">Unavailable</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if item.is_featured %}
+                                            <i class="fas fa-star text-warning"></i>
+                                        {% else %}
+                                            <i class="far fa-star text-muted"></i>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'portal:menu_item_edit' item.pk %}" class="btn btn-sm btn-primary">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </a>
+                                        <a href="{% url 'portal:menu_item_delete' item.pk %}" class="btn btn-sm btn-danger">
+                                            <i class="fas fa-trash"></i> Delete
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="7" class="text-center py-4">
+                                        <i class="fas fa-utensils fa-3x text-muted mb-3"></i>
+                                        <p class="mb-0">No menu items found</p>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Category Tabs -->
+        {% for category in categories %}
+        <div class="tab-pane fade" id="cat-{{ category.id }}">
+            <div class="card shadow">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Price</th>
+                                    <th>Status</th>
+                                    <th>Featured</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in menu_items %}
+                                    {% if item.category.id == category.id %}
+                                    <tr>
+                                        <td>
+                                            {% if item.image %}
+                                                <img src="{{ item.image.url }}" width="50" height="50" style="object-fit: cover; border-radius: 5px;">
+                                            {% else %}
+                                                <div class="bg-secondary" style="width: 50px; height: 50px; border-radius: 5px;"></div>
+                                            {% endif %}
+                                        </td>
+                                        <td><strong>{{ item.name }}</strong></td>
+                                        <td>Tsh {{ item.price|floatformat:0 }}</td>
+                                        <td>
+                                            {% if item.is_available %}
+                                                <span class="badge bg-success">Available</span>
+                                            {% else %}
+                                                <span class="badge bg-danger">Unavailable</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if item.is_featured %}
+                                                <i class="fas fa-star text-warning"></i>
+                                            {% else %}
+                                                <i class="far fa-star text-muted"></i>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'portal:menu_item_edit' item.pk %}" class="btn btn-sm btn-primary">
+                                                <i class="fas fa-edit"></i> Edit
+                                            </a>
+                                            <a href="{% url 'portal:menu_item_delete' item.pk %}" class="btn btn-sm btn-danger">
+                                                <i class="fas fa-trash"></i> Delete
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+                                {% empty %}
+                                <tr>
+                                    <td colspan="6" class="text-center py-4">
+                                        <p class="mb-0">No items in this category</p>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

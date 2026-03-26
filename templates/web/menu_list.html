@@ -1,0 +1,199 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Menu{% endblock %}
+
+{% block extra_css %}
+<style>
+/* PAGE TITLE */
+h1 {
+    font-weight: 700;
+    color: var(--primary-color);
+    animation: fadeIn 0.8s ease;
+}
+
+/* SEARCH BAR */
+form input {
+    border-radius: 25px;
+    padding: 10px 15px;
+}
+
+form button {
+    border-radius: 25px;
+    padding: 8px 20px;
+}
+
+/* CATEGORY FILTER */
+.btn-group {
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.btn-group .btn {
+    border-radius: 20px !important;
+    padding: 6px 14px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.btn-group .btn:hover {
+    transform: translateY(-2px);
+}
+
+/* CARD DESIGN */
+.card {
+    border: none;
+    border-radius: 14px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.card img {
+    transition: transform 0.4s ease;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.card:hover img {
+    transform: scale(1.05);
+}
+
+/* PRICE */
+.card .h5 {
+    color: var(--secondary-color);
+    
+}
+
+/* BUTTONS */
+.btn-sm {
+    border-radius: 20px;
+}
+
+/* EMPTY STATE */
+.lead {
+    color: #777;
+    font-size: 1.2rem;
+}
+
+/* ANIMATION */
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(15px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+</style>
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item">
+    <a href="{% url 'web:home' %}">Home</a>
+</li>
+<li class="breadcrumb-item active">Menu</li>
+{% endblock %}
+
+{% block content %}
+<div class="container-custom">
+
+    <h1 class="text-center mb-4">Our Menu</h1>
+    
+    <!-- Search and Filter -->
+    <div class="row mb-4 align-items-center">
+        
+        <!-- SEARCH -->
+        <div class="col-md-5 mb-3 mb-md-0">
+            <form method="get" class="d-flex shadow-sm">
+                <input 
+                    type="text" 
+                    name="search" 
+                    class="form-control me-2" 
+                    placeholder="Search menu..." 
+                    value="{{ request.GET.search }}"
+                >
+                <button type="submit" class="btn btn-secondary-custom">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+        </div>
+
+        <!-- FILTER -->
+        <div class="col-md-7">
+            <div class="btn-group w-100 justify-content-md-end">
+                <a href="{% url 'web:menu_list' %}" 
+                   class="btn btn-outline-primary-custom {% if not selected_category %}active{% endif %}">
+                    All
+                </a>
+                {% for category in categories %}
+                    <a href="?category={{ category.slug }}" 
+                       class="btn btn-outline-primary-custom {% if selected_category == category.slug %}active{% endif %}">
+                        {{ category.name }}
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+    
+    <!-- Menu Items -->
+    <div class="row g-4">
+        {% for item in menu_items %}
+            <div class="col-md-4">
+                <div class="card h-100">
+
+                    {% if item.image %}
+                        <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.name }}" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                        <div class="card-img-top bg-secondary" style="height: 200px;"></div>
+                    {% endif %}
+
+                    <div class="card-body d-flex flex-column">
+                        
+                        <h5 class="card-title">{{ item.name }}</h5>
+                        
+                        <p class="text-muted small mb-1">
+                            {{ item.category.name }}
+                        </p>
+
+                        <p class="card-text">
+                            {{ item.description|truncatewords:15 }}
+                        </p>
+
+                        <!-- Bottom aligned content -->
+                        <div class="mt-auto d-flex justify-content-between align-items-center">
+                            <span class="h5 mb-0">Tsh {{ item.price|floatformat:0|intcomma }}</span>
+
+                            <div class="d-flex gap-2">
+                                <a href="{% url 'web:menu_detail' item.pk %}" 
+                                   class="btn btn-sm btn-accent-custom">
+                                    View
+                                </a>
+
+                                <form method="post" action="{% url 'web:add_to_cart' %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="menu_item_id" value="{{ item.pk }}">
+                                    <input type="hidden" name="quantity" value="1">
+                                    <button type="submit" class="btn btn-sm btn-secondary-custom">
+                                        <i class="fas fa-cart-plus"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        {% empty %}
+            <div class="col-12 text-center py-5">
+                <p class="lead">No menu items available.</p>
+                <a href="{% url 'web:menu_list' %}" class="btn btn-secondary-custom mt-2">
+                    Refresh Menu
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}

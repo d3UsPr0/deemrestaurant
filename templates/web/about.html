@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About Us{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'web:home' %}">Home</a></li>
+    <li class="breadcrumb-item active">About Us</li>
+{% endblock %}
+
+{% block content %}
+<div class="container-custom">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <h1 class="text-center mb-4">About Deem Restaurant</h1>
+            
+            <div class="card shadow mb-4">
+                <div class="card-body p-4">
+                    <h3>Our Story</h3>
+                    <p>Deem Restaurant was founded with a passion for bringing authentic, delicious cuisine to our community. Since our establishment, we've been committed to using the freshest ingredients and traditional cooking methods to create unforgettable dining experiences.</p>
+                    
+                    <h3 class="mt-4">Our Mission</h3>
+                    <p>To provide exceptional food and service that delights our customers and creates lasting memories. We believe that great food brings people together, and we're honored to be part of your special moments.</p>
+                    
+                    <h3 class="mt-4">Our Values</h3>
+                    <ul>
+                        <li><strong>Quality:</strong> We use only the freshest, highest-quality ingredients</li>
+                        <li><strong>Service:</strong> Our team is dedicated to providing exceptional customer service</li>
+                        <li><strong>Community:</strong> We're proud to be part of our local community</li>
+                        <li><strong>Innovation:</strong> We constantly evolve our menu to bring you new and exciting flavors</li>
+                    </ul>
+                    
+                    <h3 class="mt-4">Our Chef</h3>
+                    <p>Our head chef brings years of experience and a passion for culinary excellence to every dish. With training from top culinary institutions and experience in renowned restaurants, our chef creates masterpieces that delight the senses.</p>
+                </div>
+            </div>
+            
+            <div class="text-center mt-4">
+                <a href="{% url 'web:menu_list' %}" class="btn btn-accent-custom">
+                    <i class="fas fa-utensils"></i> Explore Our Menu
+                </a>
+                <a href="{% url 'web:contact' %}" class="btn btn-secondary-custom ms-2">
+                    <i class="fas fa-envelope"></i> Contact Us
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

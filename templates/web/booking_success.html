@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Booking Success{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'web:home' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'web:booking' %}">Booking</a></li>
+    <li class="breadcrumb-item active">Success</li>
+{% endblock %}
+
+{% block content %}
+<div class="container-custom">
+    <div class="text-center py-5">
+        <div class="mb-4">
+            <i class="fas fa-check-circle fa-5x text-success"></i>
+        </div>
+        <h1 class="mb-3">Booking Request Submitted!</h1>
+        <p class="lead mb-4">Thank you for choosing Deem Restaurant. We have received your booking request and will contact you within 24 hours to confirm the details.</p>
+        <div class="mt-4">
+            <a href="{% url 'web:home' %}" class="btn btn-secondary-custom me-2">
+                <i class="fas fa-home"></i> Back to Home
+            </a>
+            <a href="{% url 'web:menu_list' %}" class="btn btn-accent-custom">
+                <i class="fas fa-utensils"></i> View Menu
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

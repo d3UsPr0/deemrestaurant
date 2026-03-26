@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Shopping Cart{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'web:home' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'web:menu_list' %}">Menu</a></li>
+    <li class="breadcrumb-item active">Cart</li>
+{% endblock %}
+
+{% block content %}
+<div class="container-custom">
+    <h1 class="text-center mb-4">Your Cart</h1>
+    
+    {% if cart_items %}
+        <div class="row">
+            <div class="col-md-8">
+                {% for item in cart_items %}
+                    <div class="card mb-3 cart-item" data-item-id="{{ item.id }}">
+                        <div class="row g-0">
+                            <div class="col-md-3">
+                                {% if item.image %}
+                                    <img src="{{ item.image }}" class="img-fluid rounded-start" alt="{{ item.name }}" style="height: 120px; object-fit: cover;">
+                                {% else %}
+                                    <div class="bg-secondary" style="height: 120px;"></div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-9">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <h5 class="card-title">{{ item.name }}</h5>
+                                        <button class="btn btn-sm btn-outline-danger remove-item">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                    <p class="card-text">Price: Tsh {{ item.price|floatformat:0|intcomma }}</p>
+                                    <div class="d-flex align-items-center">
+                                        <span class="me-3">Quantity:</span>
+                                        <div class="btn-group" role="group">
+                                            <button class="btn btn-sm btn-outline-secondary quantity-decrease">-</button>
+                                            <span class="btn btn-sm btn-outline-secondary quantity-display">{{ item.quantity }}</span>
+                                            <button class="btn btn-sm btn-outline-secondary quantity-increase">+</button>
+                                        </div>
+                                        <span class="ms-3">Subtotal: Tsh {{ item.subtotal|floatformat:0|intcomma }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Order Summary</h5>
+                        <hr>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>Subtotal:</span>
+                            <span>Tsh {{ total|floatformat:0|intcomma }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>Delivery Fee:</span>
+                            <span>Tsh 500</span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between mb-3">
+                            <strong>Total:</strong>
+                            <strong>Tsh {{ total|add:"500"|floatformat:0|intcomma }}</strong>
+                        </div>
+                        <a href="{% url 'web:checkout' %}" class="btn btn-accent-custom w-100">Proceed to Checkout</a>
+                        <a href="{% url 'web:menu_list' %}" class="btn btn-secondary-custom w-100 mt-2">Continue Shopping</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="text-center py-5">
+            <i class="fas fa-shopping-cart fa-4x text-muted mb-3"></i>
+            <p class="lead">Your cart is empty.</p>
+            <a href="{% url 'web:menu_list' %}" class="btn btn-secondary-custom">Browse Menu</a>
+        </div>
+    {% endif %}
+</div>
+
+<script>
+$(document).ready(function() {
+    // Update cart quantity
+    function updateCart(itemId, action) {
+        $.ajax({
+            url: '{% url "web:update_cart" %}',
+            method: 'POST',
+            data: {
+                'item_id': itemId,
+                'action': action,
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
+            success: function(response) {
+                if (response.success) {
+                    location.reload();
+                }
+            }
+        });
+    }
+    
+    // Increase quantity
+    $('.quantity-increase').click(function() {
+        var itemId = $(this).closest('.cart-item').data('item-id');
+        updateCart(itemId, 'increase');
+    });
+    
+    // Decrease quantity
+    $('.quantity-decrease').click(function() {
+        var itemId = $(this).closest('.cart-item').data('item-id');
+        updateCart(itemId, 'decrease');
+    });
+    
+    // Remove item
+    $('.remove-item').click(function() {
+        var itemId = $(this).closest('.cart-item').data('item-id');
+        if (confirm('Remove this item from cart?')) {
+            updateCart(itemId, 'remove');
+        }
+    });
+});
+</script>
+{% endblock %}

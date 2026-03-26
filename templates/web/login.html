@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Login{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'web:home' %}">Home</a></li>
+    <li class="breadcrumb-item active">Login</li>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .login-container {
+        min-height: 70vh;
+        display: flex;
+        align-items: center;
+    }
+    
+    .login-card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+    
+    .login-header {
+        background: linear-gradient(135deg, var(--primary-color), #7a2e1a);
+        color: white;
+        padding: 2rem;
+        text-align: center;
+    }
+    
+    .login-header i {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+    
+    .login-header h3 {
+        margin: 0;
+        font-weight: 600;
+    }
+    
+    .login-body {
+        padding: 2rem;
+    }
+    
+    .btn-login {
+        background-color: var(--secondary-color);
+        color: var(--primary-color);
+        font-weight: 600;
+        padding: 0.75rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-login:hover {
+        background-color: #28a745;
+        transform: translateY(-2px);
+        color: white;
+    }
+    
+    .form-control:focus {
+        border-color: var(--secondary-color);
+        box-shadow: 0 0 0 0.2rem rgba(0, 182, 82, 0.25);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-custom login-container">
+    <div class="row justify-content-center w-100">
+        <div class="col-md-6 col-lg-5">
+            <div class="login-card">
+                <div class="login-header">
+                    <i class="fas fa-user-circle"></i>
+                    <h3>Welcome Back</h3>
+                    <p class="mb-0 mt-2">Login to your account</p>
+                </div>
+                
+                <div class="login-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        {% if form.errors %}
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <i class="fas fa-exclamation-circle"></i>
+                                Invalid username or password.
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        {% endif %}
+                        
+                        <div class="mb-3">
+                            <label for="id_username" class="form-label">
+                                <i class="fas fa-user"></i> Username or Email
+                            </label>
+                            {{ form.username }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="id_password" class="form-label">
+                                <i class="fas fa-lock"></i> Password
+                            </label>
+                            {{ form.password }}
+                        </div>
+                        
+                        <button type="submit" class="btn btn-login w-100">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="text-center py-3 border-top">
+                    <p class="mb-0">
+                        Don't have an account? 
+                        <a href="{% url 'web:register' %}" class="text-decoration-none">
+                            Register here
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

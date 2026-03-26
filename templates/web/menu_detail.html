@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}{{ menu_item.name }}{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'web:home' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'web:menu_list' %}">Menu</a></li>
+    <li class="breadcrumb-item active">{{ menu_item.name }}</li>
+{% endblock %}
+
+{% block content %}
+<div class="container-custom">
+    <div class="row">
+        <div class="col-md-6">
+            {% if menu_item.image %}
+                <img src="{{ menu_item.image.url }}" class="img-fluid rounded shadow" alt="{{ menu_item.name }}">
+            {% else %}
+                <div class="bg-secondary rounded shadow" style="height: 400px;"></div>
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            <h1 class="mb-3">{{ menu_item.name }}</h1>
+            <p class="text-muted mb-2">{{ menu_item.category.name }}</p>
+            <h3 class="text-accent-custom mb-3">Tsh {{ menu_item.price|floatformat:0|intcomma }}</h3>
+            <p class="mb-4">{{ menu_item.description }}</p>
+            
+            <form method="post" action="{% url 'web:add_to_cart' %}">
+                {% csrf_token %}
+                <input type="hidden" name="menu_item_id" value="{{ menu_item.pk }}">
+                <div class="mb-3">
+                    <label for="quantity" class="form-label">Quantity:</label>
+                    <input type="number" name="quantity" id="quantity" class="form-control" value="1" min="1" style="width: 100px;">
+                </div>
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-accent-custom">
+                        <i class="fas fa-cart-plus"></i> Add to Cart
+                    </button>
+                    
+                    {% if user.is_authenticated %}
+                        <form method="post" action="{% url 'web:toggle_favorite' menu_item.pk %}" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-{% if is_favorite %}danger{% else %}secondary{% endif %}">
+                                <i class="fas fa-{% if is_favorite %}heart-broken{% else %}heart{% endif %}"></i>
+                                {% if is_favorite %}Remove from Favorites{% else %}Add to Favorites{% endif %}
+                            </button>
+                        </form>
+                    {% endif %}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

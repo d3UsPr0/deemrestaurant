@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+
+{% block title %}Order #{{ order.order_number }}{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'web:home' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'web:my_orders' %}">My Orders</a></li>
+    <li class="breadcrumb-item active">Order #{{ order.order_number }}</li>
+{% endblock %}
+
+{% block content %}
+<div class="container-custom">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card shadow mb-4">
+                <div class="card-header bg-primary-custom text-white">
+                    <h4 class="mb-0">Order Details</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <strong>Order Number:</strong> {{ order.order_number }}
+                        </div>
+                        <div class="col-md-6">
+                            <strong>Date:</strong> {{ order.created_at|date:"F d, Y H:i" }}
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <strong>Status:</strong>
+                            <span class="badge status-{{ order.status }} ms-2">
+                                {{ order.get_status_display }}
+                            </span>
+                        </div>
+                        <div class="col-md-6">
+                            <strong>Total Amount:</strong> Tsh {{ order.total_amount|floatformat:0|intcomma }}
+                        </div>
+                    </div>
+                    
+                    <hr>
+                    
+                    <h5>Items Ordered</h5>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in order.items.all %}
+                                <tr>
+                                    <td>{{ item.menu_item.name }}</td>
+                                    <td>{{ item.quantity }}</td>
+                                    <td>Tsh {{ item.price|floatformat:0|intcomma }}</td>
+                                    <td>Tsh {% widthratio item.price 1 item.quantity %}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <hr>
+                    
+                    <h5>Delivery Information</h5>
+                    <p>
+                        <strong>Name:</strong> {{ order.full_name }}<br>
+                        <strong>Phone:</strong> {{ order.phone_number }}<br>
+                        <strong>Email:</strong> {{ order.email }}<br>
+                        <strong>Address:</strong> {{ order.address }}<br>
+                        {% if order.special_instructions %}
+                            <strong>Special Instructions:</strong> {{ order.special_instructions }}
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Comments Section -->
+            <div class="card shadow">
+                <div class="card-header">
+                    <h5 class="mb-0">Comments & Feedback</h5>
+                </div>
+                <div class="card-body">
+                    {% if order.comments.all %}
+                        {% for comment in order.comments.all %}
+                        <div class="border-bottom mb-3 pb-3">
+                            <div class="d-flex justify-content-between">
+                                <strong>{{ comment.user.username }}</strong>
+                                <small class="text-muted">{{ comment.created_at|date:"M d, Y H:i" }}</small>
+                            </div>
+                            {% if comment.rating %}
+                                <div class="mb-2">
+                                    {% for i in "12345"|make_list %}
+                                        {% if forloop.counter <= comment.rating %}
+                                            <i class="fas fa-star text-warning"></i>
+                                        {% else %}
+                                            <i class="far fa-star text-muted"></i>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <p class="mb-0">{{ comment.comment }}</p>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-muted">No comments yet.</p>
+                    {% endif %}
+                    
+                    {% if order.status == 'delivered' and not order.comments.exists %}
+                        <hr>
+                        <h6>Add a Comment</h6>
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ form|crispy }}
+                            <button type="submit" class="btn btn-accent-custom mt-2">
+                                <i class="fas fa-paper-plane"></i> Submit Comment
+                            </button>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card shadow">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">Order Timeline</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li class="mb-3">
+                            <i class="fas fa-check-circle text-success me-2"></i>
+                            Order Placed: {{ order.created_at|date:"M d, Y H:i" }}
+                        </li>
+                        {% if order.approved_at %}
+                        <li class="mb-3">
+                            <i class="fas fa-check-circle text-success me-2"></i>
+                            Approved: {{ order.approved_at|date:"M d, Y H:i" }}
+                        </li>
+                        {% endif %}
+                        {% if order.delivered_at %}
+                        <li class="mb-3">
+                            <i class="fas fa-check-circle text-success me-2"></i>
+                            Delivered: {{ order.delivered_at|date:"M d, Y H:i" }}
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

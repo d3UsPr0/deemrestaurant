@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}My Orders{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'web:home' %}">Home</a></li>
+    <li class="breadcrumb-item active">My Orders</li>
+{% endblock %}
+
+{% block content %}
+<div class="container-custom">
+    <h1 class="text-center mb-4">My Orders</h1>
+    
+    {% if orders %}
+        <div class="row">
+            {% for order in orders %}
+            <div class="col-12 mb-3">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-md-3">
+                                <strong>Order #:</strong> {{ order.order_number }}
+                            </div>
+                            <div class="col-md-2">
+                                <strong>Date:</strong> {{ order.created_at|date:"M d, Y" }}
+                            </div>
+                            <div class="col-md-2">
+                                <strong>Total:</strong> Tsh {{ order.total_amount|floatformat:0 }}
+                            </div>
+                            <div class="col-md-2">
+                                <span class="badge status-{{ order.status }}">
+                                    {{ order.get_status_display }}
+                                </span>
+                            </div>
+                            <div class="col-md-3 text-end">
+                                <a href="{% url 'web:order_detail' order.order_number %}" class="btn btn-sm btn-accent-custom">
+                                    <i class="fas fa-eye"></i> View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="text-center py-5">
+            <i class="fas fa-shopping-bag fa-4x text-muted mb-3"></i>
+            <p class="lead">You haven't placed any orders yet.</p>
+            <a href="{% url 'web:menu_list' %}" class="btn btn-secondary-custom mt-3">
+                <i class="fas fa-utensils"></i> Start Ordering
+            </a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
