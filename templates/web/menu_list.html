@@ -7,21 +7,75 @@
 {% block extra_css %}
 <style>
 /* PAGE TITLE */
-h1 {
+h4 {
     font-weight: 700;
     color: var(--primary-color);
     animation: fadeIn 0.8s ease;
 }
 
 /* SEARCH BAR */
-form input {
-    border-radius: 25px;
-    padding: 10px 15px;
+
+/* SEARCH FORM CONTAINER */
+.search-form {
+    width: 100%;
 }
 
-form button {
-    border-radius: 25px;
-    padding: 8px 20px;
+/* WRAPPER */
+.search-wrapper {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+/* FOCUS EFFECT */
+.search-wrapper:focus-within {
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    border-color: var(--secondary-color);
+}
+.search-wrapper input:focus {
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 3px rgba(0,182,82,0.1);
+}
+
+/* BUTTON */
+.search-btn {
+    margin-left: 8px;
+}
+
+/* INPUT */
+.search-wrapper input {
+    border-radius: 30px;
+    padding: 10px 15px;
+    border: 1px solid rgba(0,0,0,0.1);
+    flex: 1;
+}
+
+/* BUTTON */
+.search-btn {
+    background: var(--secondary-color);
+    border: none;
+    color: #fff;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+/* BUTTON HOVER */
+.search-btn:hover {
+    background: var(--primary-color);
+    transform: scale(1.05);
+}
+
+/* ICON */
+.search-btn i {
+    font-size: 0.9rem;
 }
 
 /* CATEGORY FILTER */
@@ -41,7 +95,7 @@ form button {
     transform: translateY(-2px);
 }
 
-/* CARD DESIGN */
+/* CARD DESIGN - Removed hover effect from card */
 .card {
     border: none;
     border-radius: 14px;
@@ -49,23 +103,39 @@ form button {
     transition: all 0.3s ease;
 }
 
-.card img {
+/* Image container for proper overflow handling */
+.card-img-container {
+    overflow: hidden;
+    position: relative;
+}
+
+/* Image hover effect - ONLY image scales */
+.card-img-top {
     transition: transform 0.4s ease;
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
 }
 
-.card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+.card-img-container:hover .card-img-top {
+    transform: scale(1.08);
 }
 
-.card:hover img {
-    transform: scale(1.05);
+/* Optional: Add subtle overlay on image hover */
+.card-img-container:hover::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
 }
 
 /* PRICE */
 .card .h5 {
     color: var(--secondary-color);
-    
 }
 
 /* BUTTONS */
@@ -84,6 +154,87 @@ form button {
     from {opacity: 0; transform: translateY(15px);}
     to {opacity: 1; transform: translateY(0);}
 }
+
+/* CARD TEXT REFINEMENT */
+/* Title */
+.card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+    line-height: 1.3;
+}
+
+/* Category label */
+.card-body .text-muted {
+    font-size: 0.7rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 6px !important;
+    display: inline-block;
+}
+
+/* Description */
+.card-text {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+/* Price tighter */
+.card .h5 {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+/* Reduce card body spacing */
+.card-body {
+    padding: 12px 14px;
+}
+
+.card-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* CATEGORY FILTER - CLEAN DESIGN */
+.category-filter {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* Normal state */
+.category-btn {
+    padding: 6px 16px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    font-size: 0.85rem;
+    color: #444;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+/* Hover */
+.category-btn:hover {
+    background: var(--accent-color);
+    color: var(--primary-color);
+}
+
+/* ACTIVE STATE (VERY IMPORTANT) */
+.category-btn.active {
+    .category-btn.active {
+    background: linear-gradient(135deg, var(--secondary-color), #00d96b);
+    color: #fff;
+}
+    border-color: var(--secondary-color);
+    font-weight: 500;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
 </style>
 {% endblock %}
 
@@ -97,41 +248,44 @@ form button {
 {% block content %}
 <div class="container-custom">
 
-    <h1 class="text-center mb-4">Our Menu</h1>
+    <h4 class="text-center mb-4">Our Menu</h4>
     
     <!-- Search and Filter -->
     <div class="row mb-4 align-items-center">
         
         <!-- SEARCH -->
-        <div class="col-md-5 mb-3 mb-md-0">
-            <form method="get" class="d-flex shadow-sm">
-                <input 
-                    type="text" 
-                    name="search" 
-                    class="form-control me-2" 
-                    placeholder="Search menu..." 
-                    value="{{ request.GET.search }}"
-                >
-                <button type="submit" class="btn btn-secondary-custom">
-                    <i class="fas fa-search"></i>
-                </button>
-            </form>
+        <div class="col-md-5 mb-3 mb-md-0 ">
+            <form method="get" class="search-form shadow-sm">
+    <div class="search-wrapper ">
+        <input 
+            type="text" 
+            name="search" 
+            class="form-control" 
+            placeholder="Search delicious meals..." 
+            value="{{ request.GET.search }}"
+        >
+        <button type="submit" class="search-btn">
+            <i class="fas fa-search"></i>
+        </button>
+    </div>
+</form>
         </div>
 
         <!-- FILTER -->
         <div class="col-md-7">
-            <div class="btn-group w-100 justify-content-md-end">
-                <a href="{% url 'web:menu_list' %}" 
-                   class="btn btn-outline-primary-custom {% if not selected_category %}active{% endif %}">
-                    All
-                </a>
-                {% for category in categories %}
-                    <a href="?category={{ category.slug }}" 
-                       class="btn btn-outline-primary-custom {% if selected_category == category.slug %}active{% endif %}">
-                        {{ category.name }}
-                    </a>
-                {% endfor %}
-            </div>
+            <div class="category-filter text-center">
+    <a href="{% url 'web:menu_list' %}" 
+       class="category-btn {% if not selected_category %}active{% endif %}">
+        All
+    </a>
+
+    {% for category in categories %}
+        <a href="?category={{ category.slug }}" 
+           class="category-btn {% if selected_category == category.slug %}active{% endif %}">
+            {{ category.name }}
+        </a>
+    {% endfor %}
+</div>
         </div>
 
     </div>
@@ -141,12 +295,14 @@ form button {
         {% for item in menu_items %}
             <div class="col-md-4">
                 <div class="card h-100">
-
-                    {% if item.image %}
-                        <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.name }}" style="height: 200px; object-fit: cover;">
-                    {% else %}
-                        <div class="card-img-top bg-secondary" style="height: 200px;"></div>
-                    {% endif %}
+                    <!-- Image container with hover effect -->
+                    <div class="card-img-container">
+                        {% if item.image %}
+                            <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.name }}">
+                        {% else %}
+                            <div class="card-img-top bg-secondary" style="height: 200px;"></div>
+                        {% endif %}
+                    </div>
 
                     <div class="card-body d-flex flex-column">
                         
@@ -174,8 +330,8 @@ form button {
                                     {% csrf_token %}
                                     <input type="hidden" name="menu_item_id" value="{{ item.pk }}">
                                     <input type="hidden" name="quantity" value="1">
-                                    <button type="submit" class="btn btn-sm btn-secondary-custom">
-                                        <i class="fas fa-cart-plus"></i>
+                                    <button type="submit" class="btn btn-sm btn-secondary-custom px-3">
+                                        Add to Order
                                     </button>
                                 </form>
                             </div>

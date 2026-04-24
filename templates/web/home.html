@@ -45,7 +45,8 @@
     }
 
     .hero-content h1 {
-        font-weight: 700;
+        font-weight: 500;
+        {% comment %} font-family: "Playfair Display", serif; {% endcomment %}
     }
 
     .hero-tagline {
@@ -65,35 +66,106 @@
     }
 
     /* ============================================
-       CARDS (FEATURED ITEMS)
+       CARDS (FEATURED ITEMS) - Matching menu_list
     ============================================ */
     .card {
+        border: none;
+        border-radius: 14px;
         overflow: hidden;
-        border-radius: 12px;
-        transition: transform 0.3s ease;
+        transition: all 0.3s ease;
     }
 
-    .card img {
-        transition: transform 0.5s ease;
+    /* Image container for proper overflow handling */
+    .card-img-container {
+        overflow: hidden;
+        position: relative;
+        height: 200px;
     }
 
-    .card:hover {
-        transform: translateY(-8px);
+    /* Image hover effect - ONLY image scales */
+    .card-img-top {
+        transition: transform 0.4s ease;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 
-    .card:hover img {
-        transform: scale(1.1);
+    .card-img-container:hover .card-img-top {
+        transform: scale(1.08);
+    }
+
+    /* Subtle overlay on image hover */
+    .card-img-container:hover::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    /* PRICE */
+    .card .h5 {
+        color: var(--secondary-color);
+    }
+
+    /* BUTTONS */
+    .btn-sm {
+        border-radius: 20px;
+    }
+
+    /* CARD TEXT REFINEMENT */
+    .card-title {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 4px;
+        line-height: 1.3;
+    }
+
+    /* Category label */
+    .card-body .text-muted {
+        font-size: 0.7rem;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        margin-bottom: 6px !important;
+        display: inline-block;
+    }
+
+    /* Description */
+    .card-text {
+        font-size: 0.85rem;
+        line-height: 1.4;
+        color: #555;
+        margin-bottom: 10px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    /* Price tighter */
+    .card .h5 {
+        font-size: 1rem;
+        font-weight: 600;
+    }
+
+    /* Reduce card body spacing */
+    .card-body {
+        padding: 12px 14px;
     }
 
     /* ============================================
        SECTION TITLES
     ============================================ */
-    section h2 {
+    section h2, section h4 {
         font-weight: 600;
         position: relative;
+        color: var(--primary-color);
     }
 
-    section h2::after {
+    section h2::after, section h4::after {
         content: "";
         width: 60px;
         height: 3px;
@@ -199,26 +271,54 @@
         </div>
     </div>
 
-    <!-- Featured Menu Items -->
+    <!-- Featured Menu Items - Updated to match menu_list style -->
     {% if featured_items %}
     <section class="featured-items my-5 fade-in">
-        <h2 class="text-center mb-4">Popular Dishes</h2>
+        <h4 class="text-center mb-4">Popular Dishes</h4>
         <div class="row g-4">
             {% for item in featured_items %}
             <div class="col-md-4">
                 <div class="card h-100">
-                    {% if item.image %}
-                        <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.name }}" style="height: 200px; object-fit: cover;">
-                    {% else %}
-                        <div class="card-img-top bg-secondary" style="height: 200px;"></div>
-                    {% endif %}
-                    <div class="card-body text-center">
+                    <!-- Image container with hover effect -->
+                    <div class="card-img-container">
+                        {% if item.image %}
+                            <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.name }}">
+                        {% else %}
+                            <div class="card-img-top bg-secondary"></div>
+                        {% endif %}
+                    </div>
+
+                    <div class="card-body d-flex flex-column">
                         <h5 class="card-title">{{ item.name }}</h5>
-                        <p class="card-text">{{ item.description|truncatewords:20 }}</p>
-                        <p class="card-text"><strong>Tsh {{ item.price|floatformat:0|intcomma }}</strong></p>
-                        <a href="{% url 'web:menu_detail' item.pk %}" class="btn btn-sm btn-accent-custom">
-                            View Details
-                        </a>
+                        
+                        <p class="text-muted small mb-1">
+                            {{ item.category.name }}
+                        </p>
+
+                        <p class="card-text">
+                            {{ item.description|truncatewords:15 }}
+                        </p>
+
+                        <!-- Bottom aligned content with price and buttons -->
+                        <div class="mt-auto d-flex justify-content-between align-items-center">
+                            <span class="h5 mb-0">Tsh {{ item.price|floatformat:0|intcomma }}</span>
+
+                            <div class="d-flex gap-2">
+                                <a href="{% url 'web:menu_detail' item.pk %}" 
+                                   class="btn btn-sm btn-accent-custom">
+                                    View
+                                </a>
+
+                                <form method="post" action="{% url 'web:add_to_cart' %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="menu_item_id" value="{{ item.pk }}">
+                                    <input type="hidden" name="quantity" value="1">
+                                    <button type="submit" class="btn btn-sm btn-secondary-custom px-3">
+                                        Add to Order
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -227,7 +327,7 @@
     </section>
     {% endif %}
 
-    <!-- Featured Gallery -->
+    {% comment %} <!-- Featured Gallery -->
     {% if gallery_items %}
     <section class="featured-gallery my-5 fade-in">
         <h2 class="text-center mb-4">From Our Gallery</h2>
@@ -253,7 +353,7 @@
             </button>
         </div>
     </section>
-    {% endif %}
+    {% endif %} {% endcomment %}
 
     <!-- Why Choose Us -->
     <section class="why-choose-us my-5 py-4 fade-in">

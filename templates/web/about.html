@@ -8,21 +8,32 @@
     <li class="breadcrumb-item active">About Us</li>
 {% endblock %}
 
+{% block extra_css %}
+<style>
+/* PAGE TITLE */
+h5 {
+    font-weight: 600;
+    color: var(--primary-color);
+    animation: fadeIn 0.8s ease;
+}
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="container-custom">
     <div class="row">
         <div class="col-lg-8 mx-auto">
-            <h1 class="text-center mb-4">About Deem Restaurant</h1>
+            <h5 class="text-center mb-4">About Deem Restaurant</h5>
             
             <div class="card shadow mb-4">
                 <div class="card-body p-4">
-                    <h3>Our Story</h3>
+                    <h5>Our Story</h5>
                     <p>Deem Restaurant was founded with a passion for bringing authentic, delicious cuisine to our community. Since our establishment, we've been committed to using the freshest ingredients and traditional cooking methods to create unforgettable dining experiences.</p>
                     
-                    <h3 class="mt-4">Our Mission</h3>
+                    <h5 class="mt-4">Our Mission</h5>
                     <p>To provide exceptional food and service that delights our customers and creates lasting memories. We believe that great food brings people together, and we're honored to be part of your special moments.</p>
                     
-                    <h3 class="mt-4">Our Values</h3>
+                    <h5 class="mt-4">Our Values</h5>
                     <ul>
                         <li><strong>Quality:</strong> We use only the freshest, highest-quality ingredients</li>
                         <li><strong>Service:</strong> Our team is dedicated to providing exceptional customer service</li>
@@ -30,7 +41,7 @@
                         <li><strong>Innovation:</strong> We constantly evolve our menu to bring you new and exciting flavors</li>
                     </ul>
                     
-                    <h3 class="mt-4">Our Chef</h3>
+                    <h5 class="mt-4">Our Chef</h5>
                     <p>Our head chef brings years of experience and a passion for culinary excellence to every dish. With training from top culinary institutions and experience in renowned restaurants, our chef creates masterpieces that delight the senses.</p>
                 </div>
             </div>

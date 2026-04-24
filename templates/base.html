@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
+      <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DEEM Restaurant - {% block title %}{% endblock %}</title>
 
@@ -19,259 +18,397 @@
 
     <!-- Google Fonts -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Red+Hat+Text:wght@300;400;500;600;700&family=Alice&family=Playfair+Display:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Red+Hat+Text:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
-
     <style>
       /* ============================================
-         CSS VARIABLES & RESET
+         VARIABLES & RESET
       ============================================ */
       :root {
         --primary-color: #540b02;
         --secondary-color: #00b652;
         --accent-color: #f7941d;
+        --light-bg: #e9fde8;
+        --white: #ffffff;
+        --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
       }
 
       body {
-        font-family:
-          "Plus Jakarta Sans", "Red Hat Text", "Alice", "Playfair Display",
-          sans-serif;
-        background-color: #f6d7d753;
-      }
-
-      .container-custom {
-        max-width: 900px;
-        margin: 0 auto;
-        padding: 0 15px;
+        font-family: 'Plus Jakarta Sans', 'Red Hat Text', sans-serif;
+        background-color: var(--light-bg);
       }
 
       /* ============================================
-         TOP LOGO SECTION
-      ============================================ */
-      .top-logo {
-        background: white;
-        transition: all 0.3s ease;
-      }
-
-      .top-logo.hide {
-        opacity: 0;
-        transform: translateY(-20px);
-        pointer-events: none;
-      }
-
-      .main-logo {
-        height: 80px;
-        transition: all 0.3s ease;
-      }
-
-      /* ============================================
-         NAVBAR & HEADER STRUCTURE
+         STICKY NAVBAR
       ============================================ */
       .navbar {
-        background-color: white;
-        padding: 1rem 0;
-        transition: all 0.4s ease;
-      }
-
-      .navbar.scrolled {
-        position: fixed;
+        background-color: var(--white);
+        padding: 0.75rem 0;
+        box-shadow: var(--shadow);
+        position: sticky;
         top: 0;
-        width: 100%;
-        z-index: 999;
-        padding: 0.5rem 0;
-        background: transparent;
-        backdrop-filter: blur(100px);
+        z-index: 1030;
       }
 
-      /* Small Logo (appears on scroll) */
-      .scroll-logo {
-        display: none;
+      .navbar .container {
+        max-width: 1280px;
+        padding: 0 1.5rem;
       }
 
-      .scroll-logo img {
+      /* Logo styling */
+      .navbar-brand {
+        padding: 0;
+        margin: 0;
+      }
+
+      .navbar-brand img {
         height: 45px;
-      }
-
-      .navbar.scrolled .scroll-logo {
+        width: auto;
         display: block;
       }
 
-      /* ============================================
-         NAVIGATION LINKS
-      ============================================ */
+      /* Nav links container */
       .navbar-nav {
-        align-items: left;
-        transition: all 0.4s ease;
+        gap: 0.25rem;
       }
 
+      /* Nav link styling - WITH UNDERLINE ANIMATION */
       .nav-link {
         color: var(--primary-color) !important;
         font-weight: 500;
-        transition: color 0.3s ease;
         padding: 0.5rem 1rem !important;
+        border-radius: 0px;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.95rem;
         position: relative;
       }
 
-      /* Underline animation */
-      .nav-link::after {
-        content: "";
-        position: absolute;
-        left: 50%;
-        bottom: 5px;
-        width: 0%;
-        height: 2px;
-        background-color: var(--secondary-color);
-        transition: all 0.3s ease;
-        transform: translateX(-50%);
+      .nav-link i {
+        font-size: 0.95rem;
       }
 
-      .nav-link:hover::after {
-        width: 60%;
+      /* UNDERLINE ANIMATION - Desktop only (centered) */
+      @media (min-width: 992px) {
+        .nav-link::after {
+          content: "";
+          position: absolute;
+          left: 50%;
+          bottom: 0;
+          width: 0;
+          height: 2px;
+          background-color: var(--secondary-color);
+          transition: width 0.3s ease, left 0.3s ease;
+          transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+          width: 70%;
+          left: 50%;
+        }
+
+        .nav-link:hover {
+          color: var(--secondary-color) !important;
+          background-color: transparent;
+        }
+
+        .nav-link.active {
+          color: var(--secondary-color) !important;
+          background-color: transparent;
+        }
       }
 
-      .nav-link:hover {
-        color: var(--secondary-color) !important;
-      }
+      /* Mobile menu - underline from LEFT side */
+      @media (max-width: 991px) {
+        .nav-link::after {
+          content: "";
+          position: absolute;
+          left: 1rem;
+          bottom: 0;
+          width: 0;
+          height: 2px;
+          background-color: var(--secondary-color);
+          transition: width 0.3s ease;
+        }
 
-      .nav-link.active {
-        color: var(--secondary-color) !important;
-      }
+        .nav-link:hover::after,
+        .nav-link.active::after {
+          width: 30px; /* Fixed width aligned with icon */
+        }
 
-      /* Scrolled Navbar Links */
-      .navbar.scrolled .nav-link {
-        color: var(--primary-color) !important;
-      }
+        .nav-link:hover {
+          color: var(--secondary-color) !important;
+          background-color: transparent;
+        }
 
-      .navbar.scrolled .nav-link:hover {
-        color: var(--secondary-color) !important;
+        .nav-link.active {
+          color: var(--secondary-color) !important;
+          background-color: transparent;
+        }
       }
 
       /* ============================================
-         CART ICON STYLES
+         DROPDOWN TOGGLE - EXCLUDE HOVER EFFECT
       ============================================ */
+      /* Remove underline effect from dropdown toggle */
+      .dropdown-toggle.nav-link::after {
+        display: none !important;
+      }
+
+      /* Remove hover underline from dropdown toggle */
+      .dropdown-toggle.nav-link:hover::after {
+        width: 0 !important;
+      }
+
+      /* Keep dropdown toggle text color consistent */
+      .dropdown-toggle.nav-link {
+        color: var(--primary-color) !important;
+      }
+
+      .dropdown-toggle.nav-link:hover {
+        color: var(--primary-color) !important;
+        background-color: transparent !important;
+      }
+
+      /* For the user dropdown specifically */
+      #userDropdown.nav-link::after {
+        display: none !important;
+      }
+
+      #userDropdown.nav-link:hover::after {
+        width: 0 !important;
+      }
+
+      /* Keep the dropdown arrow but remove underline */
+      .dropdown-toggle::after {
+        margin-left: 8px;
+        vertical-align: middle;
+      }
+
+      /* Cart badge */
+      .cart-wrapper {
+        position: relative;
+      }
+
       .cart-count {
         position: absolute;
-        top: -8px;
-        right: -12px;
+        top: -4px;
+        right: 0px;
         background-color: var(--accent-color);
         color: white;
         border-radius: 50%;
         padding: 2px 6px;
-        font-size: 0.7rem;
+        font-size: 0.65rem;
         font-weight: bold;
         min-width: 18px;
         text-align: center;
       }
 
       /* ============================================
-         DROPDOWN MENU
+         DROPDOWN - FIXED HOVER BEHAVIOR
       ============================================ */
       .dropdown-menu {
-        background-color: white;
         border: none;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        border-radius: 8px;
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        padding: 0.5rem 0;
         margin-top: 0.5rem;
+        background-color: var(--white);
       }
 
       .dropdown-item {
+        padding: 0.5rem 1.25rem;
         color: var(--primary-color);
-        transition: all 0.3s ease;
-      }
-
-      .dropdown-item:hover {
-        background-color: var(--secondary-color);
-        color: var(--primary-color);
+        font-weight: 500;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 10px;
       }
 
       .dropdown-item i {
         width: 20px;
-        margin-right: 8px;
+      }
+
+      .dropdown-item:hover {
+        background-color: rgba(0, 182, 82, 0.1);
+        color: var(--secondary-color);
+      }
+
+      /* Desktop dropdown hover - proper transition */
+      @media (min-width: 992px) {
+        .dropdown {
+          position: relative;
+        }
+        
+        .dropdown .dropdown-menu {
+          display: block;
+          opacity: 0;
+          visibility: hidden;
+          transform: translateY(-10px);
+          transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+        }
+        
+        .dropdown:hover .dropdown-menu {
+          opacity: 1;
+          visibility: visible;
+          transform: translateY(0);
+        }
+        
+        /* Prevent dropdown from closing when moving cursor to menu */
+        .dropdown-menu:hover {
+          opacity: 1 !important;
+          visibility: visible !important;
+          transform: translateY(0) !important;
+          display: block !important;
+        }
       }
 
       /* ============================================
-         HAMBURGER MENU (TOGGLER)
+         HAMBURGER MENU - VISIBLE ICON WITH X TOGGLE
       ============================================ */
       .navbar-toggler {
         border: none;
-        background: none;
-        padding: 8px 12px;
-        transition: all 0.4s ease;
-        position: relative;
-        z-index: 1001;
+        padding: 0.5rem;
+        background-color: transparent;
+        transition: all 0.2s ease;
       }
 
-      .navbar-toggler:focus,
-      .navbar-toggler:active {
-        outline: none !important;
-        box-shadow: none !important;
+      .navbar-toggler:focus {
+        outline: none;
+        box-shadow: none;
       }
 
-      /* Custom Hamburger Icon */
-      .navbar-toggler-icon {
-        background-image: none;
-        width: 25px;
-        height: 2px;
-        background-color: var(--primary-color);
+      /* Custom toggler icon container */
+      .custom-toggler-icon {
         position: relative;
+        width: 28px;
+        height: 28px;
         display: inline-block;
-        transition: 0.3s;
+        font-size: 1.6rem;
+        line-height: 1;
+        color: var(--primary-color);
+        transition: all 0.3s ease;
       }
 
-      .navbar-toggler-icon::before,
-      .navbar-toggler-icon::after {
-        content: "";
+      /* When menu is collapsed (not open) - show bars */
+      .navbar-toggler.collapsed .custom-toggler-icon i.fa-bars {
+        display: inline-block;
+      }
+      
+      .navbar-toggler.collapsed .custom-toggler-icon i.fa-times {
+        display: none;
+      }
+      
+      /* When menu is open - show X */
+      .navbar-toggler:not(.collapsed) .custom-toggler-icon i.fa-bars {
+        display: none;
+      }
+      
+      .navbar-toggler:not(.collapsed) .custom-toggler-icon i.fa-times {
+        display: inline-block;
+      }
+      
+      /* Default state */
+      .custom-toggler-icon i {
         position: absolute;
-        width: 25px;
-        height: 2px;
-        background-color: var(--primary-color);
+        top: 0;
         left: 0;
-        transition: 0.3s;
+        transition: all 0.3s ease;
+      }
+      
+      .custom-toggler-icon i.fa-bars {
+        display: inline-block;
+      }
+      
+      .custom-toggler-icon i.fa-times {
+        display: none;
       }
 
-      .navbar-toggler-icon::before {
-        top: -7px;
-      }
+      /* ============================================
+         MOBILE RESPONSIVE
+      ============================================ */
+      @media (max-width: 991px) {
+        .navbar {
+          padding: 0.5rem 0;
+        }
 
-      .navbar-toggler-icon::after {
-        top: 7px;
-      }
+        .navbar-brand img {
+          height: 40px;
+        }
 
-      /* Open state (X icon) - stays in same position */
-      .navbar-toggler.open .navbar-toggler-icon {
-        background-color: transparent;
-      }
+        /* Mobile menu styling */
+        .navbar-collapse {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background-color: var(--white);
+          padding: 1rem 1.5rem;
+          border-radius: 0 0 20px 20px;
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+          max-height: calc(100vh - 70px);
+          overflow-y: auto;
+        }
 
-      .navbar-toggler.open .navbar-toggler-icon::before {
-        transform: rotate(45deg);
-        top: 0;
-      }
+        .navbar-nav {
+          gap: 0.25rem;
+          width: 100%;
+        }
 
-      .navbar-toggler.open .navbar-toggler-icon::after {
-        transform: rotate(-45deg);
-        top: 0;
-      }
+        .nav-item {
+          width: 100%;
+        }
 
-      /* Scrolled Navbar Toggler */
-      .navbar.scrolled .navbar-toggler {
-        background: var(--primary-color);
-        border-radius: 8px;
-      }
+        .nav-link {
+          justify-content: flex-start;
+          padding: 0.75rem 1rem !important;
+          width: 100%;
+        }
 
-      .navbar.scrolled .navbar-toggler-icon,
-      .navbar.scrolled .navbar-toggler-icon::before,
-      .navbar.scrolled .navbar-toggler-icon::after {
-        background-color: white;
-      }
+        /* Mobile dropdown - click to open/close */
+        .dropdown-menu {
+          position: static;
+          float: none;
+          box-shadow: none;
+          background-color: #f8f9fa;
+          margin-top: 0.25rem;
+          margin-bottom: 0.25rem;
+          padding: 0.25rem 0;
+          border-radius: 12px;
+          width: 100%;
+          display: none;
+          opacity: 1;
+          visibility: visible;
+          transform: none;
+        }
 
-      .navbar.scrolled .navbar-toggler.open .navbar-toggler-icon {
-        background-color: transparent;
-      }
+        .dropdown.show .dropdown-menu {
+          display: block;
+        }
 
-      .navbar.scrolled .navbar-toggler.open .navbar-toggler-icon::before,
-      .navbar.scrolled .navbar-toggler.open .navbar-toggler-icon::after {
-        background-color: white;
+        .dropdown-toggle::after {
+          margin-left: auto;
+          transition: transform 0.2s;
+        }
+
+        .dropdown.show .dropdown-toggle::after {
+          transform: rotate(180deg);
+        }
+
+        .dropdown-item {
+          padding: 0.6rem 1rem 0.6rem 2rem;
+        }
       }
 
       /* ============================================
@@ -282,7 +419,6 @@
         padding: 0.75rem 0;
         margin-bottom: 0;
         justify-content: center;
-        text-align: center;
       }
 
       .breadcrumb-item a {
@@ -299,107 +435,11 @@
       }
 
       /* ============================================
-         ALERT MESSAGES
+         ALERTS
       ============================================ */
       .alert {
         border: none;
-        border-radius: 8px;
-      }
-
-      .alert-success {
-        background-color: #d4edda;
-        color: #155724;
-      }
-
-      .alert-error {
-        background-color: #f8d7da;
-        color: #721c24;
-      }
-
-      .alert-warning {
-        background-color: #fff3cd;
-        color: #856404;
-      }
-
-      .alert-info {
-        background-color: #d1ecf1;
-        color: #0c5460;
-      }
-
-      /* ============================================
-         CARDS
-      ============================================ */
-      .card {
-        border: none;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s;
-      }
-
-      .card:hover {
-        transform: translateY(-5px);
-      }
-
-      /* ============================================
-         BUTTONS
-      ============================================ */
-      .btn-secondary-custom {
-        background-color: var(--secondary-color) !important;
-        color: var(--primary-color) !important;
-        border: none;
-        transition: all 0.3s ease;
-      }
-
-      .btn-secondary-custom:hover {
-        background-color: #9ac048 !important;
-        transform: translateY(-2px);
-      }
-
-      .btn-accent-custom {
-        background-color: var(--accent-color) !important;
-        color: white !important;
-        border: none;
-        transition: all 0.3s ease;
-      }
-
-      .btn-accent-custom:hover {
-        background-color: #e0830a !important;
-        transform: translateY(-2px);
-      }
-
-      /* ============================================
-         STATUS BADGES
-      ============================================ */
-      .status-pending {
-        background-color: #ffc107;
-        color: #000;
-      }
-      .status-submitted {
-        background-color: #17a2b8;
-        color: #fff;
-      }
-      .status-approved {
-        background-color: #28a745;
-        color: #fff;
-      }
-      .status-preparing {
-        background-color: #fd7e14;
-        color: #fff;
-      }
-      .status-ready {
-        background-color: #6f42c1;
-        color: #fff;
-      }
-      .status-out_for_delivery {
-        background-color: #007bff;
-        color: #fff;
-      }
-      .status-delivered {
-        background-color: #28a745;
-        color: #fff;
-      }
-      .status-cancelled {
-        background-color: #dc3545;
-        color: #fff;
+        border-radius: 12px;
       }
 
       /* ============================================
@@ -408,333 +448,162 @@
       footer {
         background-color: var(--primary-color);
         color: white;
+        margin-top: 4rem;
       }
 
       footer a {
         color: white;
         text-decoration: none;
-        transition: color 0.3s ease;
+        transition: 0.2s;
       }
 
       footer a:hover {
-        color: var(--secondary-color);
+        color: var(--accent-color);
       }
 
-      /* ============================================
-         SOCIAL ICONS
-      ============================================ */
       .social-icons a {
-        color: white;
-        margin: 0 10px;
-        font-size: 1.5rem;
-        transition: color 0.3s;
         display: inline-block;
+        margin-right: 1rem;
+        font-size: 1.3rem;
       }
 
-      .social-icons a:hover {
-        color: var(--secondary-color);
-        transform: translateY(-3px);
-      }
-
-      /* ============================================
-         RESPONSIVE DESIGN
-      ============================================ */
-      @media (max-width: 991px) {
-        /* Hide scroll-logo on mobile */
-        .scroll-logo {
-          display: none !important;
-        }
-
-        .navbar {
-          position: relative;
-          background-color: white;
-          padding: 0.5rem 0;
-        }
-
-        .navbar.scrolled {
-          background: transparent;
-          backdrop-filter: blur(100px);
-          padding: 0.5rem 0;
-          height: auto;
-        }
-
-        /* Center the container and button */
-        .navbar .container-custom {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 100%;
-          position: relative;
-        }
-
-        /* Center the hamburger button */
-        .navbar-toggler {
-          margin: 0 auto;
-          position: relative;
-          z-index: 1001;
-        }
-
-        /* Keep hamburger centered when scrolled */
-        .navbar.scrolled .navbar-toggler {
-          position: relative;
-          top: auto;
-          left: auto;
-          transform: none;
-          background-color: var(--primary-color);
-          padding: 10px 16px;
-          border-radius: 5px;
-          margin: 0 auto;
-        }
-
-        /* Menu dropdown */
-        .navbar-collapse {
-          position: absolute;
-          top: 100%;
-          left: 50%;
-          transform: translateX(-50%);
-
-          width: auto; /* key fix */
-          min-width: 250px; /* control minimum */
-          max-width: 90vw; /* prevent overflow */
-
-          background-color: white;
-          padding: 15px 25px;
-          border-radius: 12px;
-          z-index: 1000;
-
-          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-        }
-
-        .navbar.scrolled .navbar-collapse {
-          background-color: var(--primary-color);
-        }
-
-        .nav-link {
-          color: var(--primary-color) !important;
-          padding: 0.75rem 0 !important;
-          text-align: center;
-        }
-
-        .navbar.scrolled .nav-link {
-          color: white !important;
-        }
-
-        /* Center nav items */
-        .navbar-nav {
-          text-align: center;
-        }
-
-        /* Adjust dropdown menu for mobile */
-        .dropdown-menu {
-          position: relative;
-          width: 100%;
-          margin-top: 0;
-          background-color: transparent;
-          box-shadow: none;
-          padding-left: 1rem;
-        }
-
-        .navbar.scrolled .dropdown-menu {
-          background-color: transparent;
-        }
-
-        .dropdown-item {
-          color: var(--primary-color);
-          text-align: center;
-        }
-
-        .navbar.scrolled .dropdown-item {
-          color: white;
-        }
-
-        .navbar.scrolled .dropdown-item:hover {
-          background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        /* Hide top logo when scrolled */
-        .top-logo.hide {
-          display: none;
-        }
+      .container-custom {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
       }
 
       @media (max-width: 768px) {
-        .main-logo {
-          height: 60px;
+        .container-custom {
+          padding: 0 1rem;
         }
-
-        h1 {
-          font-size: 1.8rem;
-        }
-
-        /* Adjust hamburger for smaller screens */
-        .navbar-toggler {
-          padding: 8px 14px;
-        }
-
-        .navbar.scrolled .navbar-toggler {
-          padding: 8px 14px;
-        }
-      }
-
-      /* Body padding when scrolled to prevent content jump */
-      body.scrolled {
-        padding-top: 70px;
       }
     </style>
-
     {% block extra_css %}{% endblock %}
   </head>
   <body>
-    <!-- Top Logo (Centered Initially) -->
-    <div class="top-logo text-center py-3">
-      <a href="{% url 'web:home' %}">
-        <img
-          src="/static/images/logo.png"
-          alt="Deem Restaurant"
-          class="main-logo"
-        />
-      </a>
-    </div>
 
-    <!-- Navigation -->
+    <!-- STICKY NAVBAR WITH X ICON TOGGLE -->
     <nav class="navbar navbar-expand-lg">
-      <div class="container-custom">
-        <!-- Mobile Toggle Button - Centered -->
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-        >
-          <span class="navbar-toggler-icon"></span>
+      <div class="container">
+        <!-- Logo on the left -->
+        <a class="navbar-brand" href="{% url 'web:home' %}">
+          <img src="/static/images/logo.png" alt="Deem Restaurant" />
+        </a>
+
+        <!-- Mobile toggle button with X icon -->
+        <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-label="Toggle navigation">
+          <span class="custom-toggler-icon">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-times"></i>
+          </span>
         </button>
 
-        <!-- Navigation Items -->
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <!-- Navigation links -->
+        <div class="collapse navbar-collapse" id="mainNavbar">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-              <a
-                class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
-                href="{% url 'web:home' %}"
-              >
+              <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'web:home' %}">
                 <i class="fas fa-home"></i> Home
               </a>
             </li>
             <li class="nav-item">
-              <a
-                class="nav-link {% if request.resolver_match.url_name == 'menu_list' %}active{% endif %}"
-                href="{% url 'web:menu_list' %}"
-              >
+              <a class="nav-link {% if request.resolver_match.url_name == 'menu_list' %}active{% endif %}" href="{% url 'web:menu_list' %}">
                 <i class="fas fa-utensils"></i> Menu
               </a>
             </li>
             <li class="nav-item">
-              <a
-                class="nav-link {% if request.resolver_match.url_name == 'gallery' %}active{% endif %}"
-                href="{% url 'web:gallery' %}"
-              >
+              <a class="nav-link {% if request.resolver_match.url_name == 'gallery' %}active{% endif %}" href="{% url 'web:gallery' %}">
                 <i class="fas fa-images"></i> Gallery
               </a>
             </li>
             <li class="nav-item">
-              <a
-                class="nav-link {% if request.resolver_match.url_name == 'booking' %}active{% endif %}"
-                href="{% url 'web:booking' %}"
-              >
+              <a class="nav-link {% if request.resolver_match.url_name == 'booking' %}active{% endif %}" href="{% url 'web:booking' %}">
                 <i class="fas fa-calendar-alt"></i> Booking
               </a>
             </li>
             <li class="nav-item">
-              <a
-                class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}"
-                href="{% url 'web:about' %}"
-              >
+              <a class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}" href="{% url 'web:about' %}">
                 <i class="fas fa-info-circle"></i> About
               </a>
             </li>
             <li class="nav-item">
-              <a
-                class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}"
-                href="{% url 'web:contact' %}"
-              >
+              <a class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}" href="{% url 'web:contact' %}">
                 <i class="fas fa-envelope"></i> Contact
               </a>
             </li>
 
             {% if user.is_authenticated %}
-    <!-- Cart Icon - Only visible when logged in -->
-    <li class="nav-item">
-        <a class="nav-link position-relative" href="{% url 'web:view_cart' %}">
-            <i class="fas fa-shopping-cart"></i>
-            {% if cart_items_count > 0 %}
-                <span class="cart-count">{{ cart_items_count }}</span>
-            {% endif %}
-        </a>
-    </li>
+              <!-- Cart -->
+              <li class="nav-item cart-wrapper">
+                <a class="nav-link" href="{% url 'web:view_cart' %}">
+                  <i class="fas fa-shopping-cart"></i> Cart
+                  {% if cart_items_count > 0 %}
+                  <span class="cart-count">{{ cart_items_count }}</span>
+                  {% endif %}
+                </a>
+              </li>
 
-    <!-- User Dropdown -->
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
-            <i class="fas fa-user-circle"></i> {{ user.username }}
-        </a>
-        <ul class="dropdown-menu dropdown-menu-end">
-            <li>
-                <a class="dropdown-item" href="{% url 'web:profile' %}">
-                    <i class="fas fa-id-card"></i> My Profile
+              <!-- User Dropdown -->
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                  <i class="fas fa-user-circle"></i> {{ user.username }}
                 </a>
-            </li>
-            <li>
-                <a class="dropdown-item" href="{% url 'web:favorites' %}">
-                    <i class="fas fa-heart text-danger"></i> My Favorites
-                </a>
-            </li>
-            <li>
-                <a class="dropdown-item" href="{% url 'web:my_orders' %}">
-                    <i class="fas fa-shopping-bag"></i> My Orders
-                </a>
-            </li>
-            {% if user.is_staff or user.is_superuser %}
-                <li><hr class="dropdown-divider"></li>
-                <li>
-                    <a class="dropdown-item" href="{% url 'portal:dashboard' %}">
-                        <i class="fas fa-tachometer-alt"></i> Manager Portal
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                  <li>
+                    <a class="dropdown-item" href="{% url 'web:profile' %}">
+                      <i class="fas fa-id-card"></i> My Profile
                     </a>
-                </li>
-            {% endif %}
-            <li><hr class="dropdown-divider"></li>
-            <li>
-                <a class="dropdown-item" href="{% url 'web:logout' %}">
-                    <i class="fas fa-sign-out-alt"></i> Logout
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="{% url 'web:favorites' %}">
+                      <i class="fas fa-heart text-danger"></i> My Favorites
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="{% url 'web:my_orders' %}">
+                      <i class="fas fa-shopping-bag"></i> My Orders
+                    </a>
+                  </li>
+                  {% if user.is_staff or user.is_superuser %}
+                  <li><hr class="dropdown-divider" /></li>
+                  <li>
+                    <a class="dropdown-item" href="{% url 'portal:dashboard' %}">
+                      <i class="fas fa-tachometer-alt"></i> Manager Portal
+                    </a>
+                  </li>
+                  {% endif %}
+                  <li><hr class="dropdown-divider" /></li>
+                  <li>
+                    <a class="dropdown-item" href="{% url 'web:logout' %}">
+                      <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'web:login' %}">
+                  <i class="fas fa-sign-in-alt"></i> Login
                 </a>
-            </li>
-        </ul>
-    </li>
-{% else %}
-    <!-- Login and Register Links for Guests -->
-    <li class="nav-item">
-        <a class="nav-link" href="{% url 'web:login' %}">
-            <i class="fas fa-sign-in-alt"></i> Login
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{% url 'web:register' %}">
-            <i class="fas fa-user-plus"></i> Register
-        </a>
-    </li>
-{% endif %}
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'web:register' %}">
+                  <i class="fas fa-user-plus"></i> Register
+                </a>
+              </li>
+            {% endif %}
           </ul>
         </div>
       </div>
     </nav>
 
     <!-- Breadcrumb -->
-    <div class="container-custom">
+    <div class="container-custom mt-2">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
           {% block breadcrumb %}
-          <li class="breadcrumb-item">
-            <a href="{% url 'web:home' %}">Home</a>
-          </li>
+          <li class="breadcrumb-item"><a href="{% url 'web:home' %}">Home</a></li>
           {% endblock %}
         </ol>
       </nav>
@@ -742,21 +611,12 @@
 
     <!-- Alert Messages -->
     {% if messages %}
-    <div class="container-custom mt-3">
+    <div class="container-custom mt-2">
       {% for message in messages %}
-      <div
-        class="alert alert-{{ message.tags }} alert-dismissible fade show"
-        role="alert"
-      >
-        <i
-          class="fas fa-{% if message.tags == 'success' %}check-circle{% elif message.tags == 'error' %}exclamation-circle{% elif message.tags == 'warning' %}exclamation-triangle{% else %}info-circle{% endif %} me-2"
-        ></i>
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        <i class="fas fa-{% if message.tags == 'success' %}check-circle{% elif message.tags == 'error' %}exclamation-circle{% elif message.tags == 'warning' %}exclamation-triangle{% else %}info-circle{% endif %} me-2"></i>
         {{ message }}
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="alert"
-        ></button>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
       </div>
       {% endfor %}
     </div>
@@ -766,15 +626,12 @@
     <main>{% block content %}{% endblock %}</main>
 
     <!-- Footer -->
-    <footer class="mt-5 py-4">
+    <footer class="py-4">
       <div class="container-custom">
         <div class="row">
           <div class="col-md-4 mb-4 mb-md-0">
-            <h5 class="mb-3">Deem Restaurant</h5>
-            <p>
-              Delicious food delivered to your doorstep with love and care.
-              Experience the finest dining with our carefully crafted meals.
-            </p>
+            <h5 class="mb-3">DEEM Restaurant</h5>
+            <p>Delicious food delivered to your doorstep with love and care. Experience the finest dining with our carefully crafted meals.</p>
             <div class="social-icons mt-3">
               <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
               <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
@@ -786,66 +643,33 @@
           <div class="col-md-4 mb-4 mb-md-0">
             <h5 class="mb-3">Quick Links</h5>
             <ul class="list-unstyled">
-              <li class="mb-2">
-                <a href="{% url 'web:about' %}">
-                  <i class="fas fa-chevron-right me-2"></i> About Us
-                </a>
-              </li>
-              <li class="mb-2">
-                <a href="{% url 'web:contact' %}">
-                  <i class="fas fa-chevron-right me-2"></i> Contact
-                </a>
-              </li>
-              <li class="mb-2">
-                <a href="{% url 'web:booking' %}">
-                  <i class="fas fa-chevron-right me-2"></i> Event Booking
-                </a>
-              </li>
-              <li class="mb-2">
-                <a href="{% url 'web:menu_list' %}">
-                  <i class="fas fa-chevron-right me-2"></i> Our Menu
-                </a>
-              </li>
-              <li class="mb-2">
-                <a href="{% url 'portal:login' %}">
-                  <i class="fas fa-chevron-right me-2"></i> Manager Portal
-                </a>
-              </li>
+              <li class="mb-2"><a href="{% url 'web:about' %}"><i class="fas fa-chevron-right me-2"></i> About Us</a></li>
+              <li class="mb-2"><a href="{% url 'web:contact' %}"><i class="fas fa-chevron-right me-2"></i> Contact</a></li>
+              <li class="mb-2"><a href="{% url 'web:booking' %}"><i class="fas fa-chevron-right me-2"></i> Event Booking</a></li>
+              <li class="mb-2"><a href="{% url 'web:menu_list' %}"><i class="fas fa-chevron-right me-2"></i> Our Menu</a></li>
+              <li class="mb-2"><a href="{% url 'portal:login' %}"><i class="fas fa-chevron-right me-2"></i> Manager Portal</a></li>
             </ul>
           </div>
 
           <div class="col-md-4">
             <h5 class="mb-3">Contact Info</h5>
             <ul class="list-unstyled">
-              <li class="mb-2">
-                <i class="fas fa-map-marker-alt me-2"></i> Bima, Kihonda
-                Maghorofani, Morogoro
-              </li>
-              <li class="mb-2">
-                <i class="fas fa-phone me-2"></i> +255 755 405 492
-              </li>
-              <li class="mb-2">
-                <i class="fas fa-envelope me-2"></i> info@deemrestaurant.com
-              </li>
-              <li class="mb-2">
-                <i class="fas fa-clock me-2"></i> Monday-Saturday: 10:00 AM -
-                10:00 PM
-              </li>
+              <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Bima, Kihonda Maghorofani, Morogoro</li>
+              <li class="mb-2"><i class="fas fa-phone me-2"></i> +255 755 405 492</li>
+              <li class="mb-2"><i class="fas fa-envelope me-2"></i> info@deemrestaurant.com</li>
+              <li class="mb-2"><i class="fas fa-clock me-2"></i> Monday-Saturday: 10:00 AM - 10:00 PM</li>
             </ul>
           </div>
         </div>
 
         <hr class="bg-light mt-4" />
-
         <div class="text-center">
-          <p class="mb-0">
-            &copy; {% now "Y" %} DEEM Restaurant. All rights reserved.
-          </p>
+          <p class="mb-0">&copy; {% now "Y" %} DEEM Restaurant. All rights reserved.</p>
         </div>
       </div>
     </footer>
 
-    <!-- JavaScript Libraries -->
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -856,7 +680,7 @@
           $(".alert").fadeOut("slow");
         }, 5000);
 
-        // Add active class to current page link
+        // Active link highlight
         const currentUrl = window.location.pathname;
         $(".nav-link").each(function () {
           const linkUrl = $(this).attr("href");
@@ -866,24 +690,58 @@
             $(this).addClass("active");
           }
         });
-      });
 
-      // Scroll event handler for navbar transformation
-      $(window).on("scroll", function () {
-        if ($(window).scrollTop() > 80) {
-          $(".navbar").addClass("scrolled");
-          $(".top-logo").addClass("hide");
-          $("body").addClass("scrolled");
-        } else {
-          $(".navbar").removeClass("scrolled");
-          $(".top-logo").removeClass("hide");
-          $("body").removeClass("scrolled");
+        // Fix for desktop dropdown hover - ensure it stays open
+        if (window.innerWidth >= 992) {
+          $('.dropdown').on('mouseenter', function() {
+            $(this).addClass('show');
+            $(this).find('.dropdown-menu').addClass('show');
+          }).on('mouseleave', function() {
+            $(this).removeClass('show');
+            $(this).find('.dropdown-menu').removeClass('show');
+          });
+        }
+
+        // Handle toggler icon switching (bars <-> X)
+        const toggler = document.querySelector('.navbar-toggler');
+        const collapseElement = document.getElementById('mainNavbar');
+        
+        if (toggler && collapseElement) {
+          // Listen for collapse events to update the icon state
+          collapseElement.addEventListener('show.bs.collapse', function () {
+            toggler.classList.remove('collapsed');
+          });
+          
+          collapseElement.addEventListener('hide.bs.collapse', function () {
+            toggler.classList.add('collapsed');
+          });
+          
+          // Initial state check
+          if (!collapseElement.classList.contains('show')) {
+            toggler.classList.add('collapsed');
+          } else {
+            toggler.classList.remove('collapsed');
+          }
         }
       });
+    </script>
+    
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="btn btn-accent-custom" style="position: fixed; bottom: 30px; right: 30px; display: none; border-radius: 50%; width: 45px; height: 45px; background-color: var(--accent-color); color: white; border: none; box-shadow: var(--shadow);">
+      <i class="fas fa-arrow-up"></i>
+    </button>
 
-      // Hamburger menu toggle animation
-      $(".navbar-toggler").click(function () {
-        $(this).toggleClass("open");
+    <script>
+      $(window).scroll(function() {
+        if ($(this).scrollTop() > 300) {
+          $('#backToTop').fadeIn();
+        } else {
+          $('#backToTop').fadeOut();
+        }
+      });
+      
+      $('#backToTop').click(function() {
+        $('html, body').animate({scrollTop: 0}, 300);
       });
     </script>
 
