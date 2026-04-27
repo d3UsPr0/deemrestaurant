@@ -8,12 +8,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-your-secret-key-here'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 #Maintance mode
-MAINTENANCE_MODE = False
+MAINTENANCE_MODE = True
 
-ALLOWED_HOSTS = ['deemrestaurant.co.tz','www.deemrestaurant.co.tz']
+ALLOWED_HOSTS = [
+    'deemrestaurant.co.tz',
+    'www.deemrestaurant.co.tz',
+    '127.0.0.1',
+    'localhost',
+    '10.100.15.103',
+]
 
 # Application definition
 INSTALLED_APPS = [
