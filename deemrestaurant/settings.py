@@ -16,9 +16,7 @@ MAINTENANCE_MODE = True
 ALLOWED_HOSTS = [
     'deemrestaurant.co.tz',
     'www.deemrestaurant.co.tz',
-    '127.0.0.1',
     'localhost',
-    '10.100.15.103',
 ]
 
 # Application definition
