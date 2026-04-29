@@ -1,10 +1,12 @@
-import os
 import sys
+import os
 
-# Add your project path
-sys.path.insert(0, os.path.dirname(__file__))
+# Get the project directory path
+project_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, project_dir)
 
-os.environ['DJANGO_SETTINGS_MODULE'] = 'deemrestaurant.settings'
+# Set settings module
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'deemrestaurant.settings')
 
 from django.core.wsgi import get_wsgi_application
 application = get_wsgi_application()

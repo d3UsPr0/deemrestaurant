@@ -1,4 +1,4 @@
 PassengerEnabled on
 PassengerAppType wsgi
 PassengerStartupFile passenger_wsgi.py
-SetEnv DJANGO_SETTINGS_MODULE deemrestaurant.settings
+PassengerPython /home/deemrest/virtualenv/deemrestaurant/3.10/bin/python
