@@ -11,7 +11,7 @@ SECRET_KEY = 'django-insecure-your-secret-key-here'
 DEBUG = False
 
 #Maintance mode
-MAINTENANCE_MODE = False
+MAINTENANCE_MODE = True
 
 ALLOWED_HOSTS = ['*']
 
