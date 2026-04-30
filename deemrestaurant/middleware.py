@@ -19,7 +19,7 @@ class MaintenanceMiddleware:
             path = request.path_info.lstrip('/')
 
             # ✅ Allow admin, static, media
-            if any(re.match(url, path) for url in EXEMPT_URLS):
+            if any(re.match(url, request.path_info.lstrip('/')) for url in EXEMPT_URLS):
                 return self.get_response(request)
 
             # ✅ Allow YOU (local machine)
@@ -27,11 +27,11 @@ class MaintenanceMiddleware:
                 return self.get_response(request)
 
             # ✅ Allow logged-in staff (optional)
-            user = getattr(request, "user", None)
-            if user and user.is_authenticated and user.is_staff:
+            user = getattr(request, "user", None)          
+            if user and user.is_authenticated and (user.is_staff or user.is_superuser):
                 return self.get_response(request)
 
             # ❌ Everyone else sees maintenance
-            return render(request, 'maintenance.html')
+            return render(request, 'maintenance.html', status=503)
 
         return self.get_response(request)
