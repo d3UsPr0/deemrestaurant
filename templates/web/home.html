@@ -22,7 +22,6 @@
     .hero-section {
         position: relative;
         height: 75vh;
-        background: url("/static/images/hero.jpg") center/cover no-repeat;
         border-radius: 12px;
         overflow: hidden;
         animation: fadeIn 1s ease;
@@ -257,7 +256,8 @@
 {% block content %}
 <div class="container-custom">
     <!-- Hero Section -->
-    <div class="hero-section d-flex align-items-center justify-content-center text-center">
+    <div class="hero-section d-flex align-items-center justify-content-center text-center"
+     style="background: url('{% static "images/hero.jpg" %}') center/cover no-repeat;">
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <h1 class="display-4 text-white">Welcome to DEEM Restaurant</h1>
