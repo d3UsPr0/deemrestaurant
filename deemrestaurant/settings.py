@@ -11,9 +11,9 @@ SECRET_KEY = 'django-insecure-your-secret-key-here'
 DEBUG = False
 
 #Maintance mode
-MAINTENANCE_MODE = False
+MAINTENANCE_MODE = True
 
-ALLOWED_HOSTS = ['deemrestaurant.com', 'www.deemrestaurant.com', 'localhost']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 INSTALLED_APPS = [
