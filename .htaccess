@@ -1,11 +1,5 @@
 RewriteEngine On
 
-# Serve static files
-RewriteRule ^static/(.*)$ /home/deemrest/public_html/deemrestaurant/staticfiles/$1 [L]
-
-# Serve media files (optional but good)
-RewriteRule ^media/(.*)$ /home/deemrest/public_html/deemrestaurant/media/$1 [L]
-
 PassengerEnabled on
 PassengerAppType wsgi
 PassengerStartupFile passenger_wsgi.py
