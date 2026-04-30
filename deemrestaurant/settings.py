@@ -13,7 +13,7 @@ DEBUG = False
 #Maintance mode
 MAINTENANCE_MODE = False
 
-ALLOWED_HOSTS = ['deemrestaurant.com', 'www.deemrestaurant.com',]
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 INSTALLED_APPS = [
