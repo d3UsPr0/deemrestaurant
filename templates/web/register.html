@@ -11,171 +11,392 @@
 
 {% block extra_css %}
 <style>
+    /* ============================================
+       REGISTER PAGE - MULTI-COLUMN LAYOUT
+    ============================================ */
+    
     .register-container {
-        min-height: 70vh;
+        min-height: auto;
         display: flex;
         align-items: center;
+        justify-content: center;
+        padding: 1.5rem 0 2.5rem 0;
     }
     
     .register-card {
         border: none;
-        border-radius: 15px;
+        border-radius: 24px;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        background: #ffffff;
     }
     
+    .register-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    }
+    
+    /* Header Section */
     .register-header {
         background: linear-gradient(135deg, var(--primary-color), #7a2e1a);
         color: white;
-        padding: 1.5rem;
+        padding: 1.8rem 1.5rem;
         text-align: center;
     }
     
     .register-header i {
-        font-size: 2.5rem;
-        margin-bottom: 0.5rem;
+        font-size: 2.8rem;
+        margin-bottom: 0.75rem;
+        opacity: 0.95;
     }
     
     .register-header h3 {
+        font-size: 1.4rem;
+        font-weight: 700;
         margin: 0;
-        font-weight: 600;
+        letter-spacing: -0.5px;
     }
     
+    .register-header p {
+        font-size: 0.85rem;
+        opacity: 0.85;
+        margin-top: 0.5rem;
+        margin-bottom: 0;
+    }
+    
+    /* Body Section */
     .register-body {
-        padding: 2rem;
+        padding: 2rem 1.5rem;
     }
     
-    .btn-register {
-        background-color: var(--secondary-color);
-        color: var(--primary-color);
+    /* Form Labels */
+    .register-body label {
+        font-size: 0.75rem;
         font-weight: 600;
-        padding: 0.75rem;
+        color: var(--primary-color);
+        margin-bottom: 0.3rem;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    
+    .register-body label i {
+        font-size: 0.75rem;
+        color: var(--accent-color);
+    }
+    
+    /* Form Inputs */
+    .register-body .form-control {
+        font-size: 0.85rem;
+        padding: 8px 12px;
         border-radius: 8px;
+        border: 1px solid #e0e0e0;
+        transition: all 0.2s ease;
+        background: #fefefe;
+        width: 100%;
+    }
+    
+    .register-body .form-control:focus {
+        outline: none;
+        border-color: var(--secondary-color);
+        box-shadow: 0 0 0 3px rgba(0, 182, 82, 0.1);
+        background: white;
+    }
+    
+    /* Form Group Spacing - REDUCED */
+    .register-body .form-group {
+        margin-bottom: 0.75rem;
+    }
+    
+    /* Multi-Column Grid - TIGHTER SPACING */
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+        margin-bottom: 0;
+    }
+    
+    .form-grid-full {
+        grid-column: span 2;
+    }
+    
+    /* Register Button */
+    .btn-register {
+        background: var(--secondary-color);
+        color: white;
+        font-weight: 600;
+        font-size: 0.85rem;
+        padding: 10px 20px;
+        border-radius: 30px;
+        border: none;
         transition: all 0.3s ease;
+        width: 100%;
+        margin-top: 0.5rem;
     }
     
     .btn-register:hover {
-        background-color: #28a745;
+        background: #009948;
         transform: translateY(-2px);
-        color: white;
+        box-shadow: 0 4px 12px rgba(0, 182, 82, 0.3);
     }
     
-    .form-control:focus {
-        border-color: var(--secondary-color);
-        box-shadow: 0 0 0 0.2rem rgba(0, 182, 82, 0.25);
+    .btn-register:active {
+        transform: translateY(0);
     }
     
-    .password-requirements {
+    .btn-register i {
+        margin-right: 6px;
+        font-size: 0.85rem;
+    }
+    
+    /* Alert Message */
+    .alert {
         font-size: 0.8rem;
+        padding: 10px 12px;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        border: none;
+    }
+    
+    .alert-danger {
+        background: #fee2e2;
+        color: #dc2626;
+    }
+    
+    .alert-danger i {
+        color: #dc2626;
+    }
+    
+    /* Password Requirements */
+    .password-requirements {
+        font-size: 0.7rem;
         color: #6c757d;
         margin-top: 0.25rem;
+    }
+    
+    /* Error Messages */
+    .text-danger {
+        font-size: 0.7rem;
+        margin-top: 0.25rem;
+    }
+    
+    /* Footer */
+    .register-footer {
+        padding: 1rem 1.5rem;
+        text-align: center;
+        border-top: 1px solid #f0f0f0;
+        background: #fbfbfb;
+    }
+    
+    .register-footer p {
+        font-size: 0.8rem;
+        margin: 0;
+        color: #666;
+    }
+    
+    .register-footer a {
+        color: var(--secondary-color);
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        margin-left: 4px;
+    }
+    
+    .register-footer a:hover {
+        color: var(--accent-color);
+        text-decoration: underline;
+    }
+    
+    /* Breadcrumb Spacing Fix */
+    .breadcrumb {
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .register-container {
+            padding: 1rem 0 1.5rem 0;
+        }
+        
+        .register-header {
+            padding: 1.5rem 1.25rem;
+        }
+        
+        .register-header i {
+            font-size: 2.5rem;
+        }
+        
+        .register-header h3 {
+            font-size: 1.3rem;
+        }
+        
+        .register-header p {
+            font-size: 0.8rem;
+        }
+        
+        .register-body {
+            padding: 1.25rem;
+        }
+        
+        .btn-register {
+            padding: 9px 18px;
+        }
+        
+        .register-footer {
+            padding: 0.875rem 1.25rem;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .form-grid {
+            grid-template-columns: 1fr;
+            gap: 0.5rem;
+        }
+        
+        .form-grid-full {
+            grid-column: span 1;
+        }
+        
+        .register-body {
+            padding: 1rem;
+        }
+        
+        .register-body .form-control {
+            font-size: 0.8rem;
+            padding: 7px 10px;
+        }
+        
+        .register-body .form-group {
+            margin-bottom: 0.6rem;
+        }
+        
+        .register-footer p {
+            font-size: 0.75rem;
+        }
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="container-custom register-container">
-    <div class="row justify-content-center w-100">
-        <div class="col-md-6 col-lg-5">
+<div class="container register-container">
+    <div class="row justify-content-center w-100 m-0">
+        <div class="col-sm-10 col-md-9 col-lg-8 col-xl-7">
             <div class="register-card">
+                <!-- Header -->
                 <div class="register-header">
                     <i class="fas fa-user-plus"></i>
                     <h3>Create an Account</h3>
-                    <p class="mb-0 mt-2">Join Deem Restaurant today</p>
+                    <p>Join Deem Restaurant today</p>
                 </div>
                 
+                <!-- Body -->
                 <div class="register-body">
                     <form method="post">
                         {% csrf_token %}
                         
                         {% if form.errors %}
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <i class="fas fa-exclamation-circle"></i>
+                                <i class="fas fa-exclamation-circle me-2"></i>
                                 Please correct the errors below.
                                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                             </div>
                         {% endif %}
                         
-                        <div class="mb-3">
-                            <label for="id_username" class="form-label">
-                                <i class="fas fa-user"></i> Username
-                            </label>
-                            {{ form.username }}
-                            {% if form.username.errors %}
-                                <div class="text-danger small">{{ form.username.errors }}</div>
-                            {% endif %}
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="id_first_name" class="form-label">
+                        <!-- Multi-Column Grid Layout - TIGHT SPACING -->
+                        <div class="form-grid">
+                            <!-- Username -->
+                            <div class="form-group">
+                                <label for="id_username">
+                                    <i class="fas fa-user"></i> Username
+                                </label>
+                                {{ form.username }}
+                                {% if form.username.errors %}
+                                    <div class="text-danger">{{ form.username.errors }}</div>
+                                {% endif %}
+                            </div>
+                            
+                            <!-- Email -->
+                            <div class="form-group">
+                                <label for="id_email">
+                                    <i class="fas fa-envelope"></i> Email
+                                </label>
+                                {{ form.email }}
+                                {% if form.email.errors %}
+                                    <div class="text-danger">{{ form.email.errors }}</div>
+                                {% endif %}
+                            </div>
+                            
+                            <!-- First Name -->
+                            <div class="form-group">
+                                <label for="id_first_name">
                                     <i class="fas fa-user"></i> First Name
                                 </label>
                                 {{ form.first_name }}
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="id_last_name" class="form-label">
+                            
+                            <!-- Last Name -->
+                            <div class="form-group">
+                                <label for="id_last_name">
                                     <i class="fas fa-user"></i> Last Name
                                 </label>
                                 {{ form.last_name }}
                             </div>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="id_email" class="form-label">
-                                <i class="fas fa-envelope"></i> Email
-                            </label>
-                            {{ form.email }}
-                            {% if form.email.errors %}
-                                <div class="text-danger small">{{ form.email.errors }}</div>
-                            {% endif %}
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="id_phone" class="form-label">
-                                <i class="fas fa-phone"></i> Phone Number
-                            </label>
-                            {{ form.phone }}
-                            {% if form.phone.errors %}
-                                <div class="text-danger small">{{ form.phone.errors }}</div>
-                            {% endif %}
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="id_password1" class="form-label">
-                                <i class="fas fa-lock"></i> Password
-                            </label>
-                            {{ form.password1 }}
-                            <div class="password-requirements">
-                                <small>Password must be at least 8 characters long.</small>
+                            
+                            <!-- Phone Number -->
+                            <div class="form-group">
+                                <label for="id_phone">
+                                    <i class="fas fa-phone"></i> Phone Number
+                                </label>
+                                {{ form.phone }}
+                                {% if form.phone.errors %}
+                                    <div class="text-danger">{{ form.phone.errors }}</div>
+                                {% endif %}
                             </div>
-                            {% if form.password1.errors %}
-                                <div class="text-danger small">{{ form.password1.errors }}</div>
-                            {% endif %}
+                            
+                            <!-- Empty div for grid balance -->
+                            <div class="form-group">
+                                <!-- Placeholder for visual balance -->
+                            </div>
+                            
+                            <!-- Password - Full Width -->
+                            <div class="form-group form-grid-full">
+                                <label for="id_password1">
+                                    <i class="fas fa-lock"></i> Password
+                                </label>
+                                {{ form.password1 }}
+                                <div class="password-requirements">
+                                    <i class="fas fa-info-circle"></i> Password must be at least 8 characters
+                                </div>
+                                {% if form.password1.errors %}
+                                    <div class="text-danger">{{ form.password1.errors }}</div>
+                                {% endif %}
+                            </div>
+                            
+                            <!-- Confirm Password - Full Width -->
+                            <div class="form-group form-grid-full">
+                                <label for="id_password2">
+                                    <i class="fas fa-lock"></i> Confirm Password
+                                </label>
+                                {{ form.password2 }}
+                                {% if form.password2.errors %}
+                                    <div class="text-danger">{{ form.password2.errors }}</div>
+                                {% endif %}
+                            </div>
                         </div>
                         
-                        <div class="mb-3">
-                            <label for="id_password2" class="form-label">
-                                <i class="fas fa-lock"></i> Confirm Password
-                            </label>
-                            {{ form.password2 }}
-                            {% if form.password2.errors %}
-                                <div class="text-danger small">{{ form.password2.errors }}</div>
-                            {% endif %}
-                        </div>
-                        
-                        <button type="submit" class="btn btn-register w-100">
+                        <button type="submit" class="btn-register">
                             <i class="fas fa-user-plus"></i> Register
                         </button>
                     </form>
                 </div>
                 
-                <div class="text-center py-3 border-top">
-                    <p class="mb-0">
+                <!-- Footer -->
+                <div class="register-footer">
+                    <p>
                         Already have an account? 
-                        <a href="{% url 'web:login' %}" class="text-decoration-none">
-                            Login here
-                        </a>
+                        <a href="{% url 'web:login' %}">Login here</a>
                     </p>
                 </div>
             </div>

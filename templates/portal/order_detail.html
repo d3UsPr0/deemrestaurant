@@ -4,51 +4,56 @@
 {% block title %}Order #{{ order.order_number }}{% endblock %}
 
 {% block content %}
-<div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3">Order #{{ order.order_number }}</h1>
-        <a href="{% url 'portal:order_list' %}" class="btn btn-secondary">
-            <i class="fas fa-arrow-left"></i> Back to Orders
+<div class="container-fluid px-0">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="section-header mb-0">Order #{{ order.order_number }}</h1>
+        <a href="{% url 'portal:order_list' %}" class="btn btn-secondary btn-sm">
+            <i class="fas fa-arrow-left"></i> Back
         </a>
     </div>
     
-    <div class="row">
+    <div class="row g-3">
         <!-- Order Details -->
-        <div class="col-md-8">
-            <div class="card shadow mb-4">
-                <div class="card-header">
-                    <h5 class="mb-0">Order Details</h5>
+        <div class="col-lg-8">
+            <div class="card mb-3">
+                <div class="card-header py-2 px-3">
+                    <h6 class="card-title mb-0">Order Details</h6>
                 </div>
                 <div class="card-body">
-                    <div class="row mb-3">
+                    <div class="row g-2 mb-3">
                         <div class="col-md-6">
-                            <strong>Order Number:</strong> {{ order.order_number }}
+                            <div class="info-label">Order Number</div>
+                            <div class="info-value">{{ order.order_number }}</div>
                         </div>
                         <div class="col-md-6">
-                            <strong>Date:</strong> {{ order.created_at|date:"F d, Y H:i" }}
+                            <div class="info-label">Date</div>
+                            <div class="info-value">{{ order.created_at|date:"M d, Y H:i" }}</div>
                         </div>
                     </div>
-                    <div class="row mb-3">
+                    <div class="row g-2 mb-3">
                         <div class="col-md-6">
-                            <strong>Status:</strong>
-                            <span class="badge status-{{ order.status }} ms-2">
-                                {{ order.get_status_display }}
-                            </span>
+                            <div class="info-label">Status</div>
+                            <div>
+                                <span class="badge status-{{ order.status }}">
+                                    {{ order.get_status_display }}
+                                </span>
+                            </div>
                         </div>
                         <div class="col-md-6">
-                            <strong>Total Amount:</strong> Tsh {{ order.total_amount|floatformat:0|intcomma }}
+                            <div class="info-label">Total Amount</div>
+                            <div class="info-value">Tsh {{ order.total_amount|floatformat:0|intcomma }}</div>
                         </div>
                     </div>
                     
-                    <hr>
+                    <hr class="my-3">
                     
-                    <h6>Items Ordered</h6>
+                    <h6 class="section-subheader mb-2">Items Ordered</h6>
                     <div class="table-responsive">
-                        <table class="table table-bordered">
-                            <thead class="table-light">
+                        <table class="table mb-0">
+                            <thead>
                                 <tr>
                                     <th>Item</th>
-                                    <th>Quantity</th>
+                                    <th>Qty</th>
                                     <th>Price</th>
                                     <th>Subtotal</th>
                                 </tr>
@@ -66,36 +71,36 @@
                         </table>
                     </div>
                     
-                    <hr>
+                    <hr class="my-3">
                     
-                    <h6>Customer Information</h6>
-                    <p>
-                        <strong>Name:</strong> {{ order.full_name }}<br>
-                        <strong>Phone:</strong> {{ order.phone_number }}<br>
-                        <strong>Email:</strong> {{ order.email }}<br>
-                        <strong>Address:</strong> {{ order.address }}<br>
+                    <h6 class="section-subheader mb-2">Customer Information</h6>
+                    <div class="customer-info">
+                        <div><span class="info-label">Name:</span> {{ order.full_name }}</div>
+                        <div><span class="info-label">Phone:</span> {{ order.phone_number }}</div>
+                        <div><span class="info-label">Email:</span> {{ order.email }}</div>
+                        <div><span class="info-label">Address:</span> {{ order.address }}</div>
                         {% if order.special_instructions %}
-                            <strong>Special Instructions:</strong> {{ order.special_instructions }}
+                            <div><span class="info-label">Special Instructions:</span> {{ order.special_instructions }}</div>
                         {% endif %}
-                    </p>
+                    </div>
                 </div>
             </div>
             
             <!-- Comments -->
-            <div class="card shadow">
-                <div class="card-header">
-                    <h5 class="mb-0">Customer Comments</h5>
+            <div class="card">
+                <div class="card-header py-2 px-3">
+                    <h6 class="card-title mb-0">Customer Comments</h6>
                 </div>
                 <div class="card-body">
                     {% if order.comments.all %}
                         {% for comment in order.comments.all %}
-                        <div class="border-bottom mb-3 pb-3">
-                            <div class="d-flex justify-content-between">
-                                <strong>{{ comment.user.username }}</strong>
+                        <div class="comment-item">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <strong class="comment-author">{{ comment.user.username }}</strong>
                                 <small class="text-muted">{{ comment.created_at|date:"M d, Y H:i" }}</small>
                             </div>
                             {% if comment.rating %}
-                                <div class="mb-2">
+                                <div class="comment-rating">
                                     {% for i in "12345"|make_list %}
                                         {% if forloop.counter <= comment.rating %}
                                             <i class="fas fa-star text-warning"></i>
@@ -105,21 +110,21 @@
                                     {% endfor %}
                                 </div>
                             {% endif %}
-                            <p class="mb-0">{{ comment.comment }}</p>
+                            <p class="comment-text mb-0">{{ comment.comment }}</p>
                         </div>
                         {% endfor %}
                     {% else %}
-                        <p class="text-muted">No comments yet.</p>
+                        <p class="text-muted text-center py-2 mb-0"><small>No comments yet.</small></p>
                     {% endif %}
                 </div>
             </div>
         </div>
         
-        <!-- Update Status -->
-        <div class="col-md-4">
-            <div class="card shadow">
-                <div class="card-header">
-                    <h5 class="mb-0">Update Status</h5>
+        <!-- Update Status & Timeline -->
+        <div class="col-lg-4">
+            <div class="card mb-3">
+                <div class="card-header py-2 px-3">
+                    <h6 class="card-title mb-0">Update Status</h6>
                 </div>
                 <div class="card-body">
                     <form method="post">
@@ -128,7 +133,7 @@
                             <label for="status" class="form-label">Order Status</label>
                             {{ form.status }}
                         </div>
-                        <button type="submit" class="btn btn-primary w-100">
+                        <button type="submit" class="btn btn-primary btn-sm w-100">
                             <i class="fas fa-save"></i> Update Status
                         </button>
                     </form>
@@ -136,26 +141,26 @@
             </div>
             
             <!-- Order Timeline -->
-            <div class="card shadow mt-4">
-                <div class="card-header">
-                    <h5 class="mb-0">Order Timeline</h5>
+            <div class="card">
+                <div class="card-header py-2 px-3">
+                    <h6 class="card-title mb-0">Order Timeline</h6>
                 </div>
                 <div class="card-body">
-                    <ul class="list-unstyled">
-                        <li class="mb-3">
-                            <i class="fas fa-check-circle text-success me-2"></i>
-                            Order Placed: {{ order.created_at|date:"M d, Y H:i" }}
+                    <ul class="timeline-list">
+                        <li>
+                            <i class="fas fa-check-circle text-success"></i>
+                            <span>Order Placed: {{ order.created_at|date:"M d, H:i" }}</span>
                         </li>
                         {% if order.approved_at %}
-                        <li class="mb-3">
-                            <i class="fas fa-check-circle text-success me-2"></i>
-                            Approved: {{ order.approved_at|date:"M d, Y H:i" }}
+                        <li>
+                            <i class="fas fa-check-circle text-success"></i>
+                            <span>Approved: {{ order.approved_at|date:"M d, H:i" }}</span>
                         </li>
                         {% endif %}
                         {% if order.delivered_at %}
-                        <li class="mb-3">
-                            <i class="fas fa-check-circle text-success me-2"></i>
-                            Delivered: {{ order.delivered_at|date:"M d, Y H:i" }}
+                        <li>
+                            <i class="fas fa-check-circle text-success"></i>
+                            <span>Delivered: {{ order.delivered_at|date:"M d, H:i" }}</span>
                         </li>
                         {% endif %}
                     </ul>
@@ -164,4 +169,219 @@
         </div>
     </div>
 </div>
+
+<style>
+    /* Section Header */
+    .section-header {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--primary-color);
+    }
+    
+    .section-subheader {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--primary-color);
+    }
+    
+    /* Card */
+    .card {
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+    }
+    
+    .card-header {
+        background: #fafafa;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .card-title {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--primary-color);
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+    
+    /* Info Labels & Values */
+    .info-label {
+        font-size: 0.65rem;
+        font-weight: 600;
+        color: #888;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        margin-bottom: 0.2rem;
+    }
+    
+    .info-value {
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: #333;
+    }
+    
+    /* Customer Info */
+    .customer-info div {
+        font-size: 0.75rem;
+        margin-bottom: 0.3rem;
+    }
+    
+    .customer-info .info-label {
+        display: inline-block;
+        width: 110px;
+        font-size: 0.7rem;
+    }
+    
+    /* Table */
+    .table {
+        margin-bottom: 0;
+    }
+    
+    .table thead th {
+        font-size: 0.65rem;
+        font-weight: 600;
+        color: #888;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        padding: 0.5rem 0.5rem;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .table tbody td {
+        font-size: 0.75rem;
+        padding: 0.5rem;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    /* Badges */
+    .badge {
+        padding: 2px 8px;
+        font-size: 0.6rem;
+        font-weight: 600;
+        border-radius: 10px;
+    }
+    
+    .status-pending { background-color: #ffc107; color: #000; }
+    .status-submitted { background-color: #17a2b8; color: #fff; }
+    .status-approved { background-color: #28a745; color: #fff; }
+    .status-preparing { background-color: #fd7e14; color: #fff; }
+    .status-ready { background-color: #6f42c1; color: #fff; }
+    .status-out_for_delivery { background-color: #007bff; color: #fff; }
+    .status-delivered { background-color: #28a745; color: #fff; }
+    .status-cancelled { background-color: #dc3545; color: #fff; }
+    
+    /* Comments */
+    .comment-item {
+        border-bottom: 1px solid #f0f0f0;
+        padding-bottom: 0.75rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    .comment-item:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+        margin-bottom: 0;
+    }
+    
+    .comment-author {
+        font-size: 0.75rem;
+        color: var(--primary-color);
+    }
+    
+    .comment-rating {
+        margin: 0.25rem 0;
+    }
+    
+    .comment-rating i {
+        font-size: 0.7rem;
+    }
+    
+    .comment-text {
+        font-size: 0.75rem;
+        color: #555;
+        margin-top: 0.3rem;
+    }
+    
+    /* Timeline */
+    .timeline-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .timeline-list li {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 0.75rem;
+        font-size: 0.75rem;
+        color: #555;
+    }
+    
+    .timeline-list li:last-child {
+        margin-bottom: 0;
+    }
+    
+    .timeline-list i {
+        width: 18px;
+        font-size: 0.8rem;
+    }
+    
+    /* Form */
+    .form-label {
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: #888;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        margin-bottom: 0.25rem;
+    }
+    
+    .form-select {
+        font-size: 0.8rem;
+        padding: 0.35rem 0.6rem;
+        border-radius: 6px;
+        border: 1px solid #e0e0e0;
+    }
+    
+    /* Buttons */
+    .btn-sm {
+        padding: 0.35rem 0.8rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+        border-radius: 6px;
+    }
+    
+    .btn-primary {
+        background-color: var(--secondary-color);
+        border-color: var(--secondary-color);
+    }
+    
+    .btn-primary:hover {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .card-body {
+            padding: 0.875rem;
+        }
+        
+        .info-value {
+            font-size: 0.75rem;
+        }
+        
+        .customer-info div {
+            font-size: 0.7rem;
+        }
+        
+        .timeline-list li {
+            font-size: 0.7rem;
+        }
+    }
+</style>
 {% endblock %}

@@ -11,111 +11,271 @@
 
 {% block extra_css %}
 <style>
+    /* ============================================
+       LOGIN PAGE - MATCHING BOOKING.HTML STYLES
+    ============================================ */
+    
     .login-container {
-        min-height: 70vh;
+        min-height: auto;
         display: flex;
         align-items: center;
+        justify-content: center;
+        padding: 1.5rem 0 2.5rem 0;
     }
     
     .login-card {
         border: none;
-        border-radius: 15px;
+        border-radius: 24px;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        background: #ffffff;
     }
     
+    .login-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    }
+    
+    /* Header Section */
     .login-header {
         background: linear-gradient(135deg, var(--primary-color), #7a2e1a);
         color: white;
-        padding: 2rem;
+        padding: 2rem 1.5rem;
         text-align: center;
     }
     
     .login-header i {
         font-size: 3rem;
-        margin-bottom: 1rem;
+        margin-bottom: 0.75rem;
+        opacity: 0.95;
     }
     
     .login-header h3 {
+        font-size: 1.5rem;
+        font-weight: 700;
         margin: 0;
-        font-weight: 600;
+        letter-spacing: -0.5px;
     }
     
+    .login-header p {
+        font-size: 0.85rem;
+        opacity: 0.85;
+        margin-top: 0.5rem;
+        margin-bottom: 0;
+    }
+    
+    /* Body Section */
     .login-body {
-        padding: 2rem;
+        padding: 2rem 1.75rem;
     }
     
-    .btn-login {
-        background-color: var(--secondary-color);
-        color: var(--primary-color);
+    /* Form Labels - MATCHING BOOKING.HTML */
+    .login-body label {
+        font-size: 0.75rem;
         font-weight: 600;
-        padding: 0.75rem;
+        color: var(--primary-color);
+        margin-bottom: 0.3rem;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    
+    .login-body label i {
+        font-size: 0.75rem;
+        color: var(--accent-color);
+    }
+    
+    /* Form Inputs - MATCHING BOOKING.HTML HEIGHT */
+    .login-body .form-control {
+        font-size: 0.85rem;
+        padding: 8px 12px;
         border-radius: 8px;
+        border: 1px solid #e0e0e0;
+        transition: all 0.2s ease;
+        background: #fefefe;
+        height: auto;
+    }
+    
+    .login-body .form-control:focus {
+        outline: none;
+        border-color: var(--secondary-color);
+        box-shadow: 0 0 0 3px rgba(0, 182, 82, 0.1);
+        background: white;
+    }
+    
+    /* Crispy Forms Override */
+    .login-body .form-group {
+        margin-bottom: 1rem;
+    }
+    
+    /* Login Button - MATCHING BOOKING.HTML */
+    .btn-login {
+        background: var(--secondary-color);
+        color: white;
+        font-weight: 600;
+        font-size: 0.85rem;
+        padding: 10px 20px;
+        border-radius: 30px;
+        border: none;
         transition: all 0.3s ease;
+        width: 100%;
     }
     
     .btn-login:hover {
-        background-color: #28a745;
+        background: #009948;
         transform: translateY(-2px);
-        color: white;
+        box-shadow: 0 4px 12px rgba(0, 182, 82, 0.3);
     }
     
-    .form-control:focus {
-        border-color: var(--secondary-color);
-        box-shadow: 0 0 0 0.2rem rgba(0, 182, 82, 0.25);
+    .btn-login:active {
+        transform: translateY(0);
+    }
+    
+    .btn-login i {
+        margin-right: 6px;
+        font-size: 0.85rem;
+    }
+    
+    /* Alert Message */
+    .alert {
+        font-size: 0.8rem;
+        padding: 10px 12px;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        border: none;
+    }
+    
+    .alert-danger {
+        background: #fee2e2;
+        color: #dc2626;
+    }
+    
+    .alert-danger i {
+        color: #dc2626;
+    }
+    
+    /* Footer */
+    .login-footer {
+        padding: 1rem 1.75rem;
+        text-align: center;
+        border-top: 1px solid #f0f0f0;
+        background: #fbfbfb;
+    }
+    
+    .login-footer p {
+        font-size: 0.8rem;
+        margin: 0;
+        color: #666;
+    }
+    
+    .login-footer a {
+        color: var(--secondary-color);
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        margin-left: 4px;
+    }
+    
+    .login-footer a:hover {
+        color: var(--accent-color);
+        text-decoration: underline;
+    }
+    
+    /* Breadcrumb Spacing Fix */
+    .breadcrumb {
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .login-container {
+            padding: 1rem 0 1.5rem 0;
+        }
+        
+        .login-header {
+            padding: 1.5rem 1.25rem;
+        }
+        
+        .login-header i {
+            font-size: 2.5rem;
+        }
+        
+        .login-header h3 {
+            font-size: 1.3rem;
+        }
+        
+        .login-header p {
+            font-size: 0.8rem;
+        }
+        
+        .login-body {
+            padding: 1.5rem;
+        }
+        
+        .btn-login {
+            padding: 9px 18px;
+        }
+        
+        .login-footer {
+            padding: 0.875rem 1.25rem;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .login-body {
+            padding: 1.25rem;
+        }
+        
+        .login-footer p {
+            font-size: 0.75rem;
+        }
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="container-custom login-container">
-    <div class="row justify-content-center w-100">
-        <div class="col-md-6 col-lg-5">
+<div class="container login-container">
+    <div class="row justify-content-center w-100 m-0">
+        <div class="col-sm-10 col-md-8 col-lg-6 col-xl-5">
             <div class="login-card">
+                <!-- Header -->
                 <div class="login-header">
                     <i class="fas fa-user-circle"></i>
                     <h3>Welcome Back</h3>
-                    <p class="mb-0 mt-2">Login to your account</p>
+                    <p>Login to your account to continue</p>
                 </div>
                 
+                <!-- Body -->
                 <div class="login-body">
                     <form method="post">
                         {% csrf_token %}
                         
-                        {% if form.errors %}
+                        {% if form.non_field_errors %}
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <i class="fas fa-exclamation-circle"></i>
-                                Invalid username or password.
+                                <i class="fas fa-exclamation-circle me-2"></i>
+                                {% for error in form.non_field_errors %}
+                                    {{ error }}
+                                {% endfor %}
                                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                             </div>
                         {% endif %}
                         
-                        <div class="mb-3">
-                            <label for="id_username" class="form-label">
-                                <i class="fas fa-user"></i> Username or Email
-                            </label>
-                            {{ form.username }}
-                        </div>
+                        <!-- Crispy Forms -->
+                        {{ form|crispy }}
                         
-                        <div class="mb-3">
-                            <label for="id_password" class="form-label">
-                                <i class="fas fa-lock"></i> Password
-                            </label>
-                            {{ form.password }}
-                        </div>
-                        
-                        <button type="submit" class="btn btn-login w-100">
+                        <button type="submit" class="btn-login mt-3">
                             <i class="fas fa-sign-in-alt"></i> Login
                         </button>
                     </form>
                 </div>
                 
-                <div class="text-center py-3 border-top">
-                    <p class="mb-0">
+                <!-- Footer -->
+                <div class="login-footer">
+                    <p>
                         Don't have an account? 
-                        <a href="{% url 'web:register' %}" class="text-decoration-none">
-                            Register here
-                        </a>
+                        <a href="{% url 'web:register' %}">Create one now</a>
                     </p>
                 </div>
             </div>

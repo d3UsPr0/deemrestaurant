@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deem Restaurant Portal - {% block title %}{% endblock %}</title>
+    <title>DEEM Portal - {% block title %}{% endblock %}</title>
     
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -22,20 +22,29 @@
         }
         
         body {
-            font-family: "Plus Jakarta Sans", sans-serif;
-            background-color: #f8f9fa;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f0f2f5;
         }
         
+        /* Sidebar */
         .sidebar {
             background-color: var(--primary-color);
             min-height: 100vh;
             color: white;
         }
         
+        .sidebar-header h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: 0;
+        }
+        
         .sidebar .nav-link {
             color: rgba(255, 255, 255, 0.8);
-            padding: 0.75rem 1rem;
+            padding: 0.6rem 1rem;
             transition: all 0.3s;
+            font-size: 0.85rem;
+            font-weight: 500;
         }
         
         .sidebar .nav-link:hover,
@@ -47,17 +56,79 @@
         .sidebar .nav-link i {
             width: 25px;
             margin-right: 10px;
+            font-size: 0.9rem;
         }
         
+        .sidebar hr {
+            margin: 0.75rem 0;
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Main Content */
         .main-content {
-            padding: 20px;
+            padding: 0;
         }
         
         .navbar-top {
             background-color: white;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            padding: 0.6rem 1rem;
         }
         
+        #sidebarToggle {
+            background: transparent;
+            border: none;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            padding: 0.4rem;
+        }
+        
+        .user-info {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+        
+        .user-info i {
+            font-size: 0.9rem;
+            margin-right: 6px;
+            color: var(--secondary-color);
+        }
+        
+        .content-area {
+            padding: 1.25rem;
+        }
+        
+        /* Alerts */
+        .alert {
+            border: none;
+            border-radius: 10px;
+            padding: 0.7rem 1rem;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+        
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+        
+        /* Responsive */
         @media (max-width: 768px) {
             .sidebar {
                 min-height: auto;
@@ -72,8 +143,8 @@
                 left: 0;
             }
             
-            .main-content {
-                margin-left: 0;
+            .content-area {
+                padding: 1rem;
             }
         }
     </style>
@@ -85,8 +156,8 @@
         <div class="row">
             <!-- Sidebar -->
             <div class="col-md-3 col-lg-2 px-0 sidebar">
-                <div class="p-3">
-                    <h4 class="text-center mb-4">DEEM Portal</h4>
+                <div class="sidebar-header p-3">
+                    <h4 class="text-center mb-0">DEEM Portal</h4>
                 </div>
                 <nav class="nav flex-column">
                     <a class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}" href="{% url 'portal:dashboard' %}">
@@ -104,7 +175,7 @@
                     <a class="nav-link {% if request.resolver_match.url_name == 'reports' %}active{% endif %}" href="{% url 'portal:reports' %}">
                         <i class="fas fa-chart-bar"></i> Reports
                     </a>
-                    <hr class="bg-light">
+                    <hr>
                     <a class="nav-link" href="{% url 'portal:logout' %}">
                         <i class="fas fa-sign-out-alt"></i> Logout
                     </a>
@@ -112,24 +183,23 @@
             </div>
             
             <!-- Main Content -->
-            <div class="col-md-9 col-lg-10 ms-sm-auto px-0">
-                <nav class="navbar navbar-top navbar-expand-lg">
-                    <div class="container-fluid">
-                        <button class="btn btn-link d-md-none" id="sidebarToggle">
+            <div class="col-md-9 col-lg-10 ms-sm-auto px-0 main-content">
+                <nav class="navbar-top">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <button class="btn" id="sidebarToggle">
                             <i class="fas fa-bars"></i>
                         </button>
-                        <div class="ms-auto">
-                            <span class="text-muted">
-                                <i class="fas fa-user-circle"></i> {{ user.username }}
-                            </span>
+                        <div class="user-info">
+                            <i class="fas fa-user-circle"></i> {{ user.username }}
                         </div>
                     </div>
                 </nav>
                 
-                <div class="main-content">
+                <div class="content-area">
                     {% if messages %}
                         {% for message in messages %}
                             <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                                <i class="fas fa-{% if message.tags == 'success' %}check-circle{% elif message.tags == 'error' %}exclamation-circle{% else %}info-circle{% endif %} me-2"></i>
                                 {{ message }}
                                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                             </div>

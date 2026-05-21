@@ -4,6 +4,213 @@
 
 {% block title %}{{ menu_item.name }}{% endblock %}
 
+{% block extra_css %}
+<style>
+    /* ============================================
+       MENU DETAIL PAGE - OPTIMIZED & COMPACT
+    ============================================ */
+    
+    /* Image container */
+    .detail-image-container {
+        overflow: hidden;
+        border-radius: 16px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        margin-bottom: 0.5rem;
+    }
+    
+    .detail-image {
+        width: 100%;
+        height: auto;
+        max-height: 380px;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+    }
+    
+    .detail-image-container:hover .detail-image {
+        transform: scale(1.02);
+    }
+    
+    /* Product title - REDUCED SIZE */
+    .product-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        margin-bottom: 0.5rem;
+    }
+    
+    /* Category badge - COMPACT */
+    .category-badge {
+        display: inline-block;
+        font-size: 0.65rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--secondary-color);
+        background: rgba(0, 182, 82, 0.1);
+        padding: 3px 10px;
+        border-radius: 20px;
+        margin-bottom: 0.75rem;
+    }
+    
+    /* Price - REDUCED SIZE */
+    .product-price {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--accent-color);
+        margin-bottom: 0.75rem;
+    }
+    
+    /* Description */
+    .product-description {
+        font-size: 0.85rem;
+        line-height: 1.5;
+        color: #555;
+        margin-bottom: 1.25rem;
+        padding-right: 0.5rem;
+    }
+    
+    /* Quantity label */
+    .quantity-label {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--primary-color);
+        margin-bottom: 0.4rem;
+        display: block;
+    }
+    
+    /* Quantity input */
+    .quantity-input {
+        width: 80px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        padding: 6px 10px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s ease;
+    }
+    
+    .quantity-input:focus {
+        outline: none;
+        border-color: var(--secondary-color);
+        box-shadow: 0 0 0 3px rgba(0,182,82,0.1);
+    }
+    
+    /* Action buttons - COMPACT */
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 0.75rem;
+    }
+    
+    .btn-cart {
+        background: var(--secondary-color);
+        color: white;
+        border: none;
+        padding: 8px 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-cart:hover {
+        background: #009948;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(0,182,82,0.2);
+    }
+    
+    .btn-favorite {
+        padding: 8px 18px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-favorite i {
+        margin-right: 5px;
+        font-size: 0.75rem;
+    }
+    
+    .btn-favorite.btn-danger {
+        background: #dc3545;
+        color: white;
+        border: none;
+    }
+    
+    .btn-favorite.btn-danger:hover {
+        background: #c82333;
+        transform: translateY(-1px);
+    }
+    
+    .btn-favorite.btn-secondary {
+        background: #6c757d;
+        color: white;
+        border: none;
+    }
+    
+    .btn-favorite.btn-secondary:hover {
+        background: #5a6268;
+        transform: translateY(-1px);
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .product-title {
+            font-size: 1.2rem;
+            margin-top: 0.75rem;
+        }
+        
+        .product-price {
+            font-size: 1.1rem;
+        }
+        
+        .product-description {
+            font-size: 0.8rem;
+            padding-right: 0;
+        }
+        
+        .detail-image {
+            max-height: 280px;
+        }
+        
+        .action-buttons {
+            gap: 8px;
+        }
+        
+        .btn-cart, .btn-favorite {
+            padding: 6px 16px;
+            font-size: 0.75rem;
+        }
+        
+        .category-badge {
+            font-size: 0.6rem;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .product-title {
+            font-size: 1.1rem;
+        }
+        
+        .product-price {
+            font-size: 1rem;
+        }
+        
+        .quantity-input {
+            width: 70px;
+            padding: 5px 8px;
+        }
+        
+        .btn-cart, .btn-favorite {
+            padding: 5px 14px;
+            font-size: 0.7rem;
+        }
+    }
+</style>
+{% endblock %}
+
 {% block breadcrumb %}
     <li class="breadcrumb-item"><a href="{% url 'web:home' %}">Home</a></li>
     <li class="breadcrumb-item"><a href="{% url 'web:menu_list' %}">Menu</a></li>
@@ -12,38 +219,59 @@
 
 {% block content %}
 <div class="container-custom">
-    <div class="row">
+    <div class="row g-4">
+        <!-- Image Column -->
         <div class="col-md-6">
-            {% if menu_item.image %}
-                <img src="{{ menu_item.image.url }}" class="img-fluid rounded shadow" alt="{{ menu_item.name }}">
-            {% else %}
-                <div class="bg-secondary rounded shadow" style="height: 400px;"></div>
-            {% endif %}
+            <div class="detail-image-container">
+                {% if menu_item.image %}
+                    <img src="{{ menu_item.image.url }}" class="detail-image" alt="{{ menu_item.name }}" loading="lazy">
+                {% else %}
+                    <div class="detail-image bg-secondary d-flex align-items-center justify-content-center" style="height: 350px;">
+                        <i class="fas fa-utensils fa-3x text-white-50"></i>
+                    </div>
+                {% endif %}
+            </div>
         </div>
+        
+        <!-- Details Column -->
         <div class="col-md-6">
-            <h1 class="mb-3">{{ menu_item.name }}</h1>
-            <p class="text-muted mb-2">{{ menu_item.category.name }}</p>
-            <h3 class="text-accent-custom mb-3">Tsh {{ menu_item.price|floatformat:0|intcomma }}</h3>
-            <p class="mb-4">{{ menu_item.description }}</p>
+            <h1 class="product-title">{{ menu_item.name }}</h1>
+            
+            <div class="category-badge">
+                <i class="fas fa-tag"></i> {{ menu_item.category.name }}
+            </div>
+            
+            <div class="product-price">
+                Tsh {{ menu_item.price|floatformat:0|intcomma }}
+            </div>
+            
+            <p class="product-description">
+                {{ menu_item.description }}
+            </p>
             
             <form method="post" action="{% url 'web:add_to_cart' %}">
                 {% csrf_token %}
                 <input type="hidden" name="menu_item_id" value="{{ menu_item.pk }}">
+                
                 <div class="mb-3">
-                    <label for="quantity" class="form-label">Quantity:</label>
-                    <input type="number" name="quantity" id="quantity" class="form-control" value="1" min="1" style="width: 100px;">
+                    <label for="quantity" class="quantity-label">
+                        <i class="fas fa-shopping-cart"></i> Quantity
+                    </label>
+                    <input type="number" name="quantity" id="quantity" class="quantity-input" 
+                           value="1" min="1" step="1">
                 </div>
-                <div class="d-flex gap-2">
-                    <button type="submit" class="btn btn-accent-custom">
+                
+                <div class="action-buttons">
+                    <button type="submit" class="btn-cart">
                         <i class="fas fa-cart-plus"></i> Add to Cart
                     </button>
                     
                     {% if user.is_authenticated %}
                         <form method="post" action="{% url 'web:toggle_favorite' menu_item.pk %}" class="d-inline">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-{% if is_favorite %}danger{% else %}secondary{% endif %}">
+                            <button type="submit" class="btn-favorite {% if is_favorite %}btn-danger{% else %}btn-secondary{% endif %}">
                                 <i class="fas fa-{% if is_favorite %}heart-broken{% else %}heart{% endif %}"></i>
-                                {% if is_favorite %}Remove from Favorites{% else %}Add to Favorites{% endif %}
+                                {% if is_favorite %}Remove{% else %}Save{% endif %}
                             </button>
                         </form>
                     {% endif %}

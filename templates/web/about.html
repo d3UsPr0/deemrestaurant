@@ -10,50 +10,220 @@
 
 {% block extra_css %}
 <style>
-/* PAGE TITLE */
-h5 {
-    font-weight: 600;
-    color: var(--primary-color);
-    animation: fadeIn 0.8s ease;
-}
+    /* ============================================
+       ABOUT PAGE - OPTIMIZED & COMPACT
+    ============================================ */
+    
+    /* Page Title */
+    .about-title {
+        font-size: 1.6rem;
+        font-weight: 800;
+        color: var(--primary-color);
+        margin-bottom: 1.5rem;
+        position: relative;
+    }
+    
+    .about-title::after {
+        content: "";
+        width: 60px;
+        height: 3px;
+        background: var(--secondary-color);
+        display: block;
+        margin: 10px auto 0;
+        border-radius: 2px;
+    }
+    
+    /* About Card */
+    .about-card {
+        border: none;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        transition: all 0.3s ease;
+    }
+    
+    .about-card:hover {
+        box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    }
+    
+    .about-card .card-body {
+        padding: 1.5rem;
+    }
+    
+    /* Section Headers */
+    .section-header {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        margin-bottom: 0.75rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid var(--secondary-color);
+        display: inline-block;
+    }
+    
+    /* Paragraph text */
+    .about-text {
+        font-size: 0.85rem;
+        line-height: 1.6;
+        color: #555;
+        margin-bottom: 1rem;
+    }
+    
+    /* Values List */
+    .values-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .values-list li {
+        font-size: 0.85rem;
+        color: #555;
+        margin-bottom: 0.75rem;
+        padding-left: 1.5rem;
+        position: relative;
+    }
+    
+    .values-list li::before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        color: var(--secondary-color);
+        font-weight: bold;
+        font-size: 0.85rem;
+    }
+    
+    .values-list li strong {
+        color: var(--primary-color);
+        font-weight: 600;
+    }
+    
+    /* Action Buttons */
+    .action-buttons {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 1.5rem;
+    }
+    
+    .btn-about {
+        padding: 8px 24px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        border-radius: 30px;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-about i {
+        margin-right: 6px;
+        font-size: 0.85rem;
+    }
+    
+    .btn-about:hover {
+        transform: translateY(-2px);
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .about-title {
+            font-size: 1.3rem;
+        }
+        
+        .section-header {
+            font-size: 1rem;
+        }
+        
+        .about-text {
+            font-size: 0.8rem;
+        }
+        
+        .values-list li {
+            font-size: 0.8rem;
+        }
+        
+        .about-card .card-body {
+            padding: 1.25rem;
+        }
+        
+        .btn-about {
+            padding: 6px 20px;
+            font-size: 0.8rem;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .about-card .card-body {
+            padding: 1rem;
+        }
+        
+        .section-header {
+            font-size: 0.95rem;
+        }
+        
+        .action-buttons {
+            gap: 8px;
+        }
+    }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="container-custom">
     <div class="row">
-        <div class="col-lg-8 mx-auto">
-            <h5 class="text-center mb-4">About Deem Restaurant</h5>
+        <div class="col-lg-8 col-md-10 mx-auto">
             
-            <div class="card shadow mb-4">
-                <div class="card-body p-4">
-                    <h5>Our Story</h5>
-                    <p>Deem Restaurant was founded with a passion for bringing authentic, delicious cuisine to our community. Since our establishment, we've been committed to using the freshest ingredients and traditional cooking methods to create unforgettable dining experiences.</p>
+            <!-- Page Title -->
+            <div class="about-title text-center">About Deem Restaurant</div>
+            
+            <!-- About Content Card -->
+            <div class="about-card card mb-4">
+                <div class="card-body">
                     
-                    <h5 class="mt-4">Our Mission</h5>
-                    <p>To provide exceptional food and service that delights our customers and creates lasting memories. We believe that great food brings people together, and we're honored to be part of your special moments.</p>
+                    <!-- Our Story -->
+                    <h5 class="section-header">Our Story</h5>
+                    <p class="about-text">
+                        Deem Restaurant was founded with a passion for bringing authentic, delicious cuisine to our community. 
+                        Since our establishment, we've been committed to using the freshest ingredients and traditional cooking 
+                        methods to create unforgettable dining experiences.
+                    </p>
                     
-                    <h5 class="mt-4">Our Values</h5>
-                    <ul>
+                    <!-- Our Mission -->
+                    <h5 class="section-header mt-4">Our Mission</h5>
+                    <p class="about-text">
+                        To provide exceptional food and service that delights our customers and creates lasting memories. 
+                        We believe that great food brings people together, and we're honored to be part of your special moments.
+                    </p>
+                    
+                    <!-- Our Values -->
+                    <h5 class="section-header mt-4">Our Values</h5>
+                    <ul class="values-list">
                         <li><strong>Quality:</strong> We use only the freshest, highest-quality ingredients</li>
                         <li><strong>Service:</strong> Our team is dedicated to providing exceptional customer service</li>
                         <li><strong>Community:</strong> We're proud to be part of our local community</li>
                         <li><strong>Innovation:</strong> We constantly evolve our menu to bring you new and exciting flavors</li>
                     </ul>
                     
-                    <h5 class="mt-4">Our Chef</h5>
-                    <p>Our head chef brings years of experience and a passion for culinary excellence to every dish. With training from top culinary institutions and experience in renowned restaurants, our chef creates masterpieces that delight the senses.</p>
+                    <!-- Our Chef -->
+                    <h5 class="section-header mt-4">Our Chef</h5>
+                    <p class="about-text">
+                        Our head chef brings years of experience and a passion for culinary excellence to every dish. 
+                        With training from top culinary institutions and experience in renowned restaurants, our chef 
+                        creates masterpieces that delight the senses.
+                    </p>
                 </div>
             </div>
             
-            <div class="text-center mt-4">
-                <a href="{% url 'web:menu_list' %}" class="btn btn-accent-custom">
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <a href="{% url 'web:menu_list' %}" class="btn btn-accent-custom btn-about">
                     <i class="fas fa-utensils"></i> Explore Our Menu
                 </a>
-                <a href="{% url 'web:contact' %}" class="btn btn-secondary-custom ms-2">
+                <a href="{% url 'web:contact' %}" class="btn btn-secondary-custom btn-about">
                     <i class="fas fa-envelope"></i> Contact Us
                 </a>
             </div>
+            
         </div>
     </div>
 </div>

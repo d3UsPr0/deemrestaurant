@@ -3,15 +3,15 @@
 {% block title %}Reports{% endblock %}
 
 {% block content %}
-<div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3">Sales Reports</h1>
+<div class="container-fluid px-0">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="section-header mb-0">Sales Reports</h1>
     </div>
     
     <!-- Date Filter -->
-    <div class="card shadow mb-4">
+    <div class="card mb-3">
         <div class="card-body">
-            <form method="get" class="row g-3">
+            <form method="get" class="row g-2">
                 <div class="col-md-4">
                     <label for="date_from" class="form-label">From Date</label>
                     <input type="date" name="date_from" id="date_from" class="form-control" value="{{ date_from }}">
@@ -22,7 +22,7 @@
                 </div>
                 <div class="col-md-4 d-flex align-items-end">
                     <button type="submit" class="btn btn-primary w-100">
-                        <i class="fas fa-chart-line"></i> Generate Report
+                        <i class="fas fa-chart-line"></i> Generate
                     </button>
                 </div>
             </form>
@@ -30,43 +30,43 @@
     </div>
     
     <!-- Statistics Cards -->
-    <div class="row mb-4">
+    <div class="row g-2 mb-3">
         <div class="col-md-4">
-            <div class="card shadow border-left-primary">
+            <div class="stat-card card">
                 <div class="card-body">
-                    <div class="text-muted">Total Orders</div>
-                    <h2 class="mb-0">{{ total_orders }}</h2>
+                    <div class="stat-title">Total Orders</div>
+                    <div class="stat-value">{{ total_orders }}</div>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card shadow border-left-success">
+            <div class="stat-card card">
                 <div class="card-body">
-                    <div class="text-muted">Total Revenue</div>
-                    <h2 class="mb-0">Tsh {{ total_revenue|floatformat:0 }}</h2>
+                    <div class="stat-title">Total Revenue</div>
+                    <div class="stat-value">Tsh {{ total_revenue|floatformat:0 }}</div>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card shadow border-left-info">
+            <div class="stat-card card">
                 <div class="card-body">
-                    <div class="text-muted">Average Order Value</div>
-                    <h2 class="mb-0">Tsh {{ avg_order_value|floatformat:0 }}</h2>
+                    <div class="stat-title">Average Order Value</div>
+                    <div class="stat-value">Tsh {{ avg_order_value|floatformat:0 }}</div>
                 </div>
             </div>
         </div>
     </div>
     
-    <div class="row">
+    <div class="row g-2">
         <!-- Orders by Status -->
-        <div class="col-md-6 mb-4">
-            <div class="card shadow">
-                <div class="card-header">
-                    <h5 class="mb-0">Orders by Status</h5>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header py-2 px-3">
+                    <h6 class="card-title mb-0">Orders by Status</h6>
                 </div>
-                <div class="card-body">
+                <div class="card-body p-0">
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="table mb-0">
                             <thead>
                                 <tr>
                                     <th>Status</th>
@@ -85,7 +85,9 @@
                                 </tr>
                                 {% empty %}
                                 <tr>
-                                    <td colspan="2" class="text-center">No data available</td>
+                                    <td colspan="2" class="text-center py-3 text-muted">
+                                        <small>No data available</small>
+                                    </td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
@@ -96,18 +98,18 @@
         </div>
         
         <!-- Popular Items -->
-        <div class="col-md-6 mb-4">
-            <div class="card shadow">
-                <div class="card-header">
-                    <h5 class="mb-0">Most Popular Items</h5>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header py-2 px-3">
+                    <h6 class="card-title mb-0">Most Popular Items</h6>
                 </div>
-                <div class="card-body">
+                <div class="card-body p-0">
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="table mb-0">
                             <thead>
                                 <tr>
                                     <th>Menu Item</th>
-                                    <th>Total Ordered</th>
+                                    <th>Orders</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -118,7 +120,9 @@
                                 </tr>
                                 {% empty %}
                                 <tr>
-                                    <td colspan="2" class="text-center">No data available</td>
+                                    <td colspan="2" class="text-center py-3 text-muted">
+                                        <small>No data available</small>
+                                    </td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
@@ -129,4 +133,167 @@
         </div>
     </div>
 </div>
+
+<style>
+    /* Page Header */
+    .section-header {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--primary-color);
+    }
+    
+    /* Card */
+    .card {
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+    }
+    
+    .card-header {
+        background: #fafafa;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .card-title {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--primary-color);
+    }
+    
+    /* Statistics Cards */
+    .stat-card {
+        border: none;
+        border-radius: 10px;
+        background: white;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+    
+    .stat-card .card-body {
+        padding: 0.75rem;
+    }
+    
+    .stat-title {
+        font-size: 0.65rem;
+        font-weight: 600;
+        color: #888;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        margin-bottom: 0.2rem;
+    }
+    
+    .stat-value {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        margin-bottom: 0;
+        line-height: 1.2;
+    }
+    
+    /* Form */
+    .form-label {
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: #888;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        margin-bottom: 0.25rem;
+    }
+    
+    .form-control {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.6rem;
+        border-radius: 6px;
+        border: 1px solid #e0e0e0;
+    }
+    
+    .form-control:focus {
+        border-color: var(--secondary-color);
+        box-shadow: 0 0 0 2px rgba(49, 157, 47, 0.1);
+    }
+    
+    /* Button */
+    .btn-primary {
+        background-color: var(--secondary-color);
+        border-color: var(--secondary-color);
+        font-size: 0.75rem;
+        font-weight: 500;
+        padding: 0.4rem 0.8rem;
+        border-radius: 6px;
+    }
+    
+    .btn-primary:hover {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+    
+    /* Table */
+    .table {
+        margin-bottom: 0;
+    }
+    
+    .table thead th {
+        font-size: 0.65rem;
+        font-weight: 600;
+        color: #888;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        padding: 0.6rem 0.75rem;
+        border-bottom: 1px solid #f0f0f0;
+        background-color: #fafafa;
+    }
+    
+    .table tbody td {
+        font-size: 0.75rem;
+        padding: 0.5rem 0.75rem;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .table tbody tr:last-child td {
+        border-bottom: none;
+    }
+    
+    /* Badges */
+    .badge {
+        padding: 2px 8px;
+        font-size: 0.6rem;
+        font-weight: 600;
+        border-radius: 10px;
+    }
+    
+    .status-pending { background-color: #ffc107; color: #000; }
+    .status-submitted { background-color: #17a2b8; color: #fff; }
+    .status-approved { background-color: #28a745; color: #fff; }
+    .status-preparing { background-color: #fd7e14; color: #fff; }
+    .status-ready { background-color: #6f42c1; color: #fff; }
+    .status-out_for_delivery { background-color: #007bff; color: #fff; }
+    .status-delivered { background-color: #28a745; color: #fff; }
+    .status-cancelled { background-color: #dc3545; color: #fff; }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .stat-value {
+            font-size: 1rem;
+        }
+        
+        .table thead th {
+            font-size: 0.6rem;
+            padding: 0.5rem;
+        }
+        
+        .table tbody td {
+            font-size: 0.7rem;
+            padding: 0.5rem;
+        }
+        
+        .form-label {
+            font-size: 0.65rem;
+        }
+        
+        .form-control {
+            font-size: 0.75rem;
+            padding: 0.35rem 0.5rem;
+        }
+    }
+</style>
 {% endblock %}

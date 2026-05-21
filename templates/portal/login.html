@@ -12,64 +12,176 @@
 {% block extra_css %}
 <style>
     .login-container {
-        min-height: 70vh;
+        min-height: 60vh;
         display: flex;
         align-items: center;
+        padding: 2rem 0;
     }
     
     .login-card {
         border: none;
-        border-radius: 15px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
         overflow: hidden;
+        transition: all 0.3s ease;
     }
     
     .login-header {
         background: linear-gradient(135deg, var(--primary-color), #7a2e1a);
         color: white;
-        padding: 2rem;
+        padding: 1.5rem;
         text-align: center;
     }
     
     .login-header i {
-        font-size: 3rem;
-        margin-bottom: 1rem;
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
     }
     
     .login-header h3 {
+        font-size: 1.2rem;
+        font-weight: 700;
         margin: 0;
-        font-weight: 600;
+    }
+    
+    .login-header p {
+        font-size: 0.75rem;
+        opacity: 0.85;
+        margin-top: 0.25rem;
+        margin-bottom: 0;
     }
     
     .login-body {
-        padding: 2rem;
+        padding: 1.5rem;
     }
     
     .login-footer {
         background-color: #f8f9fa;
-        padding: 1rem;
+        padding: 0.75rem;
         text-align: center;
-        border-top: 1px solid #dee2e6;
+        border-top: 1px solid #e9ecef;
+    }
+    
+    .login-footer p {
+        font-size: 0.75rem;
+        margin: 0;
+    }
+    
+    .login-footer a {
+        color: var(--secondary-color);
+        text-decoration: none;
+        font-weight: 500;
+    }
+    
+    .login-footer a:hover {
+        color: var(--accent-color);
+        text-decoration: underline;
     }
     
     .btn-login {
         background-color: var(--secondary-color);
-        color: var(--primary-color);
+        color: white;
         font-weight: 600;
-        padding: 0.75rem;
+        font-size: 0.85rem;
+        padding: 0.6rem;
         border-radius: 8px;
         transition: all 0.3s ease;
+        width: 100%;
+        border: none;
     }
     
     .btn-login:hover {
         background-color: #28a745;
-        transform: translateY(-2px);
+        transform: translateY(-1px);
         color: white;
+    }
+    
+    .btn-login i {
+        margin-right: 6px;
+    }
+    
+    /* Form Labels */
+    .form-label {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--primary-color);
+        margin-bottom: 0.3rem;
+    }
+    
+    .form-label i {
+        font-size: 0.75rem;
+        margin-right: 4px;
+    }
+    
+    /* Form Controls */
+    .form-control {
+        font-size: 0.85rem;
+        padding: 0.45rem 0.75rem;
+        border-radius: 8px;
+        border: 1px solid #dee2e6;
+        transition: all 0.2s ease;
     }
     
     .form-control:focus {
         border-color: var(--secondary-color);
-        box-shadow: 0 0 0 0.2rem rgba(0, 182, 82, 0.25);
+        box-shadow: 0 0 0 3px rgba(0, 182, 82, 0.1);
+    }
+    
+    /* Alert */
+    .alert {
+        font-size: 0.8rem;
+        padding: 0.6rem 0.8rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+    }
+    
+    /* Secure text */
+    .secure-text {
+        font-size: 0.7rem;
+        color: #888;
+    }
+    
+    .secure-text i {
+        font-size: 0.7rem;
+        margin-right: 4px;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .login-container {
+            min-height: 50vh;
+            padding: 1rem 0;
+        }
+        
+        .login-header {
+            padding: 1.25rem;
+        }
+        
+        .login-header i {
+            font-size: 2rem;
+        }
+        
+        .login-header h3 {
+            font-size: 1rem;
+        }
+        
+        .login-header p {
+            font-size: 0.7rem;
+        }
+        
+        .login-body {
+            padding: 1.25rem;
+        }
+        
+        .form-control {
+            font-size: 0.8rem;
+            padding: 0.4rem 0.65rem;
+        }
+        
+        .btn-login {
+            padding: 0.5rem;
+            font-size: 0.8rem;
+        }
     }
 </style>
 {% endblock %}
@@ -82,7 +194,7 @@
                 <div class="login-header">
                     <i class="fas fa-user-lock"></i>
                     <h3>Manager Portal</h3>
-                    <p class="mb-0 mt-2">Please login to access the management dashboard</p>
+                    <p>Please login to access the management dashboard</p>
                 </div>
                 
                 <div class="login-body">
@@ -91,8 +203,8 @@
                         
                         {% if form.errors %}
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <i class="fas fa-exclamation-circle"></i>
-                                Invalid username or password. Please try again.
+                                <i class="fas fa-exclamation-circle me-2"></i>
+                                Invalid username or password.
                                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                             </div>
                         {% endif %}
@@ -113,22 +225,22 @@
                                    placeholder="Enter your password" required>
                         </div>
                         
-                        <button type="submit" class="btn btn-login w-100">
+                        <button type="submit" class="btn-login">
                             <i class="fas fa-sign-in-alt"></i> Login
                         </button>
                     </form>
                 </div>
                 
                 <div class="login-footer">
-                    <p class="mb-0">
+                    <p>
                         <i class="fas fa-utensils"></i> 
-                        <a href="{% url 'web:home' %}" class="text-decoration-none">Back to Restaurant Website</a>
+                        <a href="{% url 'web:home' %}">Back to Restaurant Website</a>
                     </p>
                 </div>
             </div>
             
             <div class="text-center mt-3">
-                <small class="text-muted">
+                <small class="secure-text">
                     <i class="fas fa-shield-alt"></i> Secure area for authorized personnel only
                 </small>
             </div>

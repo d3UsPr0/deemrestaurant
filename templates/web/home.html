@@ -17,14 +17,16 @@
     }
 
     /* ============================================
-       HERO SECTION
+       HERO SECTION - REDUCED HEIGHT
     ============================================ */
     .hero-section {
         position: relative;
-        height: 75vh;
-        border-radius: 12px;
+        height: 60vh; /* Reduced from 75vh */
+        min-height: 400px;
+        max-height: 500px;
+        border-radius: 16px;
         overflow: hidden;
-        animation: fadeIn 1s ease;
+        animation: fadeIn 0.8s ease;
     }
 
     .hero-overlay {
@@ -33,55 +35,70 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background: rgba(0, 0, 0, 0.5);
+        background: rgba(0, 0, 0, 0.55);
     }
 
     .hero-content {
         position: relative;
         z-index: 2;
-        animation: fadeInUp 1s ease;
-        padding: 20px;
+        animation: fadeInUp 0.8s ease;
+        padding: 1.5rem;
     }
 
     .hero-content h1 {
-        font-weight: 500;
-        {% comment %} font-family: "Playfair Display", serif; {% endcomment %}
+        font-weight: 700;
+        font-size: 2.5rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .hero-content .lead {
+        font-size: 1.1rem;
+        font-weight: 400;
+        margin-bottom: 0.5rem;
     }
 
     .hero-tagline {
         color: #ddd;
-        font-size: 1.1rem;
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
     }
 
     .hero-content .btn {
-        border-radius: 30px;
-        padding: 12px 28px;
-        font-weight: 500;
+        border-radius: 40px;
+        padding: 10px 28px;
+        font-weight: 600;
+        font-size: 0.9rem;
         transition: all 0.3s ease;
     }
 
     .hero-content .btn:hover {
-        transform: translateY(-3px) scale(1.05);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
 
     /* ============================================
-       CARDS (FEATURED ITEMS) - Matching menu_list
+       CARDS - OPTIMIZED SPACING & IMAGES
     ============================================ */
     .card {
         border: none;
-        border-radius: 14px;
+        border-radius: 12px;
         overflow: hidden;
-        transition: all 0.3s ease;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        background: white;
     }
 
-    /* Image container for proper overflow handling */
+    .card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    /* Image container - OPTIMIZED HEIGHT */
     .card-img-container {
         overflow: hidden;
         position: relative;
-        height: 200px;
+        height: 160px; /* Reduced from 200px */
     }
 
-    /* Image hover effect - ONLY image scales */
     .card-img-top {
         transition: transform 0.4s ease;
         width: 100%;
@@ -90,10 +107,9 @@
     }
 
     .card-img-container:hover .card-img-top {
-        transform: scale(1.08);
+        transform: scale(1.05);
     }
 
-    /* Subtle overlay on image hover */
     .card-img-container:hover::after {
         content: '';
         position: absolute;
@@ -101,42 +117,35 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background: rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease;
+        background: rgba(0, 0, 0, 0.08);
     }
 
-    /* PRICE */
-    .card .h5 {
-        color: var(--secondary-color);
+    /* Card Body - TIGHTENED SPACING */
+    .card-body {
+        padding: 12px 12px 14px;
     }
 
-    /* BUTTONS */
-    .btn-sm {
-        border-radius: 20px;
-    }
-
-    /* CARD TEXT REFINEMENT */
     .card-title {
         font-size: 1rem;
-        font-weight: 600;
+        font-weight: 700;
         margin-bottom: 4px;
         line-height: 1.3;
     }
 
-    /* Category label */
     .card-body .text-muted {
         font-size: 0.7rem;
+        font-weight: 500;
         letter-spacing: 0.5px;
         text-transform: uppercase;
+        color: var(--secondary-color) !important;
         margin-bottom: 6px !important;
         display: inline-block;
     }
 
-    /* Description */
     .card-text {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
         line-height: 1.4;
-        color: #555;
+        color: #666;
         margin-bottom: 10px;
         display: -webkit-box;
         -webkit-line-clamp: 2;
@@ -144,29 +153,58 @@
         overflow: hidden;
     }
 
-    /* Price tighter */
+    /* Price styling */
     .card .h5 {
-        font-size: 1rem;
-        font-weight: 600;
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--accent-color);
+        margin-bottom: 0;
     }
 
-    /* Reduce card body spacing */
-    .card-body {
-        padding: 12px 14px;
+    /* Buttons inside cards */
+    .btn-sm {
+        padding: 4px 10px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        border-radius: 20px;
+    }
+
+    .btn-accent-custom {
+        background-color: var(--accent-color);
+        color: white;
+        border: none;
+    }
+
+    .btn-accent-custom:hover {
+        background-color: #e07a0a;
+        color: white;
+    }
+
+    .btn-secondary-custom {
+        background-color: var(--secondary-color);
+        color: white;
+        border: none;
+    }
+
+    .btn-secondary-custom:hover {
+        background-color: #009948;
+        color: white;
     }
 
     /* ============================================
-       SECTION TITLES
+       SECTION TITLES - BOLD & COMPACT
     ============================================ */
     section h2, section h4 {
-        font-weight: 600;
+        font-weight: 800;
+        font-size: 1.6rem;
         position: relative;
         color: var(--primary-color);
+        margin-bottom: 1.5rem;
     }
 
     section h2::after, section h4::after {
         content: "";
-        width: 60px;
+        width: 50px;
         height: 3px;
         background: var(--secondary-color);
         display: block;
@@ -175,26 +213,33 @@
     }
 
     /* ============================================
-       GALLERY CAROUSEL
+       WHY CHOOSE US - COMPACT
     ============================================ */
-    .carousel-item img {
-        border-radius: 12px;
+    .why-choose-us {
+        padding: 2rem 0 1rem !important;
     }
 
-    .carousel-caption {
-        border-radius: 10px;
-        padding: 15px;
-    }
-
-    /* ============================================
-       WHY CHOOSE US
-    ============================================ */
     .why-choose-us i {
-        transition: transform 0.3s ease;
+        font-size: 2rem;
+        transition: all 0.3s ease;
+        margin-bottom: 0.75rem;
     }
 
-    .why-choose-us div:hover i {
-        transform: scale(1.2) rotate(5deg);
+    .why-choose-us h5 {
+        font-size: 1rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+
+    .why-choose-us p {
+        font-size: 0.8rem;
+        color: #666;
+        margin-bottom: 0;
+        padding: 0 1rem;
+    }
+
+    .why-choose-us .col-md-4:hover i {
+        transform: scale(1.15);
         color: var(--accent-color);
     }
 
@@ -210,8 +255,8 @@
     ============================================ */
     .fade-in {
         opacity: 0;
-        transform: translateY(20px);
-        transition: all 0.8s ease;
+        transform: translateY(15px);
+        transition: all 0.6s ease;
     }
 
     .fade-in.show {
@@ -223,14 +268,14 @@
        KEYFRAMES
     ============================================ */
     @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
+        from { opacity: 0; }
+        to { opacity: 1; }
     }
 
     @keyframes fadeInUp {
         from {
             opacity: 0;
-            transform: translateY(30px);
+            transform: translateY(20px);
         }
         to {
             opacity: 1;
@@ -243,11 +288,43 @@
     ============================================ */
     @media (max-width: 768px) {
         .hero-section {
-            height: 60vh;
+            height: 50vh;
+            min-height: 350px;
         }
 
         .hero-content h1 {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
+        }
+
+        .hero-content .lead {
+            font-size: 0.9rem;
+        }
+
+        .hero-tagline {
+            font-size: 0.8rem;
+        }
+
+        .hero-content .btn {
+            padding: 8px 20px;
+            font-size: 0.8rem;
+        }
+
+        section h2, section h4 {
+            font-size: 1.3rem;
+        }
+
+        .card-img-container {
+            height: 140px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .card-img-container {
+            height: 160px;
+        }
+        
+        .why-choose-us .col-md-4 {
+            margin-bottom: 1rem;
         }
     }
 </style>
@@ -255,36 +332,36 @@
 
 {% block content %}
 <div class="container-custom">
-    <!-- Hero Section -->
-    <div class="hero-section d-flex align-items-center justify-content-center text-center"
-     style="background: url('{% static "images/hero.jpg" %}') center/cover no-repeat;">
-        <div class="hero-overlay"></div>
+    <!-- Hero Section - Optimized -->
+    <div class="hero-section d-flex align-items-center justify-content-center text-center mt-2"
+         style="background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('{% static "images/hero.jpg" %}') center/cover no-repeat;">
         <div class="hero-content">
-            <h1 class="display-4 text-white">Welcome to DEEM Restaurant</h1>
+            <h1 class="text-white">Welcome to DEEM Restaurant</h1>
             <p class="lead text-white">Experience the finest dining with our delicious meals</p>
             <p class="hero-tagline">
                 <i class="fas fa-leaf"></i> Eat fresh, Stay healthy <i class="fas fa-leaf"></i>
             </p>
-            <a href="{% url 'web:menu_list' %}" class="btn btn-secondary-custom btn-lg mt-3">
-                View Menu
+            <a href="{% url 'web:menu_list' %}" class="btn btn-secondary-custom btn-lg">
+                View Menu <i class="fas fa-arrow-right ms-2"></i>
             </a>
         </div>
     </div>
 
-    <!-- Featured Menu Items - Updated to match menu_list style -->
+    <!-- Featured Menu Items - Optimized -->
     {% if featured_items %}
-    <section class="featured-items my-5 fade-in">
-        <h4 class="text-center mb-4">Popular Dishes</h4>
-        <div class="row g-4">
+    <section class="featured-items my-4 fade-in">
+        <h4 class="text-center">Popular Dishes</h4>
+        <div class="row g-3">
             {% for item in featured_items %}
-            <div class="col-md-4">
+            <div class="col-md-4 col-sm-6">
                 <div class="card h-100">
-                    <!-- Image container with hover effect -->
                     <div class="card-img-container">
                         {% if item.image %}
-                            <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.name }}">
+                            <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.name }}" loading="lazy">
                         {% else %}
-                            <div class="card-img-top bg-secondary"></div>
+                            <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center">
+                                <i class="fas fa-utensils fa-2x text-white-50"></i>
+                            </div>
                         {% endif %}
                     </div>
 
@@ -292,29 +369,28 @@
                         <h5 class="card-title">{{ item.name }}</h5>
                         
                         <p class="text-muted small mb-1">
-                            {{ item.category.name }}
+                            <i class="fas fa-tag icon-sm"></i> {{ item.category.name }}
                         </p>
 
                         <p class="card-text">
-                            {{ item.description|truncatewords:15 }}
+                            {{ item.description|truncatewords:12 }}
                         </p>
 
-                        <!-- Bottom aligned content with price and buttons -->
-                        <div class="mt-auto d-flex justify-content-between align-items-center">
+                        <div class="mt-auto d-flex justify-content-between align-items-center pt-2">
                             <span class="h5 mb-0">Tsh {{ item.price|floatformat:0|intcomma }}</span>
 
                             <div class="d-flex gap-2">
                                 <a href="{% url 'web:menu_detail' item.pk %}" 
                                    class="btn btn-sm btn-accent-custom">
-                                    View
+                                    <i class="fas fa-eye"></i>
                                 </a>
 
-                                <form method="post" action="{% url 'web:add_to_cart' %}">
+                                <form method="post" action="{% url 'web:add_to_cart' %}" class="d-inline">
                                     {% csrf_token %}
                                     <input type="hidden" name="menu_item_id" value="{{ item.pk }}">
                                     <input type="hidden" name="quantity" value="1">
-                                    <button type="submit" class="btn btn-sm btn-secondary-custom px-3">
-                                        Add to Order
+                                    <button type="submit" class="btn btn-sm btn-secondary-custom">
+                                        <i class="fas fa-cart-plus"></i>
                                     </button>
                                 </form>
                             </div>
@@ -327,52 +403,24 @@
     </section>
     {% endif %}
 
-    {% comment %} <!-- Featured Gallery -->
-    {% if gallery_items %}
-    <section class="featured-gallery my-5 fade-in">
-        <h2 class="text-center mb-4">From Our Gallery</h2>
-        <div id="galleryCarousel" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                {% for item in gallery_items %}
-                <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                    <img src="{{ item.image.url }}" class="d-block w-100" alt="{{ item.title }}" style="height: 400px; object-fit: cover;">
-                    <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50">
-                        <h5>{{ item.title }}</h5>
-                        <p>{{ item.description }}</p>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#galleryCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
-    </section>
-    {% endif %} {% endcomment %}
-
-    <!-- Why Choose Us -->
-    <section class="why-choose-us my-5 py-4 fade-in">
-        <h2 class="text-center mb-4">Why Choose Us</h2>
-        <div class="row g-4">
+    <!-- Why Choose Us - Compact -->
+    <section class="why-choose-us fade-in">
+        <h2 class="text-center">Why Choose Us</h2>
+        <div class="row g-3">
             <div class="col-md-4 text-center">
-                <i class="fas fa-truck fa-2x text-secondary-custom mb-3"></i>
+                <i class="fas fa-truck text-secondary-custom"></i>
                 <h5>Fast Delivery</h5>
-                <p>Quick and reliable delivery right to your doorstep</p>
+                <p>Quick & reliable delivery to your doorstep</p>
             </div>
             <div class="col-md-4 text-center">
-                <i class="fas fa-utensils fa-2x text-secondary-custom mb-3"></i>
+                <i class="fas fa-utensils text-secondary-custom"></i>
                 <h5>Quality Food</h5>
-                <p>Prepared with fresh ingredients by expert chefs</p>
+                <p>Fresh ingredients from expert chefs</p>
             </div>
             <div class="col-md-4 text-center">
-                <i class="fas fa-heart fa-2x text-secondary-custom mb-3"></i>
+                <i class="fas fa-heart text-secondary-custom"></i>
                 <h5>Easy Ordering</h5>
-                <p>Simple and convenient online ordering system</p>
+                <p>Simple & convenient online ordering</p>
             </div>
         </div>
     </section>
@@ -381,23 +429,27 @@
 
 {% block extra_js %}
 <script>
-    // Fade-in on scroll
-    const faders = document.querySelectorAll('.fade-in');
-
-    const appearOptions = {
-        threshold: 0.2
-    };
-
-    const appearOnScroll = new IntersectionObserver(function(entries, observer) {
-        entries.forEach(entry => {
-            if (!entry.isIntersecting) return;
-            entry.target.classList.add('show');
-            observer.unobserve(entry.target);
+    // Lazy loading images
+    document.addEventListener('DOMContentLoaded', function() {
+        // Fade-in on scroll
+        const faders = document.querySelectorAll('.fade-in');
+        
+        const appearOptions = {
+            threshold: 0.15,
+            rootMargin: "0px 0px -50px 0px"
+        };
+        
+        const appearOnScroll = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('show');
+                observer.unobserve(entry.target);
+            });
+        }, appearOptions);
+        
+        faders.forEach(fader => {
+            appearOnScroll.observe(fader);
         });
-    }, appearOptions);
-
-    faders.forEach(fader => {
-        appearOnScroll.observe(fader);
     });
 </script>
 {% endblock %}

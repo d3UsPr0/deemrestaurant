@@ -4,6 +4,285 @@
 
 {% block title %}My Profile{% endblock %}
 
+{% block extra_css %}
+<style>
+    /* ============================================
+       PROFILE PAGE - OPTIMIZED & CONSISTENT
+    ============================================ */
+    
+    .profile-header h1 {
+        font-size: 1.6rem;
+        font-weight: 800;
+        color: var(--primary-color);
+        margin-bottom: 1.5rem;
+    }
+    
+    /* Profile Card */
+    .profile-card {
+        border: none;
+        border-radius: 16px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+    
+    .profile-card:hover {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    }
+    
+    .profile-card .card-body {
+        padding: 1.5rem;
+    }
+    
+    .profile-avatar i {
+        font-size: 4rem;
+        color: var(--secondary-color);
+    }
+    
+    .profile-name {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        margin-bottom: 0.25rem;
+    }
+    
+    .profile-email {
+        font-size: 0.85rem;
+        color: #666;
+        margin-bottom: 1rem;
+    }
+    
+    .profile-stats {
+        margin-top: 0.5rem;
+    }
+    
+    .stat-label {
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: #888;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .stat-value {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        margin-bottom: 0;
+    }
+    
+    /* Edit Form Card */
+    .form-card {
+        border: none;
+        border-radius: 16px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+        margin-bottom: 1.5rem;
+    }
+    
+    .form-card .card-header {
+        background: transparent;
+        border-bottom: 1px solid #f0f0f0;
+        padding: 1rem 1.25rem;
+    }
+    
+    .form-card .card-header h5 {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        margin: 0;
+    }
+    
+    .form-card .card-body {
+        padding: 1.25rem;
+    }
+    
+    /* Form Styling */
+    .form-card label {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--primary-color);
+        margin-bottom: 0.3rem;
+    }
+    
+    .form-card .form-control {
+        font-size: 0.85rem;
+        padding: 8px 12px;
+        border-radius: 8px;
+        border: 1px solid #e0e0e0;
+        transition: all 0.2s ease;
+    }
+    
+    .form-card .form-control:focus {
+        outline: none;
+        border-color: var(--secondary-color);
+        box-shadow: 0 0 0 3px rgba(0, 182, 82, 0.1);
+    }
+    
+    /* Update Button */
+    .btn-update {
+        background: var(--secondary-color);
+        color: white;
+        font-weight: 600;
+        font-size: 0.85rem;
+        padding: 8px 20px;
+        border-radius: 30px;
+        transition: all 0.3s ease;
+        border: none;
+    }
+    
+    .btn-update:hover {
+        background: #009948;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 182, 82, 0.3);
+    }
+    
+    .btn-update i {
+        margin-right: 6px;
+        font-size: 0.85rem;
+    }
+    
+    /* Orders Table */
+    .orders-card {
+        border: none;
+        border-radius: 16px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    }
+    
+    .orders-card .card-header {
+        background: transparent;
+        border-bottom: 1px solid #f0f0f0;
+        padding: 1rem 1.25rem;
+    }
+    
+    .orders-card .card-header h5 {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        margin: 0;
+    }
+    
+    .orders-card .card-body {
+        padding: 0;
+    }
+    
+    .orders-table {
+        margin-bottom: 0;
+    }
+    
+    .orders-table thead th {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #888;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .orders-table tbody td {
+        font-size: 0.85rem;
+        padding: 0.75rem 1rem;
+        vertical-align: middle;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .orders-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+    
+    .btn-view {
+        background: var(--accent-color);
+        color: white;
+        font-weight: 600;
+        font-size: 0.7rem;
+        padding: 4px 12px;
+        border-radius: 20px;
+        transition: all 0.2s ease;
+        text-decoration: none;
+    }
+    
+    .btn-view:hover {
+        background: #e07a0a;
+        color: white;
+    }
+    
+    .btn-view-all {
+        background: transparent;
+        color: var(--secondary-color);
+        font-weight: 600;
+        font-size: 0.8rem;
+        padding: 8px 20px;
+        border-radius: 30px;
+        border: 1px solid var(--secondary-color);
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+    }
+    
+    .btn-view-all:hover {
+        background: var(--secondary-color);
+        color: white;
+    }
+    
+    /* Status Badges */
+    .badge {
+        padding: 4px 10px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        border-radius: 20px;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .profile-header h1 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .profile-card .card-body {
+            padding: 1.25rem;
+        }
+        
+        .profile-name {
+            font-size: 1rem;
+        }
+        
+        .form-card .card-body {
+            padding: 1rem;
+        }
+        
+        .orders-table thead th {
+            font-size: 0.65rem;
+            padding: 0.5rem 0.75rem;
+        }
+        
+        .orders-table tbody td {
+            font-size: 0.75rem;
+            padding: 0.5rem 0.75rem;
+        }
+        
+        .btn-view {
+            padding: 3px 10px;
+            font-size: 0.65rem;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .profile-card {
+            margin-bottom: 1rem;
+        }
+        
+        .orders-table {
+            font-size: 0.75rem;
+        }
+        
+        .stat-value {
+            font-size: 0.95rem;
+        }
+    }
+</style>
+{% endblock %}
+
 {% block breadcrumb %}
     <li class="breadcrumb-item"><a href="{% url 'web:home' %}">Home</a></li>
     <li class="breadcrumb-item active">My Profile</li>
@@ -11,56 +290,61 @@
 
 {% block content %}
 <div class="container-custom">
-    <h1 class="text-center mb-4">My Profile</h1>
+    <div class="profile-header">
+        <h1 class="text-center">My Profile</h1>
+    </div>
     
-    <div class="row">
-        <div class="col-md-4 mb-4">
-            <div class="card shadow text-center">
-                <div class="card-body">
-                    <div class="mb-3">
-                        <i class="fas fa-user-circle fa-5x text-secondary-custom"></i>
+    <div class="row g-3">
+        <!-- Profile Info Card -->
+        <div class="col-md-4">
+            <div class="profile-card card">
+                <div class="card-body text-center">
+                    <div class="profile-avatar mb-3">
+                        <i class="fas fa-user-circle"></i>
                     </div>
-                    <h4>{{ user.get_full_name|default:user.username }}</h4>
-                    <p class="text-muted">{{ user.email }}</p>
+                    <h4 class="profile-name">{{ user.get_full_name|default:user.username }}</h4>
+                    <p class="profile-email">{{ user.email }}</p>
                     <hr>
-                    <div class="row">
+                    <div class="profile-stats row">
                         <div class="col-6">
-                            <small class="text-muted">Member Since</small>
-                            <p class="mb-0">{{ user.date_joined|date:"M Y" }}</p>
+                            <div class="stat-label">Member Since</div>
+                            <p class="stat-value">{{ user.date_joined|date:"M Y" }}</p>
                         </div>
                         <div class="col-6">
-                            <small class="text-muted">Orders</small>
-                            <p class="mb-0">{{ orders|length }}</p>
+                            <div class="stat-label">Orders</div>
+                            <p class="stat-value">{{ orders|length }}</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         
+        <!-- Edit Profile Form -->
         <div class="col-md-8">
-            <div class="card shadow">
+            <div class="form-card card">
                 <div class="card-header">
-                    <h5 class="mb-0">Edit Profile</h5>
+                    <h5><i class="fas fa-edit me-2"></i>Edit Profile</h5>
                 </div>
                 <div class="card-body">
                     <form method="post">
                         {% csrf_token %}
                         {{ form|crispy }}
-                        <button type="submit" class="btn btn-accent-custom">
+                        <button type="submit" class="btn-update mt-2">
                             <i class="fas fa-save"></i> Update Profile
                         </button>
                     </form>
                 </div>
             </div>
             
+            <!-- Recent Orders -->
             {% if orders %}
-            <div class="card shadow mt-4">
+            <div class="orders-card card">
                 <div class="card-header">
-                    <h5 class="mb-0">Recent Orders</h5>
+                    <h5><i class="fas fa-shopping-bag me-2"></i>Recent Orders</h5>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="orders-table table">
                             <thead>
                                 <tr>
                                     <th>Order #</th>
@@ -82,7 +366,7 @@
                                         </span>
                                     </td>
                                     <td>
-                                        <a href="{% url 'web:order_detail' order.order_number %}" class="btn btn-sm btn-primary">
+                                        <a href="{% url 'web:order_detail' order.order_number %}" class="btn-view">
                                             View
                                         </a>
                                     </td>
@@ -92,8 +376,8 @@
                         </table>
                     </div>
                     {% if orders|length >= 5 %}
-                        <div class="text-center mt-3">
-                            <a href="{% url 'web:my_orders' %}" class="btn btn-secondary-custom">
+                        <div class="text-center mt-3 pb-2">
+                            <a href="{% url 'web:my_orders' %}" class="btn-view-all">
                                 View All Orders
                             </a>
                         </div>

@@ -3,73 +3,67 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
-<div class="container-fluid">
-    <h1 class="h3 mb-4">Dashboard</h1>
-    
+<div class="container-fluid px-0">
     <!-- Statistics Cards -->
-    <div class="row mb-4">
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-primary shadow h-100 py-2">
+    <div class="row g-2 mb-3">
+        <div class="col-xl-3 col-md-6">
+            <div class="stat-card card">
                 <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Total Orders</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ total_orders }}</div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="stat-title">Total Orders</div>
+                            <div class="stat-value">{{ total_orders }}</div>
                         </div>
-                        <div class="col-auto">
-                            <i class="fas fa-shopping-bag fa-2x text-gray-300"></i>
+                        <div class="stat-icon">
+                            <i class="fas fa-shopping-bag"></i>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-warning shadow h-100 py-2">
+        <div class="col-xl-3 col-md-6">
+            <div class="stat-card card">
                 <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                Pending Orders</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ pending_orders }}</div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="stat-title">Pending Orders</div>
+                            <div class="stat-value">{{ pending_orders }}</div>
                         </div>
-                        <div class="col-auto">
-                            <i class="fas fa-clock fa-2x text-gray-300"></i>
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-success shadow h-100 py-2">
+        <div class="col-xl-3 col-md-6">
+            <div class="stat-card card">
                 <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                Delivered Today</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ delivered_today }}</div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="stat-title">Delivered Today</div>
+                            <div class="stat-value">{{ delivered_today }}</div>
                         </div>
-                        <div class="col-auto">
-                            <i class="fas fa-check-circle fa-2x text-gray-300"></i>
+                        <div class="stat-icon">
+                            <i class="fas fa-check-circle"></i>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-info shadow h-100 py-2">
+        <div class="col-xl-3 col-md-6">
+            <div class="stat-card card">
                 <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                Total Revenue</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">Tsh {{ total_revenue|floatformat:0 }}</div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="stat-title">Total Revenue</div>
+                            <div class="stat-value">Tsh {{ total_revenue|floatformat:0 }}</div>
                         </div>
-                        <div class="col-auto">
-                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                        <div class="stat-icon">
+                            <i class="fas fa-dollar-sign"></i>
                         </div>
                     </div>
                 </div>
@@ -80,13 +74,13 @@
     <!-- Recent Orders -->
     <div class="row">
         <div class="col-12">
-            <div class="card shadow">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Recent Orders</h6>
+            <div class="card">
+                <div class="card-header py-2 px-3">
+                    <h6 class="section-header mb-0">Recent Orders</h6>
                 </div>
-                <div class="card-body">
+                <div class="card-body p-0">
                     <div class="table-responsive">
-                        <table class="table table-bordered">
+                        <table class="table mb-0">
                             <thead>
                                 <tr>
                                     <th>Order #</th>
@@ -94,21 +88,21 @@
                                     <th>Amount</th>
                                     <th>Status</th>
                                     <th>Date</th>
-                                    <th>Action</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for order in recent_orders %}
                                 <tr>
                                     <td>{{ order.order_number }}</td>
-                                    <td>{{ order.full_name }}</td>
+                                    <td>{{ order.full_name|truncatechars:20 }}</td>
                                     <td>Tsh {{ order.total_amount|floatformat:0 }}</td>
                                     <td>
                                         <span class="badge status-{{ order.status }}">
                                             {{ order.get_status_display }}
                                         </span>
                                     </td>
-                                    <td>{{ order.created_at|date:"Y-m-d H:i" }}</td>
+                                    <td>{{ order.created_at|date:"M d, H:i" }}</td>
                                     <td>
                                         <a href="{% url 'portal:order_detail' order.order_number %}" class="btn btn-sm btn-primary">
                                             View
@@ -117,7 +111,9 @@
                                 </tr>
                                 {% empty %}
                                 <tr>
-                                    <td colspan="6" class="text-center">No orders found</td>
+                                    <td colspan="6" class="text-center py-3 text-muted">
+                                        <small>No orders found</small>
+                                    </td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
@@ -128,4 +124,128 @@
         </div>
     </div>
 </div>
+
+<style>
+    /* Statistics Cards - Matching Sidebar Typography */
+    .stat-card {
+        border: none;
+        border-radius: 8px;
+        background: white;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+    
+    .stat-card .card-body {
+        padding: 0.7rem;
+    }
+    
+    .stat-title {
+        font-size: 0.65rem;
+        font-weight: 600;
+        color: #888;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        margin-bottom: 0.2rem;
+    }
+    
+    .stat-value {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        margin-bottom: 0;
+        line-height: 1.2;
+    }
+    
+    .stat-icon {
+        font-size: 1.4rem;
+        color: rgba(0, 182, 82, 0.15);
+    }
+    
+    /* Section Header */
+    .section-header {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--primary-color);
+        margin: 0;
+    }
+    
+    /* Table */
+    .table {
+        margin-bottom: 0;
+    }
+    
+    .table thead th {
+        font-size: 0.65rem;
+        font-weight: 600;
+        color: #888;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        padding: 0.5rem 0.75rem;
+        border-bottom: 1px solid #f0f0f0;
+        background-color: #fafafa;
+    }
+    
+    .table tbody td {
+        font-size: 0.75rem;
+        padding: 0.5rem 0.75rem;
+        vertical-align: middle;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    /* Badges */
+    .badge {
+        padding: 2px 6px;
+        font-size: 0.6rem;
+        font-weight: 600;
+        border-radius: 10px;
+    }
+    
+    .status-pending { background-color: #ffc107; color: #000; }
+    .status-submitted { background-color: #17a2b8; color: #fff; }
+    .status-approved { background-color: #28a745; color: #fff; }
+    .status-preparing { background-color: #fd7e14; color: #fff; }
+    .status-ready { background-color: #6f42c1; color: #fff; }
+    .status-out_for_delivery { background-color: #007bff; color: #fff; }
+    .status-delivered { background-color: #28a745; color: #fff; }
+    .status-cancelled { background-color: #dc3545; color: #fff; }
+    
+    /* Buttons */
+    .btn-sm {
+        padding: 2px 8px;
+        font-size: 0.65rem;
+        border-radius: 4px;
+    }
+    
+    /* Card */
+    .card {
+        border: none;
+        border-radius: 8px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+    }
+    
+    .card-header {
+        background: transparent;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .stat-value {
+            font-size: 1rem;
+        }
+        
+        .stat-icon {
+            font-size: 1.2rem;
+        }
+        
+        .table tbody td {
+            font-size: 0.7rem;
+            padding: 0.4rem 0.5rem;
+        }
+        
+        .table thead th {
+            padding: 0.4rem 0.5rem;
+        }
+    }
+</style>
 {% endblock %}

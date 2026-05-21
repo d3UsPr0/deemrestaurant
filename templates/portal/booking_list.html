@@ -3,16 +3,16 @@
 {% block title %}Booking Management{% endblock %}
 
 {% block content %}
-<div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3">Event Bookings</h1>
+<div class="container-fluid px-0">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="section-header mb-0">Event Bookings</h1>
     </div>
     
-    <div class="card shadow">
-        <div class="card-body">
+    <div class="card">
+        <div class="card-body p-0">
             <div class="table-responsive">
-                <table class="table table-hover">
-                    <thead class="table-light">
+                <table class="table mb-0">
+                    <thead>
                         <tr>
                             <th>Name</th>
                             <th>Email</th>
@@ -36,9 +36,8 @@
                         </tr>
                         {% empty %}
                         <tr>
-                            <td colspan="7" class="text-center py-4">
-                                <i class="fas fa-calendar-alt fa-3x text-muted mb-3"></i>
-                                <p class="mb-0">No bookings found</p>
+                            <td colspan="7" class="text-center py-3 text-muted">
+                                <small>No bookings found</small>
                             </td>
                         </tr>
                         {% endfor %}
@@ -48,4 +47,71 @@
         </div>
     </div>
 </div>
+
+<style>
+    /* Page Header */
+    .section-header {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--primary-color);
+    }
+    
+    /* Card */
+    .card {
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+    }
+    
+    /* Table */
+    .table {
+        margin-bottom: 0;
+    }
+    
+    .table thead th {
+        font-size: 0.65rem;
+        font-weight: 600;
+        color: #888;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        padding: 0.7rem 0.75rem;
+        border-bottom: 1px solid #f0f0f0;
+        background-color: #fafafa;
+    }
+    
+    .table tbody td {
+        font-size: 0.75rem;
+        padding: 0.6rem 0.75rem;
+        vertical-align: middle;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .table tbody tr:hover {
+        background-color: #f8f9fa;
+    }
+    
+    .table tbody tr:last-child td {
+        border-bottom: none;
+    }
+    
+    /* Strong text in table */
+    .table tbody td strong {
+        font-weight: 600;
+        color: var(--primary-color);
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .table thead th {
+            font-size: 0.6rem;
+            padding: 0.5rem 0.5rem;
+        }
+        
+        .table tbody td {
+            font-size: 0.7rem;
+            padding: 0.5rem 0.5rem;
+        }
+    }
+</style>
 {% endblock %}

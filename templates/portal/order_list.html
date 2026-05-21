@@ -3,15 +3,15 @@
 {% block title %}Orders Management{% endblock %}
 
 {% block content %}
-<div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3">Orders Management</h1>
+<div class="container-fluid px-0">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="section-header mb-0">Orders Management</h1>
     </div>
     
     <!-- Filters -->
-    <div class="card shadow mb-4">
+    <div class="card mb-3">
         <div class="card-body">
-            <form method="get" class="row g-3">
+            <form method="get" class="row g-2">
                 <div class="col-md-3">
                     <label for="status" class="form-label">Filter by Status</label>
                     <select name="status" id="status" class="form-select">
@@ -43,11 +43,11 @@
     </div>
     
     <!-- Orders Table -->
-    <div class="card shadow">
-        <div class="card-body">
+    <div class="card">
+        <div class="card-body p-0">
             <div class="table-responsive">
-                <table class="table table-hover">
-                    <thead class="table-light">
+                <table class="table mb-0">
+                    <thead>
                         <tr>
                             <th>Order #</th>
                             <th>Customer</th>
@@ -55,7 +55,7 @@
                             <th>Amount</th>
                             <th>Status</th>
                             <th>Date</th>
-                            <th>Actions</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -75,7 +75,7 @@
                                     {{ order.get_status_display }}
                                 </span>
                             </td>
-                            <td>{{ order.created_at|date:"Y-m-d H:i" }}</td>
+                            <td>{{ order.created_at|date:"M d, H:i" }}</td>
                             <td>
                                 <a href="{% url 'portal:order_detail' order.order_number %}" 
                                    class="btn btn-sm btn-primary">
@@ -85,9 +85,8 @@
                         </tr>
                         {% empty %}
                         <tr>
-                            <td colspan="7" class="text-center py-4">
-                                <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
-                                <p class="mb-0">No orders found</p>
+                            <td colspan="7" class="text-center py-3 text-muted">
+                                <small>No orders found</small>
                             </td>
                         </tr>
                         {% endfor %}
@@ -97,4 +96,150 @@
         </div>
     </div>
 </div>
+
+<style>
+    /* Page Header */
+    .section-header {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--primary-color);
+    }
+    
+    /* Card */
+    .card {
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+    }
+    
+    /* Form Labels */
+    .form-label {
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: #888;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        margin-bottom: 0.25rem;
+    }
+    
+    /* Form Controls */
+    .form-select, .form-control {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.6rem;
+        border-radius: 6px;
+        border: 1px solid #e0e0e0;
+    }
+    
+    .form-select:focus, .form-control:focus {
+        border-color: var(--secondary-color);
+        box-shadow: 0 0 0 2px rgba(49, 157, 47, 0.1);
+    }
+    
+    /* Buttons */
+    .btn {
+        font-size: 0.75rem;
+        font-weight: 500;
+        padding: 0.4rem 0.8rem;
+        border-radius: 6px;
+    }
+    
+    .btn-primary {
+        background-color: var(--secondary-color);
+        border-color: var(--secondary-color);
+    }
+    
+    .btn-primary:hover {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+    
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+    
+    /* Table */
+    .table {
+        margin-bottom: 0;
+    }
+    
+    .table thead th {
+        font-size: 0.65rem;
+        font-weight: 600;
+        color: #888;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        padding: 0.7rem 0.75rem;
+        border-bottom: 1px solid #f0f0f0;
+        background-color: #fafafa;
+    }
+    
+    .table tbody td {
+        font-size: 0.75rem;
+        padding: 0.6rem 0.75rem;
+        vertical-align: middle;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .table tbody tr:hover {
+        background-color: #f8f9fa;
+    }
+    
+    .table tbody tr:last-child td {
+        border-bottom: none;
+    }
+    
+    /* Strong text */
+    .table tbody td strong {
+        font-weight: 600;
+        color: var(--primary-color);
+    }
+    
+    /* Badges */
+    .badge {
+        padding: 2px 8px;
+        font-size: 0.6rem;
+        font-weight: 600;
+        border-radius: 10px;
+    }
+    
+    .status-pending { background-color: #ffc107; color: #000; }
+    .status-submitted { background-color: #17a2b8; color: #fff; }
+    .status-approved { background-color: #28a745; color: #fff; }
+    .status-preparing { background-color: #fd7e14; color: #fff; }
+    .status-ready { background-color: #6f42c1; color: #fff; }
+    .status-out_for_delivery { background-color: #007bff; color: #fff; }
+    .status-delivered { background-color: #28a745; color: #fff; }
+    .status-cancelled { background-color: #dc3545; color: #fff; }
+    
+    /* Buttons inside table */
+    .btn-sm {
+        padding: 2px 8px;
+        font-size: 0.65rem;
+        border-radius: 4px;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .table thead th {
+            font-size: 0.6rem;
+            padding: 0.5rem 0.5rem;
+        }
+        
+        .table tbody td {
+            font-size: 0.7rem;
+            padding: 0.5rem 0.5rem;
+        }
+        
+        .form-label {
+            font-size: 0.65rem;
+        }
+        
+        .form-select, .form-control {
+            font-size: 0.75rem;
+            padding: 0.35rem 0.5rem;
+        }
+    }
+</style>
 {% endblock %}

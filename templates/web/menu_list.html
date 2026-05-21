@@ -6,60 +6,60 @@
 
 {% block extra_css %}
 <style>
-/* PAGE TITLE */
+/* ============================================
+   PAGE TITLE - BOLD & COMPACT
+============================================ */
 h4 {
-    font-weight: 700;
+    font-weight: 800;
+    font-size: 1.6rem;
     color: var(--primary-color);
-    animation: fadeIn 0.8s ease;
+    margin-bottom: 1.5rem;
+    animation: fadeIn 0.6s ease;
 }
 
-/* SEARCH BAR */
-
-/* SEARCH FORM CONTAINER */
+/* ============================================
+   SEARCH FORM - OPTIMIZED
+============================================ */
 .search-form {
     width: 100%;
 }
 
-/* WRAPPER */
 .search-wrapper {
     display: flex;
     align-items: center;
-    padding: 0;
+    gap: 8px;
+    background: white;
+    border-radius: 50px;
+    padding: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+
+.search-wrapper:focus-within {
+    box-shadow: 0 4px 12px rgba(0,182,82,0.15);
+}
+
+.search-wrapper input {
+    border-radius: 50px;
+    padding: 10px 18px;
+    border: none;
+    flex: 1;
+    font-size: 0.85rem;
     background: transparent;
+}
+
+.search-wrapper input:focus {
+    outline: none;
     border: none;
     box-shadow: none;
 }
 
-/* FOCUS EFFECT */
-.search-wrapper:focus-within {
-    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-    border-color: var(--secondary-color);
-}
-.search-wrapper input:focus {
-    border-color: var(--secondary-color);
-    box-shadow: 0 0 0 3px rgba(0,182,82,0.1);
-}
-
-/* BUTTON */
-.search-btn {
-    margin-left: 8px;
-}
-
-/* INPUT */
-.search-wrapper input {
-    border-radius: 30px;
-    padding: 10px 15px;
-    border: 1px solid rgba(0,0,0,0.1);
-    flex: 1;
-}
-
-/* BUTTON */
 .search-btn {
     background: var(--secondary-color);
     border: none;
     color: #fff;
-    width: 42px;
-    height: 42px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -67,61 +67,86 @@ h4 {
     transition: all 0.3s ease;
 }
 
-/* BUTTON HOVER */
 .search-btn:hover {
     background: var(--primary-color);
     transform: scale(1.05);
 }
 
-/* ICON */
 .search-btn i {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
 }
 
-/* CATEGORY FILTER */
-.btn-group {
+/* ============================================
+   CATEGORY FILTER - CLEAN & COMPACT
+============================================ */
+.category-filter {
+    display: flex;
+    justify-content: flex-end;
     flex-wrap: wrap;
     gap: 8px;
 }
 
-.btn-group .btn {
-    border-radius: 20px !important;
-    padding: 6px 14px;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
+.category-btn {
+    padding: 6px 16px;
+    border-radius: 25px;
+    border: 1px solid #e0e0e0;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #555;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    background: white;
 }
 
-.btn-group .btn:hover {
-    transform: translateY(-2px);
+.category-btn:hover {
+    background: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+    transform: translateY(-1px);
 }
 
-/* CARD DESIGN - Removed hover effect from card */
+.category-btn.active {
+    background: linear-gradient(135deg, var(--secondary-color), #00d96b);
+    color: white;
+    border-color: var(--secondary-color);
+    box-shadow: 0 2px 8px rgba(0,182,82,0.2);
+}
+
+/* ============================================
+   CARD DESIGN - OPTIMIZED
+============================================ */
 .card {
     border: none;
-    border-radius: 14px;
+    border-radius: 12px;
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
-/* Image container for proper overflow handling */
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+/* Image container - OPTIMIZED HEIGHT */
 .card-img-container {
     overflow: hidden;
     position: relative;
+    height: 160px;
 }
 
-/* Image hover effect - ONLY image scales */
 .card-img-top {
     transition: transform 0.4s ease;
     width: 100%;
-    height: 200px;
+    height: 100%;
     object-fit: cover;
 }
 
 .card-img-container:hover .card-img-top {
-    transform: scale(1.08);
+    transform: scale(1.05);
 }
 
-/* Optional: Add subtle overlay on image hover */
 .card-img-container:hover::after {
     content: '';
     position: absolute;
@@ -129,111 +154,147 @@ h4 {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+    background: rgba(0, 0, 0, 0.08);
 }
 
-/* PRICE */
-.card .h5 {
-    color: var(--secondary-color);
+/* Card Body - TIGHT SPACING */
+.card-body {
+    padding: 12px 12px 14px;
 }
 
-/* BUTTONS */
-.btn-sm {
-    border-radius: 20px;
-}
-
-/* EMPTY STATE */
-.lead {
-    color: #777;
-    font-size: 1.2rem;
-}
-
-/* ANIMATION */
-@keyframes fadeIn {
-    from {opacity: 0; transform: translateY(15px);}
-    to {opacity: 1; transform: translateY(0);}
-}
-
-/* CARD TEXT REFINEMENT */
-/* Title */
 .card-title {
     font-size: 1rem;
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: 4px;
     line-height: 1.3;
+    color: var(--primary-color);
 }
 
-/* Category label */
 .card-body .text-muted {
     font-size: 0.7rem;
+    font-weight: 600;
     letter-spacing: 0.5px;
     text-transform: uppercase;
+    color: var(--secondary-color) !important;
     margin-bottom: 6px !important;
     display: inline-block;
 }
 
-/* Description */
 .card-text {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     line-height: 1.4;
-    color: #555;
+    color: #666;
     margin-bottom: 10px;
-}
-
-/* Price tighter */
-.card .h5 {
-    font-size: 1rem;
-    font-weight: 600;
-}
-
-/* Reduce card body spacing */
-.card-body {
-    padding: 12px 14px;
-}
-
-.card-text {
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
 
-/* CATEGORY FILTER - CLEAN DESIGN */
-.category-filter {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 10px;
+/* Price styling */
+.card .h5 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    margin-bottom: 0;
 }
 
-/* Normal state */
-.category-btn {
-    padding: 6px 16px;
+/* Buttons */
+.btn-sm {
+    padding: 5px 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
     border-radius: 20px;
-    border: 1px solid #ccc;
-    font-size: 0.85rem;
-    color: #444;
-    text-decoration: none;
-    transition: all 0.3s ease;
 }
 
-/* Hover */
-.category-btn:hover {
-    background: var(--accent-color);
-    color: var(--primary-color);
+.btn-accent-custom {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    transition: all 0.2s ease;
 }
 
-/* ACTIVE STATE (VERY IMPORTANT) */
-.category-btn.active {
-    .category-btn.active {
-    background: linear-gradient(135deg, var(--secondary-color), #00d96b);
-    color: #fff;
+.btn-accent-custom:hover {
+    background-color: #e07a0a;
+    color: white;
+    transform: translateY(-1px);
 }
-    border-color: var(--secondary-color);
+
+.btn-secondary-custom {
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.btn-secondary-custom:hover {
+    background-color: #009948;
+    color: white;
+    transform: translateY(-1px);
+}
+
+/* Empty State */
+.lead {
+    color: #888;
+    font-size: 0.95rem;
     font-weight: 500;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
+
+/* ============================================
+   ANIMATIONS
+============================================ */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px);}
+    to { opacity: 1; transform: translateY(0);}
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+============================================ */
+@media (max-width: 768px) {
+    h4 {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+    }
+    
+    .category-filter {
+        justify-content: center;
+        margin-top: 12px;
+    }
+    
+    .category-btn {
+        padding: 5px 14px;
+        font-size: 0.75rem;
+    }
+    
+    .card-img-container {
+        height: 140px;
+    }
+    
+    .search-wrapper input {
+        padding: 8px 15px;
+        font-size: 0.8rem;
+    }
+    
+    .search-btn {
+        width: 38px;
+        height: 38px;
+    }
+    
+    .btn-sm {
+        padding: 4px 10px;
+        font-size: 0.7rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .card-img-container {
+        height: 160px;
+    }
+    
+    .btn-sm {
+        padding: 4px 8px;
+    }
 }
 </style>
 {% endblock %}
@@ -247,109 +308,104 @@ h4 {
 
 {% block content %}
 <div class="container-custom">
-
-    <h4 class="text-center mb-4">Our Menu</h4>
+    <h4 class="text-center">Our Menu</h4>
     
-    <!-- Search and Filter -->
+    <!-- Search and Filter - Optimized Layout -->
     <div class="row mb-4 align-items-center">
-        
         <!-- SEARCH -->
-        <div class="col-md-5 mb-3 mb-md-0 ">
-            <form method="get" class="search-form shadow-sm">
-    <div class="search-wrapper ">
-        <input 
-            type="text" 
-            name="search" 
-            class="form-control" 
-            placeholder="Search delicious meals..." 
-            value="{{ request.GET.search }}"
-        >
-        <button type="submit" class="search-btn">
-            <i class="fas fa-search"></i>
-        </button>
-    </div>
-</form>
+        <div class="col-md-5 mb-3 mb-md-0">
+            <form method="get" class="search-form">
+                <div class="search-wrapper">
+                    <input 
+                        type="text" 
+                        name="search" 
+                        class="form-control" 
+                        placeholder="Search delicious meals..." 
+                        value="{{ request.GET.search }}"
+                    >
+                    <button type="submit" class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </form>
         </div>
 
-        <!-- FILTER -->
+        <!-- FILTER - Categories -->
         <div class="col-md-7">
-            <div class="category-filter text-center">
-    <a href="{% url 'web:menu_list' %}" 
-       class="category-btn {% if not selected_category %}active{% endif %}">
-        All
-    </a>
-
-    {% for category in categories %}
-        <a href="?category={{ category.slug }}" 
-           class="category-btn {% if selected_category == category.slug %}active{% endif %}">
-            {{ category.name }}
-        </a>
-    {% endfor %}
-</div>
+            <div class="category-filter">
+                <a href="{% url 'web:menu_list' %}" 
+                   class="category-btn {% if not selected_category %}active{% endif %}">
+                    All
+                </a>
+                {% for category in categories %}
+                    <a href="?category={{ category.slug }}" 
+                       class="category-btn {% if selected_category == category.slug %}active{% endif %}">
+                        {{ category.name }}
+                    </a>
+                {% endfor %}
+            </div>
         </div>
-
     </div>
     
-    <!-- Menu Items -->
-    <div class="row g-4">
+    <!-- Menu Items Grid -->
+    <div class="row g-3">
         {% for item in menu_items %}
-            <div class="col-md-4">
+            <div class="col-md-4 col-sm-6">
                 <div class="card h-100">
                     <!-- Image container with hover effect -->
                     <div class="card-img-container">
                         {% if item.image %}
-                            <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.name }}">
+                            <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.name }}" loading="lazy">
                         {% else %}
-                            <div class="card-img-top bg-secondary" style="height: 200px;"></div>
+                            <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center">
+                                <i class="fas fa-utensils fa-2x text-white-50"></i>
+                            </div>
                         {% endif %}
                     </div>
 
                     <div class="card-body d-flex flex-column">
-                        
                         <h5 class="card-title">{{ item.name }}</h5>
                         
                         <p class="text-muted small mb-1">
-                            {{ item.category.name }}
+                            <i class="fas fa-tag icon-sm"></i> {{ item.category.name }}
                         </p>
 
                         <p class="card-text">
-                            {{ item.description|truncatewords:15 }}
+                            {{ item.description|truncatewords:12 }}
                         </p>
 
                         <!-- Bottom aligned content -->
-                        <div class="mt-auto d-flex justify-content-between align-items-center">
+                        <div class="mt-auto d-flex justify-content-between align-items-center pt-1">
                             <span class="h5 mb-0">Tsh {{ item.price|floatformat:0|intcomma }}</span>
 
                             <div class="d-flex gap-2">
                                 <a href="{% url 'web:menu_detail' item.pk %}" 
                                    class="btn btn-sm btn-accent-custom">
-                                    View
+                                    <i class="fas fa-eye"></i>
                                 </a>
 
-                                <form method="post" action="{% url 'web:add_to_cart' %}">
+                                <form method="post" action="{% url 'web:add_to_cart' %}" class="d-inline">
                                     {% csrf_token %}
                                     <input type="hidden" name="menu_item_id" value="{{ item.pk }}">
                                     <input type="hidden" name="quantity" value="1">
-                                    <button type="submit" class="btn btn-sm btn-secondary-custom px-3">
-                                        Add to Order
+                                    <button type="submit" class="btn btn-sm btn-secondary-custom">
+                                        <i class="fas fa-cart-plus"></i>
                                     </button>
                                 </form>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
-
         {% empty %}
             <div class="col-12 text-center py-5">
+                <i class="fas fa-utensils fa-3x text-muted mb-3"></i>
                 <p class="lead">No menu items available.</p>
                 <a href="{% url 'web:menu_list' %}" class="btn btn-secondary-custom mt-2">
-                    Refresh Menu
+                    <i class="fas fa-refresh"></i> Refresh Menu
                 </a>
             </div>
         {% endfor %}
     </div>
-
 </div>
 {% endblock %}

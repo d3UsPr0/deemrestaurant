@@ -3,26 +3,26 @@
 {% block title %}Delete Menu Item{% endblock %}
 
 {% block content %}
-<div class="container-fluid">
+<div class="container-fluid px-0">
     <div class="row">
         <div class="col-md-6 mx-auto">
-            <div class="card shadow">
-                <div class="card-header bg-danger text-white">
-                    <h5 class="mb-0">Confirm Delete</h5>
+            <div class="card">
+                <div class="card-header bg-danger text-white py-2 px-3">
+                    <h5 class="section-header mb-0 text-white">Confirm Delete</h5>
                 </div>
                 <div class="card-body text-center">
-                    <i class="fas fa-exclamation-triangle fa-4x text-danger mb-3"></i>
-                    <h4>Are you sure?</h4>
-                    <p>You are about to delete <strong>"{{ menu_item.name }}"</strong> from the menu.</p>
-                    <p class="text-danger">This action cannot be undone!</p>
+                    <i class="fas fa-exclamation-triangle text-danger mb-2"></i>
+                    <h4 class="confirm-title">Are you sure?</h4>
+                    <p class="confirm-text">You are about to delete <strong>"{{ menu_item.name }}"</strong> from the menu.</p>
+                    <p class="text-danger confirm-warning">This action cannot be undone!</p>
                     
                     <form method="post">
                         {% csrf_token %}
-                        <div class="mt-4">
-                            <button type="submit" class="btn btn-danger">
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-danger btn-sm">
                                 <i class="fas fa-trash"></i> Yes, Delete
                             </button>
-                            <a href="{% url 'portal:menu_management' %}" class="btn btn-secondary">
+                            <a href="{% url 'portal:menu_management' %}" class="btn btn-secondary btn-sm">
                                 <i class="fas fa-times"></i> Cancel
                             </a>
                         </div>
@@ -32,4 +32,107 @@
         </div>
     </div>
 </div>
+
+<style>
+    /* Card */
+    .card {
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+    }
+    
+    /* Card Header */
+    .card-header {
+        border-bottom: none;
+    }
+    
+    .section-header {
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin: 0;
+    }
+    
+    /* Card Body */
+    .card-body {
+        padding: 1.25rem;
+    }
+    
+    /* Icon */
+    .fa-exclamation-triangle {
+        font-size: 2.5rem;
+    }
+    
+    /* Title */
+    .confirm-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        margin-bottom: 0.5rem;
+    }
+    
+    /* Text */
+    .confirm-text {
+        font-size: 0.85rem;
+        color: #555;
+        margin-bottom: 0.5rem;
+    }
+    
+    .confirm-text strong {
+        color: var(--primary-color);
+        font-weight: 600;
+    }
+    
+    .confirm-warning {
+        font-size: 0.8rem;
+        font-weight: 500;
+        margin-bottom: 0;
+    }
+    
+    /* Buttons */
+    .btn-sm {
+        padding: 0.35rem 0.8rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+        border-radius: 6px;
+    }
+    
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+    
+    .btn-danger:hover {
+        background-color: #c82333;
+        border-color: #bd2130;
+    }
+    
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .card-body {
+            padding: 1rem;
+        }
+        
+        .fa-exclamation-triangle {
+            font-size: 2rem;
+        }
+        
+        .confirm-title {
+            font-size: 1rem;
+        }
+        
+        .confirm-text {
+            font-size: 0.8rem;
+        }
+        
+        .confirm-warning {
+            font-size: 0.75rem;
+        }
+    }
+</style>
 {% endblock %}

@@ -3,6 +3,202 @@
 
 {% block title %}Contact Us{% endblock %}
 
+{% block extra_css %}
+<style>
+    /* ============================================
+       CONTACT PAGE - OPTIMIZED & COMPACT
+    ============================================ */
+    
+    /* Page Header */
+    .contact-header h1 {
+        font-size: 1.6rem;
+        font-weight: 800;
+        color: var(--primary-color);
+        margin-bottom: 0.5rem;
+    }
+    
+    .contact-subtitle {
+        font-size: 0.85rem;
+        color: #666;
+        margin-bottom: 1.5rem;
+    }
+    
+    /* Contact Cards */
+    .contact-card {
+        border: none;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+    
+    .contact-card:hover {
+        box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+        transform: translateY(-2px);
+    }
+    
+    .contact-card .card-body {
+        padding: 1.25rem;
+    }
+    
+    /* Contact Info Sections */
+    .info-section {
+        margin-bottom: 1.25rem;
+    }
+    
+    .info-title {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .info-title i {
+        font-size: 1rem;
+        color: var(--accent-color);
+    }
+    
+    .info-content {
+        font-size: 0.85rem;
+        color: #555;
+        line-height: 1.5;
+        margin-bottom: 0;
+        padding-left: 1.75rem;
+    }
+    
+    /* Form Styling */
+    .form-label {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--primary-color);
+        margin-bottom: 0.3rem;
+    }
+    
+    .form-control {
+        font-size: 0.85rem;
+        padding: 8px 12px;
+        border-radius: 8px;
+        border: 1px solid #e0e0e0;
+        transition: all 0.2s ease;
+    }
+    
+    .form-control:focus {
+        outline: none;
+        border-color: var(--secondary-color);
+        box-shadow: 0 0 0 3px rgba(0,182,82,0.1);
+    }
+    
+    textarea.form-control {
+        resize: vertical;
+    }
+    
+    /* Submit Button */
+    .btn-send {
+        background: var(--secondary-color);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        border-radius: 30px;
+        transition: all 0.3s ease;
+        width: 100%;
+    }
+    
+    .btn-send:hover {
+        background: #009948;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,182,82,0.3);
+    }
+    
+    .btn-send i {
+        margin-right: 6px;
+        font-size: 0.85rem;
+    }
+    
+    /* Map Card */
+    .map-card {
+        border: none;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        margin-top: 1.5rem;
+    }
+    
+    .map-card .card-body {
+        padding: 0;
+    }
+    
+    .map-card iframe {
+        display: block;
+        width: 100%;
+        height: 350px;
+        border: none;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .contact-header h1 {
+            font-size: 1.3rem;
+        }
+        
+        .contact-subtitle {
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .contact-card .card-body {
+            padding: 1rem;
+        }
+        
+        .info-title {
+            font-size: 0.85rem;
+        }
+        
+        .info-content {
+            font-size: 0.8rem;
+            padding-left: 1.5rem;
+        }
+        
+        .form-control {
+            font-size: 0.8rem;
+            padding: 7px 10px;
+        }
+        
+        .btn-send {
+            padding: 8px 18px;
+            font-size: 0.8rem;
+        }
+        
+        .map-card iframe {
+            height: 250px;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .contact-card .card-body {
+            padding: 0.875rem;
+        }
+        
+        .info-section {
+            margin-bottom: 1rem;
+        }
+        
+        .info-title {
+            font-size: 0.8rem;
+        }
+        
+        .map-card iframe {
+            height: 200px;
+        }
+    }
+</style>
+{% endblock %}
+
 {% block breadcrumb %}
     <li class="breadcrumb-item"><a href="{% url 'web:home' %}">Home</a></li>
     <li class="breadcrumb-item active">Contact Us</li>
@@ -10,34 +206,69 @@
 
 {% block content %}
 <div class="container-custom">
-    <h1 class="text-center mb-4">Contact Us</h1>
-    <p class="text-center mb-5">We'd love to hear from you! Reach out with any questions, feedback, or special requests.</p>
+    <!-- Page Header -->
+    <div class="contact-header text-center">
+        <h1>Contact Us</h1>
+        <p class="contact-subtitle">We'd love to hear from you! Reach out with any questions, feedback, or special requests.</p>
+    </div>
     
-    <div class="row g-4">
+    <div class="row g-3">
+        <!-- Contact Info Column -->
         <div class="col-md-6">
-            <div class="card shadow h-100">
-                <div class="card-body p-4">
-                    <h3 class="mb-4"><i class="fas fa-map-marker-alt text-accent-custom"></i> Our Location</h3>
-                    <p>Bima, Kihonda Maghorofani<br>
-                    Morogoro, Tanzania</p>
+            <div class="contact-card card">
+                <div class="card-body">
+                    <!-- Location -->
+                    <div class="info-section">
+                        <div class="info-title">
+                            <i class="fas fa-map-marker-alt"></i> Our Location
+                        </div>
+                        <p class="info-content">
+                            Bima, Kihonda Maghorofani<br>
+                            Morogoro, Tanzania
+                        </p>
+                    </div>
                     
-                    <h3 class="mt-4"><i class="fas fa-phone text-accent-custom"></i> Phone</h3>
-                    <p>+255 755 405 492</p>
+                    <!-- Phone -->
+                    <div class="info-section">
+                        <div class="info-title">
+                            <i class="fas fa-phone"></i> Phone
+                        </div>
+                        <p class="info-content">
+                            <a href="tel:+255755405492" class="text-decoration-none" style="color: #555;">+255 755 405 492</a>
+                        </p>
+                    </div>
                     
-                    <h3 class="mt-4"><i class="fas fa-envelope text-accent-custom"></i> Email</h3>
-                    <p>info@deemrestaurant.com</p>
+                    <!-- Email -->
+                    <div class="info-section">
+                        <div class="info-title">
+                            <i class="fas fa-envelope"></i> Email
+                        </div>
+                        <p class="info-content">
+                            <a href="mailto:info@deemrestaurant.com" class="text-decoration-none" style="color: #555;">info@deemrestaurant.com</a>
+                        </p>
+                    </div>
                     
-                    <h3 class="mt-4"><i class="fas fa-clock text-accent-custom"></i> Hours</h3>
-                    <p>Monday - Saturday: 10:00 AM - 10:00 PM<br>
-                    Sunday: Closed</p>
+                    <!-- Hours -->
+                    <div class="info-section">
+                        <div class="info-title">
+                            <i class="fas fa-clock"></i> Hours
+                        </div>
+                        <p class="info-content">
+                            Monday - Saturday: 10:00 AM - 10:00 PM<br>
+                            Sunday: Closed
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
         
+        <!-- Contact Form Column -->
         <div class="col-md-6">
-            <div class="card shadow h-100">
-                <div class="card-body p-4">
-                    <h3 class="mb-4"><i class="fas fa-paper-plane text-accent-custom"></i> Send Us a Message</h3>
+            <div class="contact-card card">
+                <div class="card-body">
+                    <div class="info-title mb-3">
+                        <i class="fas fa-paper-plane"></i> Send Us a Message
+                    </div>
                     
                     <form method="post" action="{% url 'web:contact' %}">
                         {% csrf_token %}
@@ -55,9 +286,9 @@
                         </div>
                         <div class="mb-3">
                             <label for="message" class="form-label">Message</label>
-                            <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+                            <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
                         </div>
-                        <button type="submit" class="btn btn-accent-custom w-100">
+                        <button type="submit" class="btn-send">
                             <i class="fas fa-paper-plane"></i> Send Message
                         </button>
                     </form>
@@ -66,19 +297,18 @@
         </div>
     </div>
     
-    <!-- Google Maps Embed (Optional) -->
-    <div class="mt-5">
-        <div class="card shadow">
-            <div class="card-body p-0">
-                <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126843.123456!2d37.123456!3d-6.123456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMDcnMjYuNiJTIDM3wrAwOCc1Ni4yIkU!5e0!3m2!1sen!2stz!4v1234567890!5m2!1sen!2stz" 
-                    width="100%" 
-                    height="400" 
-                    style="border:0; border-radius: 10px;" 
-                    allowfullscreen="" 
-                    loading="lazy">
-                </iframe>
-            </div>
+    <!-- Google Maps Embed -->
+    <div class="map-card card">
+        <div class="card-body">
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126843.123456!2d37.123456!3d-6.123456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMDcnMjYuNiJTIDM3wrAwOCc1Ni4yIkU!5e0!3m2!1sen!2stz!4v1234567890!5m2!1sen!2stz" 
+                width="100%" 
+                height="350" 
+                style="border:0; border-radius: 12px;" 
+                allowfullscreen="" 
+                loading="lazy"
+                title="Deem Restaurant Location">
+            </iframe>
         </div>
     </div>
 </div>

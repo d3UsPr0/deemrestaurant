@@ -3,6 +3,148 @@
 
 {% block title %}Gallery{% endblock %}
 
+{% block extra_css %}
+<style>
+    /* ============================================
+       GALLERY PAGE - OPTIMIZED & COMPACT
+    ============================================ */
+    
+    /* Page Header */
+    .gallery-header h1 {
+        font-size: 1.6rem;
+        font-weight: 800;
+        color: var(--primary-color);
+        margin-bottom: 0.5rem;
+    }
+    
+    .gallery-subtitle {
+        font-size: 0.85rem;
+        color: #666;
+        margin-bottom: 1.5rem;
+    }
+    
+    /* Gallery Cards */
+    .gallery-card {
+        border: none;
+        border-radius: 12px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        background: white;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    
+    .gallery-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+    
+    /* Image container - OPTIMIZED HEIGHT */
+    .gallery-img-container {
+        overflow: hidden;
+        position: relative;
+        height: 200px;
+    }
+    
+    .gallery-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+    }
+    
+    .gallery-img-container:hover .gallery-img {
+        transform: scale(1.05);
+    }
+    
+    /* Overlay effect on hover */
+    .gallery-img-container:hover::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Card body - TIGHT SPACING */
+    .gallery-card .card-body {
+        padding: 12px 14px 14px;
+    }
+    
+    .gallery-card .card-title {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        margin-bottom: 5px;
+        line-height: 1.3;
+    }
+    
+    .gallery-card .card-text {
+        font-size: 0.8rem;
+        color: #666;
+        line-height: 1.4;
+        margin-bottom: 0;
+    }
+    
+    /* Empty State */
+    .empty-state {
+        padding: 3rem 1rem;
+    }
+    
+    .empty-state i {
+        font-size: 3rem;
+        color: #ccc;
+        margin-bottom: 1rem;
+    }
+    
+    .empty-state .lead {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #888;
+    }
+    
+    /* Lightbox effect (optional) */
+    .gallery-img-container {
+        cursor: pointer;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .gallery-header h1 {
+            font-size: 1.3rem;
+        }
+        
+        .gallery-subtitle {
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .gallery-img-container {
+            height: 180px;
+        }
+        
+        .gallery-card .card-title {
+            font-size: 0.85rem;
+        }
+        
+        .gallery-card .card-text {
+            font-size: 0.75rem;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .gallery-img-container {
+            height: 200px;
+        }
+        
+        .gallery-card .card-body {
+            padding: 10px 12px 12px;
+        }
+    }
+</style>
+{% endblock %}
+
 {% block breadcrumb %}
     <li class="breadcrumb-item"><a href="{% url 'web:home' %}">Home</a></li>
     <li class="breadcrumb-item active">Gallery</li>
@@ -10,25 +152,57 @@
 
 {% block content %}
 <div class="container-custom">
-    <h1 class="text-center mb-4">Our Gallery</h1>
-    <p class="text-center mb-5">Explore our delicious dishes and restaurant ambiance</p>
+    <!-- Gallery Header -->
+    <div class="gallery-header text-center">
+        <h1>Our Gallery</h1>
+        <p class="gallery-subtitle">Explore our delicious dishes and restaurant ambiance</p>
+    </div>
     
-    <div class="row g-4">
+    <!-- Gallery Grid -->
+    <div class="row g-3">
         {% for item in gallery_items %}
-        <div class="col-md-4">
-            <div class="card h-100">
-                <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.title }}" style="height: 250px; object-fit: cover;">
+        <div class="col-md-4 col-sm-6">
+            <div class="gallery-card card h-100">
+                <div class="gallery-img-container">
+                    <img src="{{ item.image.url }}" class="gallery-img" alt="{{ item.title }}" loading="lazy">
+                </div>
                 <div class="card-body">
                     <h5 class="card-title">{{ item.title }}</h5>
-                    <p class="card-text">{{ item.description }}</p>
+                    {% if item.description %}
+                        <p class="card-text">{{ item.description|truncatewords:15 }}</p>
+                    {% endif %}
                 </div>
             </div>
         </div>
         {% empty %}
-        <div class="col-12 text-center py-5">
-            <p class="lead">No gallery images available yet.</p>
+        <div class="col-12">
+            <div class="empty-state text-center">
+                <i class="fas fa-images"></i>
+                <p class="lead">No gallery images available yet.</p>
+                <p class="text-muted small">Check back soon for delicious updates!</p>
+            </div>
         </div>
         {% endfor %}
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Optional: Simple lightbox effect (can be enhanced with a library)
+    document.addEventListener('DOMContentLoaded', function() {
+        const galleryImages = document.querySelectorAll('.gallery-img-container');
+        
+        galleryImages.forEach(container => {
+            container.addEventListener('click', function() {
+                const img = this.querySelector('.gallery-img');
+                if (img) {
+                    // You can add a lightbox feature here
+                    // For now, just open image in new tab (optional)
+                    // window.open(img.src, '_blank');
+                }
+            });
+        });
+    });
+</script>
 {% endblock %}
