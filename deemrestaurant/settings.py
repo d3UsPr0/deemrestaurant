@@ -10,8 +10,8 @@ SECRET_KEY = 'django-insecure-your-secret-key-here'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-#Maintance mode
-MAINTENANCE_MODE = True
+#Maintenance mode
+MAINTENANCE_MODE = False
 
 ALLOWED_HOSTS = ['*']
 
