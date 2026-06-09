@@ -253,19 +253,19 @@
                 {% csrf_token %}
                 <input type="hidden" name="menu_item_id" value="{{ menu_item.pk }}">
                 
-                <div class="mb-3">
+                {% comment %} <div class="mb-3">
                     <label for="quantity" class="quantity-label">
                         <i class="fas fa-shopping-cart"></i> Quantity
                     </label>
                     <input type="number" name="quantity" id="quantity" class="quantity-input" 
                            value="1" min="1" step="1">
-                </div>
+                </div> {% endcomment %}
                 
                 <div class="action-buttons">
-                    <button type="submit" class="btn-cart">
+                    {% comment %} <button type="submit" class="btn-cart">
                         <i class="fas fa-cart-plus"></i> Add to Cart
                     </button>
-                    
+                     {% endcomment %}
                     {% if user.is_authenticated %}
                         <form method="post" action="{% url 'web:toggle_favorite' menu_item.pk %}" class="d-inline">
                             {% csrf_token %}

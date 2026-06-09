@@ -44,6 +44,7 @@
 
       body {
         font-family: 'Plus Jakarta Sans', 'Red Hat Text', sans-serif;
+        font-size: 16px !important;
         background-color: var(--light-bg);
       }
 
@@ -599,7 +600,7 @@
                 </ul>
               </li>
             {% else %}
-              <li class="nav-item">
+              {% comment %} <li class="nav-item">
                 <a class="nav-link" href="{% url 'web:login' %}">
                   <i class="fas fa-sign-in-alt"></i> Login
                 </a>
@@ -608,7 +609,7 @@
                 <a class="nav-link" href="{% url 'web:register' %}">
                   <i class="fas fa-user-plus"></i> Register
                 </a>
-              </li>
+              </li> {% endcomment %}
             {% endif %}
           </ul>
         </div>
