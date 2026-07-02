@@ -1,7 +1,7 @@
 {% load static %}
 <!doctype html>
-<html lang="en">
-      <meta charset="UTF-8" />
+<html lang="sw">
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DEEM Restaurant - {% block title %}{% endblock %}</title>
 
@@ -28,7 +28,7 @@
       ============================================ */
       :root {
         {% comment %} --primary-color: #540b02; {% endcomment %}
-        --primary-color: #411517;
+        --primary-color: #710107;
         --secondary-color: #00b652;
         --accent-color: #f7941d;
         --light-bg: #fdf1e8;
@@ -52,7 +52,7 @@
          STICKY NAVBAR
       ============================================ */
       .navbar {
-        background-color: var(--white);
+        background-color: var(--primary-color);
         padding: 0.75rem 0;
         box-shadow: var(--shadow);
         position: sticky;
@@ -84,7 +84,7 @@
 
       /* Nav link styling - WITH UNDERLINE ANIMATION */
       .nav-link {
-        color: var(--primary-color) !important;
+        color: var(--white) !important;
         font-weight: 500;
         padding: 0.5rem 1rem !important;
         border-radius: 0px;
@@ -315,7 +315,7 @@
         display: inline-block;
         font-size: 1.6rem;
         line-height: 1;
-        color: var(--primary-color);
+        color: var(--white);
         transition: all 0.3s ease;
       }
 
@@ -371,9 +371,9 @@
           top: 100%;
           left: 0;
           right: 0;
-          background-color: var(--white);
+          background-color: var(--primary-color);
           padding: 1rem 1.5rem;
-          border-radius: 0 0 20px 20px;
+          border-radius: 0 0 8px 8px;
           box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
           max-height: calc(100vh - 70px);
           overflow-y: auto;
@@ -499,7 +499,7 @@
     </style>
     {% block extra_css %}{% endblock %}
   </head>
-  <body>
+ <body>
 
     <!-- STICKY NAVBAR WITH X ICON TOGGLE -->
     <nav class="navbar navbar-expand-lg">
@@ -673,9 +673,9 @@
             <h5 class="mb-3">Contact Info</h5>
             <ul class="list-unstyled">
               <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Bima, Kihonda Maghorofani, Morogoro</li>
-              <li class="mb-2"><i class="fas fa-phone me-2"></i> +255 755 405 492</li>
+              <li class="mb-2"><i class="fas fa-phone me-2"></i> +255 665 304 561</li>
               <li class="mb-2"><i class="fas fa-envelope me-2"></i> info@deemrestaurant.com</li>
-              <li class="mb-2"><i class="fas fa-clock me-2"></i> Monday-Saturday: 10:00 AM - 10:00 PM</li>
+              <li class="mb-2"><i class="fas fa-clock me-2"></i> Monday-Saturday: 07:30 AM - 10:00 PM</li>
             </ul>
           </div>
         </div>
